@@ -1,4 +1,7 @@
-﻿using Application.Features.MediatR.Users.Commands;
+﻿using Application.Constants;
+using Application.Features.MediatR.Users.Commands;
+using Application.Interfaces;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +12,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+       
         private readonly IMediator _mediator;
 
         public UsersController(IMediator mediator)
@@ -21,6 +25,13 @@ namespace WebApi.Controllers
         {
             var token=await _mediator.Send(command);
             return Ok(token);
+        }
+
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser(CreateUserCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok(Messages<User>.EntityAdded);
         }
     }
 }

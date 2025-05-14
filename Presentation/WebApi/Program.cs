@@ -2,6 +2,7 @@
 using Application.Features.MediatR.Users.Handlers.Write;
 using Application.Interfaces;
 using Application.Interfaces.TokenInterface;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
@@ -52,6 +53,14 @@ namespace WebApi
             builder.Services.AddMediatR(cfg =>
              cfg.RegisterServicesFromAssembly(typeof(LoginCommandHandler).Assembly)
            );
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new Application.MapperProfiles.MapperProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            builder.Services.AddSingleton(mapper);
 
             builder.Services.AddScoped<UniHelperContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
