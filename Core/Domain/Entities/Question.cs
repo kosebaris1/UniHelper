@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Question
+    public class Question : Entitiy
     {
         public int QuestionId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime CreatedAt { get; set; }
 
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
