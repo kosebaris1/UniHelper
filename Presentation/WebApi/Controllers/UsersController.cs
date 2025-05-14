@@ -33,5 +33,13 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
             return Ok(Messages<User>.EntityAdded);
         }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(DeleteUserCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok(Messages<User>.EntityDeleted);
+        }
+
     }
 }

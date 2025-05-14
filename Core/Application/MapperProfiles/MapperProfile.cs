@@ -14,6 +14,7 @@ namespace Application.MapperProfiles
         public MapperProfile()
         {
             CreateMap<User, CreateUserCommand>().ReverseMap();
+            CreateMap<User, DeleteUserCommand>().ReverseMap();
         }
       
     }
