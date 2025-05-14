@@ -2,12 +2,14 @@
 using Application.Features.MediatR.Users.Handlers.Write;
 using Application.Interfaces;
 using Application.Interfaces.TokenInterface;
+using Application.Interfaces.UserInterface;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
 using Persistence.Repositories;
 using Persistence.Repositories.TokenRepository;
+using Persistence.Repositories.UserRepository;
 using System.Text;
 
 namespace WebApi
@@ -66,6 +68,7 @@ namespace WebApi
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             var app = builder.Build();
 

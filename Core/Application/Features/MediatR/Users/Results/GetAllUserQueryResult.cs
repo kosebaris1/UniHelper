@@ -17,11 +17,11 @@ namespace Application.Features.MediatR.Users.Results
         public bool IsVerified { get; set; }
         public string? VerificationDocumentPath { get; set; }
 
-        public int? UniversityId { get; set; }
+        public string UniversityName { get; set; }
 
-        public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
 
-        public int? RoleId { get; set; }
+        public string RoleName { get; set; }
 
     }
 }

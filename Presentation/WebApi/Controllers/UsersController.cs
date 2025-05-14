@@ -1,5 +1,6 @@
 ﻿using Application.Constants;
 using Application.Features.MediatR.Users.Commands;
+using Application.Features.MediatR.Users.Queries;
 using Application.Interfaces;
 using Domain.Entities;
 using MediatR;
@@ -18,6 +19,13 @@ namespace WebApi.Controllers
         public UsersController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("GetAllUser")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            var values = await _mediator.Send(new GetAllUserQuery());
+            return Ok(values);
         }
 
         [HttpPost]
