@@ -1,6 +1,8 @@
 
+using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
+using Persistence.Repositories;
 
 namespace WebApi
 {
@@ -22,6 +24,10 @@ namespace WebApi
             // DbContext'i ekle
             builder.Services.AddDbContext<UniHelperContext>(options =>
                 options.UseSqlServer(connectionString));
+
+
+            builder.Services.AddScoped<UniHelperContext>();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             var app = builder.Build();
 
