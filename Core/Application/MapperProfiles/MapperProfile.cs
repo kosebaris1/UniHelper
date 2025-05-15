@@ -21,6 +21,11 @@ namespace Application.MapperProfiles
           .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
           .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
           .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+
+            CreateMap<User, GetByIdUserQueryResult>()
+         .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+         .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+         .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
         }
       
     }

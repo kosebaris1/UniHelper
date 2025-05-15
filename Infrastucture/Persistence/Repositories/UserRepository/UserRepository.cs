@@ -28,9 +28,15 @@ namespace Persistence.Repositories.UserRepository
                 .ToListAsync();
         }
 
-        public Task<User> GetByIdUserAsync(int id)
+        public async Task<User> GetByIdUserAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Users
+               .Include(p => p.Role)
+               .FirstOrDefaultAsync(p => p.UserId == id && p.DeletedDate == null);
+
+            if (entity == null)
+                throw new Exception("User bulunamadı.");
+            return entity;
         }
 
         public Task<User> GetByIdUserDetailsForAdminAsync(int id)
