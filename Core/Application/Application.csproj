@@ -22,10 +22,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\MediatR\Users\Handlers\Read\" />
-    <Folder Include="Features\MediatR\Users\Queries\" />
-    <Folder Include="Features\MediatR\Users\Results\" />
-  </ItemGroup>
-
 </Project>
