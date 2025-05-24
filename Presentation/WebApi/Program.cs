@@ -1,6 +1,7 @@
 
 using Application.Features.MediatR.Users.Handlers.Write;
 using Application.Interfaces;
+using Application.Interfaces.AnswerLikeInterface;
 using Application.Interfaces.QuestionInterface;
 using Application.Interfaces.QuestionLikeInterface;
 using Application.Interfaces.TokenInterface;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
 using Persistence.Repositories;
+using Persistence.Repositories.AnswerLikeRepository;
 using Persistence.Repositories.QuestionLikeRepository;
 using Persistence.Repositories.QuestionRepository;
 using Persistence.Repositories.TokenRepository;
@@ -75,6 +77,7 @@ namespace WebApi
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
             builder.Services.AddScoped<IQuestionLikeRepository, QuestionLikeRepository>();
+            builder.Services.AddScoped<IAnswerLikeRepository, AnswerLikeRepository>();
 
             var app = builder.Build();
 

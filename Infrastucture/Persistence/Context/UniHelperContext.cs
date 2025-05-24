@@ -1,10 +1,5 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
@@ -24,6 +19,7 @@ namespace Persistence.Context
         public DbSet<Department> Departments { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<QuestionLike> QuestionLikes { get; set; }
+        public DbSet<AnswerLike> AnswerLikes{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -118,9 +114,20 @@ namespace Persistence.Context
                 .HasForeignKey(ql => ql.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+
+            modelBuilder.Entity<AnswerLike>()
+                .HasKey(al => new { al.UserId, al.AnswerId });
+            modelBuilder.Entity<AnswerLike>()
+                .HasOne(al => al.User)
+                .WithMany(u => u.LikedAnswers) // User entity'deki ICollection
+                .HasForeignKey(al => al.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AnswerLike>()
+                .HasOne(al => al.Answer)
+                .WithMany(a => a.AnswerLikes)
+                .HasForeignKey(al => al.AnswerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
-
-
-
     }
 }

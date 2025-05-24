@@ -5,13 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.MediatR.QuestionLikes.Commands
+namespace Application.Features.MediatR.AnswerLikes.Commands
 {
-    public class CreateQuestionLikeCommand:IRequest<Unit>
+    public class CreateAnswerLikeCommand:IRequest<Unit>
     {
-       
         public int UserId { get; set; }
-        public int QuestionId { get; set; }
-
+        public int AnswerId { get; set; }
     }
 }
