@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
-    public class Answer: Entitiy
+    public class Answer: Entity
     {
         public int AnswerId { get; set; }
         public string Content { get; set; }

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Persistence.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : Entitiy
+    public class Repository<T> : IRepository<T> where T : Entity
     {
         private readonly UniHelperContext _context;
 

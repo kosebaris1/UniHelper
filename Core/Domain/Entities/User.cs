@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
-    public class User : Entitiy
+    public class User : Entity
     {
         public int UserId { get; set; }
         public string FullName { get; set; }
@@ -28,6 +21,7 @@ namespace Domain.Entities
         public Role? Role { get; set; }
 
         public ICollection<Answer> Answers { get; set; }
+        public ICollection<Question> Questions { get; set; }
     }
 
 }
