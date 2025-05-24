@@ -22,6 +22,8 @@
 
         public ICollection<Answer> Answers { get; set; }
         public ICollection<Question> Questions { get; set; }
+        public ICollection<QuestionLike> LikedQuestions { get; set; } = new List<QuestionLike>();
+
     }
 
 }

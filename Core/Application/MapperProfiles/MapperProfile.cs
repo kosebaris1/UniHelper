@@ -1,4 +1,5 @@
-﻿using Application.Features.MediatR.Questions.Commands;
+﻿using Application.Features.MediatR.QuestionLikes.Commands;
+using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
 using Application.Features.MediatR.Users.Commands;
 using Application.Features.MediatR.Users.Results;
@@ -41,7 +42,9 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt=>qt.Tag.Name).ToList()));
+
+
         }
-      
+
     }
 }

@@ -23,6 +23,7 @@ namespace Persistence.Context
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<QuestionLike> QuestionLikes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +102,21 @@ namespace Persistence.Context
                 .WithMany(c => c.Universities)
                 .HasForeignKey(u => u.CityId)
                 .OnDelete(DeleteBehavior.Restrict); // ya da SetNull
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasKey(ql => new { ql.UserId, ql.QuestionId });
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasOne(ql => ql.User)
+                .WithMany(u => u.LikedQuestions)
+                .HasForeignKey(ql => ql.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasOne(ql => ql.Question)
+                .WithMany(q => q.QuestionLikes)
+                .HasForeignKey(ql => ql.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
 
         }
 

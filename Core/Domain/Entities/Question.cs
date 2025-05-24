@@ -14,6 +14,8 @@
 
         public ICollection<Answer> Answers { get; set; }
         public ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>(); // ✅
+        public ICollection<QuestionLike> QuestionLikes { get; set; } = new List<QuestionLike>();
+
     }
 
 }
