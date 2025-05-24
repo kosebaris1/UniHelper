@@ -1,31 +1,26 @@
 ﻿using Application.Features.MediatR.Questions.Commands;
-using Application.Interfaces;
+using Application.Interfaces.QuestionInterface;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.MediatR.Questions.Handlers.Write
 {
     public class CreateQuestionCommandHandler : IRequestHandler<CreateQuestionCommand, Unit>
     {
-        private readonly IRepository<Question> _repository;
+        private readonly IQuestionRepository _questionRepository;
         private readonly IMapper _mapper;
 
-        public CreateQuestionCommandHandler(IRepository<Question> repository, IMapper mapper)
+        public CreateQuestionCommandHandler(IQuestionRepository questionRepository, IMapper mapper)
         {
-            _repository = repository;
+            _questionRepository = questionRepository;
             _mapper = mapper;
         }
 
         public async Task<Unit> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
         {
             var question=_mapper.Map<Question>(request);
-            await _repository.CreateAsync(question);
+            await _questionRepository.CreateQuestionAsync(question, request.TagIds);
             return Unit.Value;
         }
     }

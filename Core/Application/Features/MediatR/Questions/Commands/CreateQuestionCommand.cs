@@ -15,6 +15,6 @@ namespace Application.Features.MediatR.Questions.Commands
         public string Content { get; set; }
         public int? DepartmentId { get; set; }
         public int? UniversityId { get; set; }
-
+        public List<int> TagIds { get; set; } 
     }
 }

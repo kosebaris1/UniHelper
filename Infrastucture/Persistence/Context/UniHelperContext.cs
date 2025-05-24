@@ -95,6 +95,13 @@ namespace Persistence.Context
                 .WithMany(t => t.QuestionTags)
                 .HasForeignKey(qt => qt.TagId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<University>()
+                .HasOne(u => u.City)
+                .WithMany(c => c.Universities)
+                .HasForeignKey(u => u.CityId)
+                .OnDelete(DeleteBehavior.Restrict); // ya da SetNull
+
         }
 
 

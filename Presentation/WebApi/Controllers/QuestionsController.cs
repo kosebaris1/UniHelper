@@ -1,5 +1,6 @@
 ﻿using Application.Constants;
 using Application.Features.MediatR.Questions.Commands;
+using Application.Features.MediatR.Questions.Queries;
 using Application.Features.MediatR.Users.Commands;
 using Domain.Entities;
 using MediatR;
@@ -18,8 +19,15 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllFilteredQuestion([FromQuery] GetFilteredQuestionQuery query)
+        {
+             var values=await _mediator.Send(query);
+            return Ok(values);
+        }
+
         [HttpPost]
-        public async Task<IActionResult> CreateQuestion(CreateQuestionCommand command)
+        public async Task<IActionResult> CreateQuestion([FromQuery] CreateQuestionCommand command)
         {
             await _mediator.Send(command);
             return Ok(Messages<Question>.EntityAdded);
