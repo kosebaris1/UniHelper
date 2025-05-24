@@ -6,7 +6,6 @@
         public string Name { get; set; }
 
         public ICollection<Department> Departments { get; set; }
-        public ICollection<University> Universities { get; set; }
         public ICollection<User> Users { get; set; }
     }
 

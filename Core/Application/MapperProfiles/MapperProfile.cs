@@ -1,4 +1,5 @@
-﻿using Application.Features.MediatR.Users.Commands;
+﻿using Application.Features.MediatR.Questions.Commands;
+using Application.Features.MediatR.Users.Commands;
 using Application.Features.MediatR.Users.Results;
 using AutoMapper;
 using Domain.Entities;
@@ -31,6 +32,9 @@ namespace Application.MapperProfiles
          .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
          .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
          .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+
+            CreateMap<Question, CreateQuestionCommand>().ReverseMap();
+            CreateMap<Question, UpdateQuestionCommand>().ReverseMap();
         }
       
     }
