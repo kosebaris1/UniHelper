@@ -1,10 +1,5 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Context
 {
@@ -19,85 +14,120 @@ namespace Persistence.Context
         public DbSet<University> Universitites { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<Question> Questşons { get; set; }
+        public DbSet<Question> Questions { get; set; }
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Answer> Answers { get; set; }
+        public DbSet<QuestionLike> QuestionLikes { get; set; }
+        public DbSet<AnswerLike> AnswerLikes{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ===== Question Config =====
+            // Question → User
             modelBuilder.Entity<Question>()
                 .HasOne(q => q.User)
                 .WithMany(u => u.Questions)
                 .HasForeignKey(q => q.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // döngü engeli
+                .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Question>()
-                .HasOne(q => q.Department)
-                .WithMany(d => d.Questions)
-                .HasForeignKey(q => q.DepartmentId)
-                .OnDelete(DeleteBehavior.Cascade); // bölüm silinirse sorular da gider
+            //// Question → Department (opsiyonel)
+            //modelBuilder.Entity<Question>()
+            //    .HasOne(q => q.Department)
+            //    .WithMany(d => d.Questions)
+            //    .HasForeignKey(q => q.DepartmentId)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<Question>()
-                .HasOne(q => q.University)
-                .WithMany()
-                .HasForeignKey(q => q.UniversityId)
-                .OnDelete(DeleteBehavior.Restrict); // döngü engeli
+            //// Question → University (opsiyonel)
+            //modelBuilder.Entity<Question>()
+            //    .HasOne(q => q.University)
+            //    .WithMany(u => u.Questions)
+            //    .HasForeignKey(q => q.UniversityId)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
-            // ===== Answer Config =====
-            modelBuilder.Entity<Answer>()
-                .HasOne(a => a.User)
-                .WithMany(u => u.Answers)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // döngü engeli
-
-            modelBuilder.Entity<Answer>()
-                .HasOne(a => a.Question)
-                .WithMany(q => q.Answers)
-                .HasForeignKey(a => a.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade); // soru silinirse cevaplar da gider
-
-            // ===== Department Config =====
-            modelBuilder.Entity<Department>()
-                .HasOne(d => d.University)
-                .WithMany(u => u.Departments)
-                .HasForeignKey(d => d.UniversityId)
-                .OnDelete(DeleteBehavior.Cascade); // üniversite silinirse bölümler de gider
-
-            // ===== User Config =====
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.University)
-                .WithMany(u => u.Users)
-                .HasForeignKey(u => u.UniversityId)
-                .OnDelete(DeleteBehavior.Restrict); // döngü engeli
-
+            // User → Department
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Department)
                 .WithMany(d => d.Users)
                 .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.SetNull); // bölüm silinirse kullanıcı boşa düşsün
+                .OnDelete(DeleteBehavior.SetNull);
 
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.University)
+                .WithMany(u => u.Users)
+                .HasForeignKey(u => u.UniversityId)
+                .OnDelete(DeleteBehavior.Restrict); // ✅ ÇAKIŞMA YOK
+
+
+            // User → Role
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
-                .OnDelete(DeleteBehavior.SetNull); // rol silinirse kullanıcı rolü null olsun
+                .OnDelete(DeleteBehavior.SetNull);
 
-            // ===== QuestionTag Config =====
+            // Answer → Question
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.Question)
+                .WithMany(q => q.Answers)
+                .HasForeignKey(a => a.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Answer → User
+            modelBuilder.Entity<Answer>()
+                .HasOne(a => a.User)
+                .WithMany(u => u.Answers)
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // QuestionTag → Question
             modelBuilder.Entity<QuestionTag>()
                 .HasOne(qt => qt.Question)
                 .WithMany(q => q.QuestionTags)
                 .HasForeignKey(qt => qt.QuestionId)
-                .OnDelete(DeleteBehavior.Cascade); // soru silinirse etiket ilişkileri de gider
+                .OnDelete(DeleteBehavior.Cascade);
 
+            // QuestionTag → Tag
             modelBuilder.Entity<QuestionTag>()
                 .HasOne(qt => qt.Tag)
                 .WithMany(t => t.QuestionTags)
                 .HasForeignKey(qt => qt.TagId)
-                .OnDelete(DeleteBehavior.Cascade); // etiket silinirse ilişki de silinir
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<University>()
+                .HasOne(u => u.City)
+                .WithMany(c => c.Universities)
+                .HasForeignKey(u => u.CityId)
+                .OnDelete(DeleteBehavior.Restrict); // ya da SetNull
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasKey(ql => new { ql.UserId, ql.QuestionId });
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasOne(ql => ql.User)
+                .WithMany(u => u.LikedQuestions)
+                .HasForeignKey(ql => ql.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<QuestionLike>()
+                .HasOne(ql => ql.Question)
+                .WithMany(q => q.QuestionLikes)
+                .HasForeignKey(ql => ql.QuestionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            modelBuilder.Entity<AnswerLike>()
+                .HasKey(al => new { al.UserId, al.AnswerId });
+            modelBuilder.Entity<AnswerLike>()
+                .HasOne(al => al.User)
+                .WithMany(u => u.LikedAnswers) // User entity'deki ICollection
+                .HasForeignKey(al => al.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AnswerLike>()
+                .HasOne(al => al.Answer)
+                .WithMany(a => a.AnswerLikes)
+                .HasForeignKey(al => al.AnswerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
-
-
     }
 }

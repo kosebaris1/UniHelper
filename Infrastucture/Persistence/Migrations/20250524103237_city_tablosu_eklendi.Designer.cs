@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(UniHelperContext))]
-    partial class UniHelperContextModelSnapshot : ModelSnapshot
+    [Migration("20250524103237_city_tablosu_eklendi")]
+    partial class city_tablosu_eklendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,24 +152,6 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.QuestionLike", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LikedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("UserId", "QuestionId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("QuestionLikes");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionTag", b =>
@@ -398,25 +383,6 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.QuestionLike", b =>
-                {
-                    b.HasOne("Domain.Entities.Question", "Question")
-                        .WithMany("QuestionLikes")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("LikedQuestions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Domain.Entities.QuestionTag", b =>
                 {
                     b.HasOne("Domain.Entities.Question", "Question")
@@ -486,8 +452,6 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("Answers");
 
-                    b.Navigation("QuestionLikes");
-
                     b.Navigation("QuestionTags");
                 });
 
@@ -511,8 +475,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Answers");
-
-                    b.Navigation("LikedQuestions");
 
                     b.Navigation("Questions");
                 });

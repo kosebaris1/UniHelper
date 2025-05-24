@@ -10,6 +10,8 @@
 
         public int UserId { get; set; }
         public User User { get; set; }
+
+        public ICollection<AnswerLike> AnswerLikes { get; set; } = new List<AnswerLike>();
     }
 
 }

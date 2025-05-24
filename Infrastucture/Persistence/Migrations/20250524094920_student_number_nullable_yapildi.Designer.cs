@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(UniHelperContext))]
-    partial class UniHelperContextModelSnapshot : ModelSnapshot
+    [Migration("20250524094920_student_number_nullable_yapildi")]
+    partial class student_number_nullable_yapildi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,23 +59,6 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Answers");
-                });
-
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.Property<int>("CityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CityId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CityId");
-
-                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
@@ -124,14 +110,14 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DepartmentId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UniversityId")
+                    b.Property<int>("UniversityId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -148,25 +134,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("Domain.Entities.QuestionLike", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LikedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("UserId", "QuestionId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("QuestionLikes");
+                    b.ToTable("Questşons");
                 });
 
             modelBuilder.Entity("Domain.Entities.QuestionTag", b =>
@@ -261,9 +229,6 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UniversityId"));
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -278,8 +243,6 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("UniversityId");
-
-                    b.HasIndex("CityId");
 
                     b.ToTable("Universitites");
                 });
@@ -379,11 +342,15 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.Department", "Department")
                         .WithMany("Questions")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.University", "University")
                         .WithMany()
-                        .HasForeignKey("UniversityId");
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Questions")
@@ -394,25 +361,6 @@ namespace Persistence.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("University");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Entities.QuestionLike", b =>
-                {
-                    b.HasOne("Domain.Entities.Question", "Question")
-                        .WithMany("QuestionLikes")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("LikedQuestions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
 
                     b.Navigation("User");
                 });
@@ -434,16 +382,6 @@ namespace Persistence.Migrations
                     b.Navigation("Question");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("Domain.Entities.University", b =>
-                {
-                    b.HasOne("Domain.Entities.City", "City")
-                        .WithMany("Universities")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -470,11 +408,6 @@ namespace Persistence.Migrations
                     b.Navigation("University");
                 });
 
-            modelBuilder.Entity("Domain.Entities.City", b =>
-                {
-                    b.Navigation("Universities");
-                });
-
             modelBuilder.Entity("Domain.Entities.Department", b =>
                 {
                     b.Navigation("Questions");
@@ -485,8 +418,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Question", b =>
                 {
                     b.Navigation("Answers");
-
-                    b.Navigation("QuestionLikes");
 
                     b.Navigation("QuestionTags");
                 });
@@ -511,8 +442,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Navigation("Answers");
-
-                    b.Navigation("LikedQuestions");
 
                     b.Navigation("Questions");
                 });
