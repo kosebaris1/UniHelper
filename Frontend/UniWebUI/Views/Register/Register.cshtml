@@ -1,0 +1,62 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+<div class="row">
+    <div class="col-md-6 p-5">
+        <h2>Üniversiteliler Topluluğuna Katıl</h2>
+        <p>En yardımsever topluluğa katılarak daha fazla özellik ve ayrıcalık elde edin</p>
+        <form asp-action="Register" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Kullanıcı Adı" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input asp-for="Email" class="form-control @(Model.IsEmailTaken ? "is-invalid" : "")" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <select asp-for="SelectedUniversity" class="form-control">
+                    <option value="">Üniversite Seçin</option>
+                    @foreach (var university in Model.Universities)
+                    {
+                        <option value="@university">@university</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedUniversity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <select asp-for="SelectedDepartment" class="form-control">
+                    <option value="">Bölüm Seçin</option>
+                    @foreach (var dept in Model.Departments)
+                    {
+                        <option value="@dept">@dept</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedDepartment" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Şifre" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input asp-for="ConfirmPassword" class="form-control" placeholder="Şifre Tekrarı" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="StudentDocument"></label>
+                <input asp-for="StudentDocument" type="file" class="form-control" />
+                <span asp-validation-for="StudentDocument" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Kayıt Ol</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <img src="~/images/university-brain.jpg" alt="Lightbulb" class="img-fluid" />
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
