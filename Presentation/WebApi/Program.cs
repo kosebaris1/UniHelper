@@ -5,6 +5,7 @@ using Application.Interfaces.AnswerLikeInterface;
 using Application.Interfaces.QuestionInterface;
 using Application.Interfaces.QuestionLikeInterface;
 using Application.Interfaces.TokenInterface;
+using Application.Interfaces.UniversitiesInterface;
 using Application.Interfaces.UserInterface;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ using Persistence.Repositories.AnswerLikeRepository;
 using Persistence.Repositories.QuestionLikeRepository;
 using Persistence.Repositories.QuestionRepository;
 using Persistence.Repositories.TokenRepository;
+using Persistence.Repositories.UniversitiesRepository;
 using Persistence.Repositories.UserRepository;
 using System.Text;
 
@@ -78,6 +80,7 @@ namespace WebApi
             builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
             builder.Services.AddScoped<IQuestionLikeRepository, QuestionLikeRepository>();
             builder.Services.AddScoped<IAnswerLikeRepository, AnswerLikeRepository>();
+            builder.Services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
 
             var app = builder.Build();
 
