@@ -51,11 +51,24 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser(CreateUserCommand command)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorList = ModelState
+                    .SelectMany(x => x.Value.Errors.Select(err => $"[{x.Key}] {err.ErrorMessage}"))
+                    .ToList();
+
+                Console.WriteLine("🟥 MODELSTATE HATALARI:");
+                errorList.ForEach(Console.WriteLine);
+
+                return BadRequest(string.Join(" | ", errorList));
+            }
+
             await _mediator.Send(command);
-            return Ok(Messages<User>.EntityAdded);
+            return Ok();
         }
+
 
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(DeleteUserCommand command)

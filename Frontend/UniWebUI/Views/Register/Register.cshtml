@@ -1,0 +1,39 @@
+﻿@model CreateRegisterDto
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+<div class="row">
+    <div class="col-md-6 p-5">
+        <h2>Üniversiteliler Topluluğuna Katıl</h2>
+        <p>En yardımsever topluluğa katılarak daha fazla özellik ve ayrıcalık elde edin</p>
+
+        <form asp-action="Register" method="post">
+            <div class="mb-3">
+                <input asp-for="FullName" class="form-control" placeholder="Ad Soyad" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                @await Component.InvokeAsync("_RegisterComponentPartial")
+                <span asp-validation-for="UniversityId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="PasswordHash" class="form-control" placeholder="Şifre" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">Kayıt Ol</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <img src="~/images/university-brain.jpg" alt="Lightbulb" class="img-fluid" />
+    </div>
+</div>
+
+    

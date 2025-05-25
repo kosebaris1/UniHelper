@@ -9,6 +9,9 @@ namespace UniWebUI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddHttpClient(); // .NET 6+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
