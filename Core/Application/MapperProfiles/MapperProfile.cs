@@ -1,4 +1,5 @@
-﻿using Application.Features.MediatR.QuestionLikes.Commands;
+﻿using Application.Features.MediatR.Department.Results;
+using Application.Features.MediatR.QuestionLikes.Commands;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
 using Application.Features.MediatR.Universities.Results;
@@ -45,6 +46,9 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt=>qt.Tag.Name).ToList()));
 
             CreateMap<University, GetAllUniversityQueryResult>().ReverseMap();
+            CreateMap<Department, GetAllDepartmentQueryResult>().ReverseMap();
+
+            CreateMap<Department, GetDepartmentsByUniversityQueryResult>().ReverseMap();
 
 
         }
