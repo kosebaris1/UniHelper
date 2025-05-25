@@ -1,0 +1,9 @@
+﻿@model List<GetUniversityDto>
+
+<select asp-for-id="UniversityId" class="form-control" id="UniversityId" name="UniversityId">
+    <option value="">Üniversite Seçin</option>
+    @foreach (var uni in Model)
+    {
+        <option value="@uni.UniversityId">@uni.Name</option>
+    }
+</select>
