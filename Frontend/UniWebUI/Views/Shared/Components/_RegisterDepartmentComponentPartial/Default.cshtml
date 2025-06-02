@@ -1,0 +1,10 @@
+﻿@model List<GetDepartmentDto>
+
+<label>Bölüm</label>
+<select id="DepartmentId" name="DepartmentId" class="form-select">
+    <option value="">Bölüm Seçin</option>
+    @foreach (var dept in Model)
+    {
+        <option value="@dept.DepartmentId">@dept.Name</option>
+    }
+</select>
