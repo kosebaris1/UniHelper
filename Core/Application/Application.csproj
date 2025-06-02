@@ -28,8 +28,6 @@
     <Folder Include="Features\MediatR\AnswerLikes\Queries\" />
     <Folder Include="Features\MediatR\Department\Commands\" />
     <Folder Include="Features\MediatR\Department\Handlers\Write\" />
-    <Folder Include="Features\MediatR\Tags\Commands\" />
-    <Folder Include="Features\MediatR\Tags\Handlers\Write\" />
     <Folder Include="Features\MediatR\Universities\Commands\" />
     <Folder Include="Features\MediatR\Universities\Handlers\Write\" />
   </ItemGroup>

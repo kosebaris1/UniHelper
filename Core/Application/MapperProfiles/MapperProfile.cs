@@ -1,18 +1,13 @@
 ﻿using Application.Features.MediatR.Department.Results;
-using Application.Features.MediatR.QuestionLikes.Commands;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
+using Application.Features.MediatR.Tags.Commands;
 using Application.Features.MediatR.Tags.Results;
 using Application.Features.MediatR.Universities.Results;
 using Application.Features.MediatR.Users.Commands;
 using Application.Features.MediatR.Users.Results;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.MapperProfiles
 {
@@ -26,19 +21,19 @@ namespace Application.MapperProfiles
             CreateMap<User, DeleteUserCommand>().ReverseMap();
             CreateMap<User, UpdateUserCommand>().ReverseMap();
             CreateMap<User, GetAllUserQueryResult>()
-          .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-          .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
-          .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+            .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
             CreateMap<User, GetByIdUserQueryResult>()
-         .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-         .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
-         .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+            .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
             CreateMap<User, GetByIdUserDetailsForAdminQueryResult>()
-         .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
-         .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
-         .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
+            .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+            .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
 
             //Question
@@ -60,6 +55,7 @@ namespace Application.MapperProfiles
 
             //Tags
             CreateMap<Tag, GetAllTagQueryResult>().ReverseMap();
+            CreateMap<Tag, CreateTagCommand>().ReverseMap();
 
         }
 

@@ -1,4 +1,5 @@
-﻿using Application.Features.MediatR.Tags.Queries;
+﻿using Application.Features.MediatR.Tags.Commands;
+using Application.Features.MediatR.Tags.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,12 @@ namespace WebApi.Controllers
         {
             var result = await _mediator.Send(new GetAllTagQuery());
             return Ok(result);
+        }
+        [HttpPost("CreateTag")]
+        public async Task<IActionResult> CreateTag(CreateTagCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
         }
     }
 }
