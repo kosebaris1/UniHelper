@@ -24,6 +24,11 @@
             </div>
 
             <div class="mb-3">
+                @await Component.InvokeAsync("_RegisterDepartmentComponentPartial")
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
                 <input asp-for="PasswordHash" class="form-control" placeholder="Şifre" />
                 <span asp-validation-for="PasswordHash" class="text-danger"></span>
             </div>
