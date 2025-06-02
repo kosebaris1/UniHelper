@@ -1,6 +1,7 @@
 
 using Application.Features.MediatR.Users.Handlers.Write;
 using Application.Interfaces;
+using Application.Interfaces.AnswerInterface;
 using Application.Interfaces.AnswerLikeInterface;
 using Application.Interfaces.DepartmentInterface;
 using Application.Interfaces.QuestionInterface;
@@ -14,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Persistence.Context;
 using Persistence.Repositories;
 using Persistence.Repositories.AnswerLikeRepository;
+using Persistence.Repositories.AnswerRepository;
 using Persistence.Repositories.DepartmentRepository;
 using Persistence.Repositories.QuestionLikeRepository;
 using Persistence.Repositories.QuestionRepository;
@@ -89,6 +91,7 @@ namespace WebApi
             builder.Services.AddScoped<IAnswerLikeRepository, AnswerLikeRepository>();
             builder.Services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
 
             var app = builder.Build();
 

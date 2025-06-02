@@ -1,4 +1,7 @@
-﻿using Application.Features.MediatR.Department.Results;
+﻿using Application.Features.MediatR.Answers.Commands;
+using Application.Features.MediatR.Answers.Queries;
+using Application.Features.MediatR.Answers.Results;
+using Application.Features.MediatR.Department.Results;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
 using Application.Features.MediatR.Tags.Commands;
@@ -56,6 +59,14 @@ namespace Application.MapperProfiles
             //Tags
             CreateMap<Tag, GetAllTagQueryResult>().ReverseMap();
             CreateMap<Tag, CreateTagCommand>().ReverseMap();
+
+            //Answers
+            CreateMap<Answer,CreateAnswersCommand>().ReverseMap();
+            CreateMap<Answer,UpdateAnswerCommand>().ReverseMap();
+            CreateMap<Answer,GetByIdAnswerQueryResult>()
+                .ForMember(x=>x.UserFullName, y => y.MapFrom(src => src.User.FullName));
+            CreateMap<Answer, GetAllAnswerByQuestionIdQueryResult>()
+                .ForMember(x => x.UserFullName, y => y.MapFrom(src => src.User.FullName));
 
         }
 
