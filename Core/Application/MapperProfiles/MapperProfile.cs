@@ -2,6 +2,7 @@
 using Application.Features.MediatR.QuestionLikes.Commands;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
+using Application.Features.MediatR.Tags.Results;
 using Application.Features.MediatR.Universities.Results;
 using Application.Features.MediatR.Users.Commands;
 using Application.Features.MediatR.Users.Results;
@@ -19,6 +20,8 @@ namespace Application.MapperProfiles
     {
         public MapperProfile()
         {
+
+            //User
             CreateMap<User, CreateUserCommand>().ReverseMap();
             CreateMap<User, DeleteUserCommand>().ReverseMap();
             CreateMap<User, UpdateUserCommand>().ReverseMap();
@@ -37,6 +40,8 @@ namespace Application.MapperProfiles
          .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
          .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
+
+            //Question
             CreateMap<Question, CreateQuestionCommand>().ReverseMap();
             CreateMap<Question, UpdateQuestionCommand>().ReverseMap();
             CreateMap<Question, GetFilteredQuestionQueryResult>()
@@ -45,11 +50,16 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt=>qt.Tag.Name).ToList()));
 
+            //University
             CreateMap<University, GetAllUniversityQueryResult>().ReverseMap();
             CreateMap<Department, GetAllDepartmentQueryResult>().ReverseMap();
 
+            //Department
             CreateMap<Department, GetDepartmentsByUniversityQueryResult>().ReverseMap();
 
+
+            //Tags
+            CreateMap<Tag, GetAllTagQueryResult>().ReverseMap();
 
         }
 
