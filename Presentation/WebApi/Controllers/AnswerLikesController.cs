@@ -1,5 +1,6 @@
 ﻿using Application.Constants;
 using Application.Features.MediatR.AnswerLikes.Commands;
+using Application.Features.MediatR.AnswerLikes.Queries;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,18 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
         }
-
+        [HttpGet("AnswerLikeCount")]
+        public async Task<IActionResult> GetByIdAnswerLikeCount(int answerId)
+        {
+            var value = await _mediator.Send(new GetByIdAnswerLikeCountQuery(answerId));
+            return Ok(value);   
+        }
+        [HttpGet("IsAlreadyLiked")]
+        public async Task<IActionResult> GetAnswerIsLiked(int userId,int answerId)
+        {
+            var value = await _mediator.Send(new GetAnswerIsAlreadyLikedQuery(userId,answerId));
+            return Ok(value);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateAnswerLike(CreateAnswerLikeCommand command)
         {

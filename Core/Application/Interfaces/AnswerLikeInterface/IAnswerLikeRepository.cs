@@ -6,5 +6,6 @@
         Task LikeAnswerAsync(int userId, int answerId);
         Task UnlikeAnswerAsync(int userId, int answerId);
         Task<int> GetLikeCountAsync(int answerId);
+
     }
 }

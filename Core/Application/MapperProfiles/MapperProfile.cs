@@ -1,5 +1,6 @@
-﻿using Application.Features.MediatR.Answers.Commands;
-using Application.Features.MediatR.Answers.Queries;
+﻿using Application.Features.MediatR.AnswerLikes.Queries;
+using Application.Features.MediatR.AnswerLikes.Results;
+using Application.Features.MediatR.Answers.Commands;
 using Application.Features.MediatR.Answers.Results;
 using Application.Features.MediatR.Department.Results;
 using Application.Features.MediatR.Questions.Commands;
@@ -67,6 +68,8 @@ namespace Application.MapperProfiles
                 .ForMember(x=>x.UserFullName, y => y.MapFrom(src => src.User.FullName));
             CreateMap<Answer, GetAllAnswerByQuestionIdQueryResult>()
                 .ForMember(x => x.UserFullName, y => y.MapFrom(src => src.User.FullName));
+
+            //AnswerLike
 
         }
 
