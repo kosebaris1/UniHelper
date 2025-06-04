@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<div class="main-container">
+    <div class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="icon-home"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a asp-controller="Question" asp-action="List">
+                    <i class="icon-questions"></i>
+                    <span>Sorular</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a asp-controller="Home" asp-action="Bookmarks">
+                    <i class="icon-bookmark"></i>
+                    <span>Kaydedilenler</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a asp-controller="Home" asp-action="Profile">
+                    <i class="icon-profile"></i>
+                    <span>Profilim</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-area">
+        <div class="content-header">
+            <div class="tab-navigation">
+                <a href="#" class="tab-item active">İlgili Konular</a>
+                <a href="#" class="tab-item">Keşfet/Trendler</a>
+                <a href="#" class="tab-item">Takip Edilenler</a>
+            </div>
+            <div class="header-actions">
+                <a asp-controller="Question" asp-action="Create" class="btn btn-primary">Soru Sor</a>
+                <div class="user-profile">
+                    <img src="@(string.IsNullOrEmpty(User.FindFirst("ProfileImage")?.Value) ? "/images/default-profile.png" : User.FindFirst("ProfileImage")?.Value)" alt="Profil" class="profile-image" />
+                </div>
+            </div>
+        </div>
+
+        <div class="question-list">
+            @foreach (var question in Model)
+            {
+                <div class="question-card">
+                    <div class="question-author">
+                        <img src="@question.AuthorProfileImage" alt="@question.AuthorName" class="author-image" />
+                        <div class="author-info">
+                            <h4 class="author-name">@question.AuthorName</h4>
+                            <p class="question-date">@question.CreatedAt.ToString("dd MMM yyyy")</p>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <h3 class="question-title">@question.Title</h3>
+                        <p class="question-text">@question.Content</p>
+                    </div>
+                    <div class="question-footer">
+                        <div class="question-tags">
+                            @foreach (var tag in question.Tags)
+                            {
+                                <span class="tag">@tag</span>
+                            }
+                        </div>
+                        <div class="question-actions">
+                            <button class="action-btn like-btn">
+                                <i class="icon-like"></i>
+                                <span>@question.LikeCount</span>
+                            </button>
+                            <button class="action-btn comment-btn">
+                                <i class="icon-comment"></i>
+                                <span>@question.CommentCount</span>
+                            </button>
+                            <button class="action-btn share-btn">
+                                <i class="icon-share"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

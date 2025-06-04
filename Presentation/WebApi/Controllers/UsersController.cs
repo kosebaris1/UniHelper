@@ -47,11 +47,11 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Login(LoginCommand command)
         {
             var token=await _mediator.Send(command);
-            return Ok(token);
+            return Ok(new { token });
         }
 
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
+        public async Task<IActionResult> CreateUser([FromForm] CreateUserCommand command)
         {
             if (!ModelState.IsValid)
             {
