@@ -34,7 +34,7 @@ namespace Persistence.Repositories.TokenRepository
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddHours(4),
                 signingCredentials: creds
             );
 

@@ -1,0 +1,125 @@
+﻿@model QuestionListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Sidebar -->
+        <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Ara...">
+            </div>
+            <h6>MENU</h6>
+            <ul class="nav flex-column سؤال-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="fas fa-list me-2"></i>Sorular</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-tags me-2"></i>Etiketler</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i>Sıralama</a>
+                </li>
+            </ul>
+
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <h6 class="mt-4">KİŞİSEL NAVİGATOR</h6>
+                <ul class="nav flex-column سؤال-menu">
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i>Sorularım</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i>Cevaplarım</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i>Beğendiklerim</a></li>
+                </ul>
+            }
+
+            <div class="social-icons-left mt-auto">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+
+        <!-- Orta İçerik -->
+        <div class="col-lg-7 col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Sorular</h4>
+                <div class="question-filters">
+                    <button class="btn btn-sm btn-primary active-filter"><i class="fas fa-bolt me-1"></i>En Yeni</button>
+                    <button class="btn btn-sm btn-outline-secondary">En Çok Beğeni Alan</button>
+                    <button class="btn btn-sm btn-outline-secondary">En Çok Etkileşim Alan</button>
+                    <button class="btn btn-sm btn-outline-secondary">Kapanmış</button>
+                </div>
+            </div>
+
+            @if (Model.Questions != null && Model.Questions.Any())
+            {
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="card question-card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <img src="/images/user-avatar1.png" alt="User Avatar" class="rounded-circle me-3" width="40" height="40">
+                                <div>
+                                    <h6 class="card-title mb-0">@question.UserName</h6>
+                                    <small class="text-muted">biraz önce</small>
+                                </div>
+                                <div class="ms-auto">
+                                    <a href="#" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+                                </div>
+                            </div>
+                            <h5 class="card-subtitle my-2">@question.Title</h5>
+                            <p class="card-text text-muted-custom">@question.Content</p>
+                            <div>
+                                <span class="badge bg-light text-dark me-1">@question.UniversityName</span>
+                                <span class="badge bg-light text-dark me-1">@question.DepartmentName</span>
+                                @foreach (var tag in question.QuestionTags)
+                                {
+                                    <span class="badge bg-light text-dark me-1">@tag</span>
+                                }
+                            </div>
+                            <hr class="my-2">
+                            <div class="d-flex justify-content-end text-muted-custom small">
+                                <span class="me-3"><i class="far fa-eye me-1"></i>125</span>
+                                <span class="me-3"><i class="far fa-comment-dots me-1"></i>15</span>
+                                <span><i class="fas fa-arrow-up me-1"></i>155</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning">Filtrenize uygun soru bulunamadı.</div>
+            }
+        </div>
+
+        <!-- Sağ Sidebar - Filtreleme Kutusu -->
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-filter me-2"></i>Filtrele</h6>
+                    <form method="get" asp-action="Index" asp-controller="Question">
+                        @await Component.InvokeAsync("_CityFilterDropdownComponentPartial", new { selectedCityId = Model.SelectedCityId })
+
+                        @await Component.InvokeAsync("_UniversityFilterDropdownComponentPartial", new { selectedUniversityId = Model.SelectedUniversityId })
+                        
+                        @await Component.InvokeAsync("_DepartmentFilterDropdownComponentPartial", new { selectedDepartmentId = Model.SelectedDepartmentId })
+
+
+                        @await Component.InvokeAsync("_TagFilterMultiSelectComponentPartial", new { selectedTagIds = Model.SelectedTagsId })
+
+                        <button type="submit" class="btn btn-primary w-100">Filtrele</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

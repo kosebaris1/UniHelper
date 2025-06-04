@@ -1,0 +1,92 @@
+/* Login Sayfası Stilleri */
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Genel bir font ailesi */
+}
+
+.navbar-brand img {
+    margin-right: 8px;
+}
+
+/* Login formunun olduğu sol taraf */
+.login-form-container {
+    background-color: #f8f9fa; /* Açık gri bir arka plan */
+}
+
+.login-form-container h2 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Giriş butonu için özel stil */
+.login-button {
+    background-color: #fd7e14; /* Görseldeki turuncu renk */
+    border-color: #fd7e14;
+    font-weight: bold;
+}
+
+.login-button:hover {
+    background-color: #e67e00; /* Turuncunun biraz daha koyu tonu */
+    border-color: #e67e00;
+}
+
+/* Sağ taraftaki görsel alanı */
+.login-image-container img {
+    object-fit: cover; /* Resmin alanı kaplamasını sağlar */
+}
+
+/* Input alanlarındaki ikonların pozisyonu ve rengi */
+.form-control {
+    padding-right: 2.5rem; /* İkon için yer açar */
+}
+
+.position-relative .fas {
+    top: 50%;
+    right: 0.75rem; /* İkonun input içindeki konumu */
+    transform: translateY(-50%);
+    margin-top: 0 !important; /* HTML'deki inline stili ezmek için */
+    cursor: default; /* İkonlara tıklama özelliği olmasın */
+}
+
+/* Bootstrap invalid feedback stilini görseldeki gibi yapmak için */
+.form-control.is-invalid + .fas.fa-times-circle {
+   color: #dc3545; /* Bootstrap'in danger rengi */
+}
+
+.form-control:not(.is-invalid) + .fas.fa-check-circle {
+   color: #198754; /* Bootstrap'in success rengi */
+}
+
+/* Navbar'daki butonlar */
+.navbar .btn-outline-primary {
+    border-color: #fd7e14;
+    color: #fd7e14;
+}
+
+.navbar .btn-outline-primary:hover {
+    background-color: #fd7e14;
+    color: white;
+}
+
+.navbar .btn-primary {
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.navbar .btn-primary:hover {
+    background-color: #e67e00;
+    border-color: #e67e00;
+}
+
+/* Placeholder'lar için varsayılan label görünümünü sıfırlama */
+.form-label {
+    font-size: 0.875rem; /* Biraz daha küçük label */
+    margin-bottom: 0.25rem;
+}
+
+/* Hata mesajının rengi */
+.invalid-feedback.d-block {
+    color: #dc3545 !important; /* Kırmızı hata mesajı rengi */
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}

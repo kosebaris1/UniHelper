@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Features.MediatR.Cities.Results
 {
-    public class City:Entity
+    public class GetAllCityQueryResult
     {
         public int CityId { get; set; }
         public string Name { get; set; }
-
-        public ICollection<University> Universities { get; set; }
     }
 }

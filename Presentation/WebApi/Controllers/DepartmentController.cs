@@ -1,5 +1,4 @@
 ﻿using Application.Features.MediatR.Department.Queries;
-using Application.Features.MediatR.Universities.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +24,13 @@ namespace WebApi.Controllers
         {
             var values = await _mediator.Send(new GetDepartmentsByUniversityQuery(id));
             return Ok(values);
+        }
+
+        [HttpGet("GetAllDistinctDepartment")]
+        public async Task<IActionResult> GetAllDistinctDepartment()
+        {
+            var result = await _mediator.Send(new GetAllDistinctDepartmentQuery());
+            return Ok(result);
         }
     }
 }

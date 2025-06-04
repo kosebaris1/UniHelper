@@ -2,6 +2,7 @@
 using Application.Features.MediatR.AnswerLikes.Results;
 using Application.Features.MediatR.Answers.Commands;
 using Application.Features.MediatR.Answers.Results;
+using Application.Features.MediatR.Cities.Results;
 using Application.Features.MediatR.Department.Results;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
@@ -55,6 +56,7 @@ namespace Application.MapperProfiles
 
             //Department
             CreateMap<Department, GetDepartmentsByUniversityQueryResult>().ReverseMap();
+            CreateMap<Department, GetAllDistinctDepartmentQueryResult>().ReverseMap();
 
 
             //Tags
@@ -69,7 +71,8 @@ namespace Application.MapperProfiles
             CreateMap<Answer, GetAllAnswerByQuestionIdQueryResult>()
                 .ForMember(x => x.UserFullName, y => y.MapFrom(src => src.User.FullName));
 
-            //AnswerLike
+            //City
+            CreateMap<City, GetAllCityQueryResult>().ReverseMap();
 
         }
 
