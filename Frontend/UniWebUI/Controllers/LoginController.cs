@@ -72,7 +72,7 @@ namespace UniWebUI.Controllers
                         new ClaimsPrincipal(identity),
                         authProps);
 
-                    return RedirectToAction("Index", "Main");
+                    return RedirectToAction("Index", "Question");
                 }
                 catch (JsonException)
                 {

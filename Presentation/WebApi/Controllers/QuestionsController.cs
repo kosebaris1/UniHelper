@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateQuestion([FromQuery] CreateQuestionCommand command)
+        public async Task<IActionResult> CreateQuestion( CreateQuestionCommand command)
         {
             await _mediator.Send(command);
             return Ok(Messages<Question>.EntityAdded);

@@ -70,11 +70,17 @@ body {
     padding: 0.3rem 0.8rem;
 }
 
-.question-filters .btn.active-filter {
-    background-color: #0d6efd; /* Bootstrap primary mavisi - En Yeni için */
-    color: #ffffff;
-    border-color: #0d6efd;
-}
+    .question-filters .btn.active-filter {
+        background-color: #fd7e14; /* Turuncu */
+        color: #ffffff;
+        border-color: #fd7e14;
+    }
+ .question-filters .btn.active-filter:hover {
+     background-color: #e67e00;
+     border-color: #e67e00;
+     color: #ffffff;
+ }
+
 
 .question-filters .btn:not(.active-filter) {
     background-color: #e9ecef; /* Açık gri */

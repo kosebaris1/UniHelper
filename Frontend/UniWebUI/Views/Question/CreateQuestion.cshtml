@@ -1,0 +1,138 @@
+﻿@model CreateQuestionDto
+@{
+    Layout = "~/Views/UILayout/Index.cshtml";
+    ViewData["Title"] = "CreateQuestion";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/yenisoru.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Sidebar (Sorular/Index.cshtml'den alındı, "Sorularım" aktif) -->
+        <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Ara...">
+            </div>
+            <h6>MENU</h6>
+            <ul class="nav flex-column سؤال-menu">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Sorular/Index">
+                        <i class="fas fa-list me-2"></i>Sorular
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-tags me-2"></i>Etiketler
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-sort-amount-down me-2"></i>Sıralama
+                    </a>
+                </li>
+            </ul>
+
+            <h6 class="mt-4">KİŞİSEL NAVİGATOR</h6>
+            <ul class="nav flex-column سؤال-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" asp-page="/Sorular/YeniSoru">
+                        <i class="far fa-question-circle me-2"></i>Sorularım
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-comment-alt me-2"></i>Cevaplarım
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-heart me-2"></i>Beğendiklerim
+                    </a>
+                </li>
+            </ul>
+            <div class="social-icons-left mt-auto">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+
+        <!-- Ana İçerik -->
+        <div class="col-lg-7 col-md-9">
+            <h4 class="mb-3">Yeni Soru</h4>
+            <div class="card new-question-form-card">
+                <div class="card-body">
+                    <form asp-action="CreateQuestion" asp-controller="Question" method="post">
+                        <input type="hidden" asp-for="UserId" />
+
+                        <div class="mb-3">
+                            <label asp-for="UniversityId" class="form-label">Üniversite (isteğe bağlı)</label>
+                            <select class="form-select" asp-for="UniversityId" asp-items="ViewBag.Universities">
+                                <option value="">Üniversite seçin (opsiyonel)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DepartmentId" class="form-label">Bölüm (isteğe bağlı)</label>
+                            <select class="form-select" asp-for="DepartmentId" asp-items="ViewBag.Departments">
+                                <option value="">Bölüm seçin (opsiyonel)</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" class="form-control" placeholder="İlgi çekici bir başlık yazın" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">İçerik</label>
+                            <textarea asp-for="Content" class="form-control" rows="6" placeholder="Sorunun detaylarını yaz" required></textarea>
+                        </div>
+
+                        @await Component.InvokeAsync("_CreateQuestionTagFilterMultiSelectComponentPartial", new { selectedTagIds = Model.TagIds })
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-warning">Yayınla <i class="fas fa-paper-plane ms-1"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Sidebar (Sorular/Index.cshtml'den alındı) -->
+        <div class="col-lg-3 d-none d-lg-block sidebar-right">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-star me-2 text-warning"></i>Okunması Gereken Kısım</h6>
+                    <ul class="list-unstyled mb-0 right-sidebar-links">
+                        <li><a href="#">Lütfen platformda gezinmeye başlamadan önce kuralları okuyun</a></li>
+                        <li><a href="#">Vizyonumuz ve Stratejimiz</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-link me-2"></i>Öne Çıkan Bağlantılar</h6>
+                    <ul class="list-unstyled mb-0 right-sidebar-links">
+                        <li><a href="#">deneme1</a></li>
+                        <li><a href="#">deneme2</a></li>
+                        <li><a href="#">deneme3</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public class YeniSoruModel : Microsoft.AspNetCore.Mvc.RazorPages.PageModel
+    {
+        public void OnGet()
+        {
+        }
+    }
+}

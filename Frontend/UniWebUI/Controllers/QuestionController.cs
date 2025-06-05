@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using System.Text;
+using UniDto.DepartmenDtos;
 using UniDto.QuestionDtos;
+using UniDto.UniversityDtos;
 using UniWebUI.Models;
 
 namespace UniWebUI.Controllers
@@ -75,9 +79,53 @@ namespace UniWebUI.Controllers
         {
             return View();
         }
-        public IActionResult CreateQuestion()
+
+        [HttpGet]
+        public async Task<IActionResult> CreateQuestion()
         {
+            var client = _httpClientFactory.CreateClient();
+
+            var uniResponse = await client.GetAsync("https://localhost:7224/GetAllUniversity");
+            var deptResponse = await client.GetAsync("https://localhost:7224/GetAllDistinctDepartment");
+
+            if (uniResponse.IsSuccessStatusCode && deptResponse.IsSuccessStatusCode)
+            {
+                var uniData = JsonConvert.DeserializeObject<List<GetAllUniversityDto>>(await uniResponse.Content.ReadAsStringAsync());
+                var deptData = JsonConvert.DeserializeObject<List<GetAllDistinctDepartmentDto>>(await deptResponse.Content.ReadAsStringAsync());
+
+                ViewBag.Universities = new SelectList(uniData, "UniversityId", "Name");
+                ViewBag.Departments = new SelectList(deptData, "DepartmentId", "Name");
+            }
+
+            return View(new CreateQuestionDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateQuestion(CreateQuestionDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            model.UserId = userId;
+
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("https://localhost:7224/api/Questions", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError(string.Empty, "Soru gönderilemedi. Lütfen tekrar deneyin.");
             return View();
         }
+
     }
 }

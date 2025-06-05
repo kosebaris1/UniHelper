@@ -59,46 +59,51 @@
                 </div>
             </div>
 
-            @if (Model.Questions != null && Model.Questions.Any())
-            {
-                @foreach (var question in Model.Questions)
+            <!-- Scrollable container -->
+            <div style="max-height: 75vh; overflow-y: auto; padding-right: 8px;">
+                @if (Model.Questions != null && Model.Questions.Any())
                 {
-                    <div class="card question-card mb-3">
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <img src="/images/user-avatar1.png" alt="User Avatar" class="rounded-circle me-3" width="40" height="40">
-                                <div>
-                                    <h6 class="card-title mb-0">@question.UserName</h6>
-                                    <small class="text-muted">biraz önce</small>
+                    @foreach (var question in Model.Questions)
+                    {
+                        <a asp-controller="Question" asp-action="Detail" asp-route-id="@question.QuestionId" class="text-decoration-none text-dark">
+                            <div class="card question-card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <img src="@question.UserImageUrl" alt="User Avatar" class="rounded-circle me-3" width="40" height="40">
+                                        <div>
+                                            <h6 class="card-title mb-0">@question.UserName</h6>
+                                            <small class="text-muted">biraz önce</small>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <i class="fas fa-ellipsis-v text-muted"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="card-subtitle my-2">@question.Title</h5>
+                                    <p class="card-text text-muted-custom">@question.Content</p>
+                                    <div>
+                                        <span class="badge bg-light text-dark me-1">@question.UniversityName</span>
+                                        <span class="badge bg-light text-dark me-1">@question.DepartmentName</span>
+                                        @foreach (var tag in question.QuestionTags)
+                                        {
+                                            <span class="badge bg-light text-dark me-1">@tag</span>
+                                        }
+                                    </div>
+                                    <hr class="my-2">
+                                    <div class="d-flex justify-content-end text-muted-custom small">
+                                        <span class="me-3"><i class="far fa-eye me-1"></i>125</span>
+                                        <span class="me-3"><i class="far fa-comment-dots me-1"></i>15</span>
+                                        <span><i class="fas fa-arrow-up me-1"></i>155</span>
+                                    </div>
                                 </div>
-                                <div class="ms-auto">
-                                    <a href="#" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
-                                </div>
                             </div>
-                            <h5 class="card-subtitle my-2">@question.Title</h5>
-                            <p class="card-text text-muted-custom">@question.Content</p>
-                            <div>
-                                <span class="badge bg-light text-dark me-1">@question.UniversityName</span>
-                                <span class="badge bg-light text-dark me-1">@question.DepartmentName</span>
-                                @foreach (var tag in question.QuestionTags)
-                                {
-                                    <span class="badge bg-light text-dark me-1">@tag</span>
-                                }
-                            </div>
-                            <hr class="my-2">
-                            <div class="d-flex justify-content-end text-muted-custom small">
-                                <span class="me-3"><i class="far fa-eye me-1"></i>125</span>
-                                <span class="me-3"><i class="far fa-comment-dots me-1"></i>15</span>
-                                <span><i class="fas fa-arrow-up me-1"></i>155</span>
-                            </div>
-                        </div>
-                    </div>
+                        </a>
+                    }
                 }
-            }
-            else
-            {
-                <div class="alert alert-warning">Filtrenize uygun soru bulunamadı.</div>
-            }
+                else
+                {
+                    <div class="alert alert-warning">Filtrenize uygun soru bulunamadı.</div>
+                }
+            </div>
         </div>
 
         <!-- Sağ Sidebar - Filtreleme Kutusu -->
@@ -108,14 +113,9 @@
                     <h6 class="card-title"><i class="fas fa-filter me-2"></i>Filtrele</h6>
                     <form method="get" asp-action="Index" asp-controller="Question">
                         @await Component.InvokeAsync("_CityFilterDropdownComponentPartial", new { selectedCityId = Model.SelectedCityId })
-
                         @await Component.InvokeAsync("_UniversityFilterDropdownComponentPartial", new { selectedUniversityId = Model.SelectedUniversityId })
-                        
                         @await Component.InvokeAsync("_DepartmentFilterDropdownComponentPartial", new { selectedDepartmentId = Model.SelectedDepartmentId })
-
-
                         @await Component.InvokeAsync("_TagFilterMultiSelectComponentPartial", new { selectedTagIds = Model.SelectedTagsId })
-
                         <button type="submit" class="btn btn-primary w-100">Filtrele</button>
                     </form>
                 </div>

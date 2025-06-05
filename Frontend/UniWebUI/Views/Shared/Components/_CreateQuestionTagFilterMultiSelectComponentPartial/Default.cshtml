@@ -2,6 +2,7 @@
 @{
     var selectedIds = ViewBag.SelectedTagIds as List<int> ?? new List<int>();
 }
+
 <div class="mb-3">
     <label for="TagSelector" class="form-label">Etiketler</label>
     <div class="input-group">
@@ -21,7 +22,7 @@
             <div class="d-inline-block me-1 mb-1 position-relative">
                 <span class="badge bg-primary pe-4">@tag.Name</span>
                 <button type="button" class="btn-close btn-close-white btn-sm position-absolute top-0 end-0 remove-tag" data-id="@tag.TagId" aria-label="Kaldır"></button>
-                <input type="hidden" name="TagsId" value="@tag.TagId" />
+                <input type="hidden" name="TagIds" value="@tag.TagId" />
             </div>
         }
     </div>
@@ -56,7 +57,7 @@
 
             const hidden = document.createElement('input');
             hidden.type = 'hidden';
-            hidden.name = 'TagsId';
+            hidden.name = 'TagIds';
             hidden.value = selectedValue;
 
             wrapper.appendChild(span);
@@ -68,7 +69,6 @@
 
         tagContainer.addEventListener('click', function (e) {
             if (e.target.classList.contains('remove-tag')) {
-                const id = e.target.getAttribute('data-id');
                 const wrapper = e.target.closest('div');
                 if (wrapper) wrapper.remove();
             }
