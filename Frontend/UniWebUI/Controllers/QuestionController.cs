@@ -75,9 +75,20 @@ namespace UniWebUI.Controllers
                 SelectedTagsId = tagsId
             });
         }
-        public IActionResult Detail()
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"https://localhost:7224/api/Questions/{id}");
+
+            if (!response.IsSuccessStatusCode)
+                return NotFound("Soru bulunamadı.");
+
+            var json = await response.Content.ReadAsStringAsync();
+            var question = JsonConvert.DeserializeObject<GetQuestionDetailDto>(json);
+
+            return View(question);
         }
 
         [HttpGet]

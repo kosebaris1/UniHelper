@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.QuestionInterface;
+﻿using Application.Constants;
+using Application.Interfaces.QuestionInterface;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -56,5 +57,20 @@ namespace Persistence.Repositories.QuestionRepository
 
         }
 
+        public async Task<Question> GetQuestionWithDetailsByIdAsync(int id)
+        {
+            var question = await _context.Questions.FindAsync(id);
+            if (question != null && question.DeletedDate == null)
+            {
+                return await _context.Questions
+                 .Include(q => q.User)
+                 .Include(q => q.University)
+                 .Include(q => q.Department)
+                 .Include(q => q.QuestionTags).ThenInclude(qt => qt.Tag)
+                 .FirstOrDefaultAsync(q => q.QuestionId == id);
+            }
+            throw new Exception(Messages<Question>.EntityNotFound);
+
+        }
     }
 }

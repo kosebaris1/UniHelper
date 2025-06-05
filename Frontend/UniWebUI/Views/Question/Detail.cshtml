@@ -1,0 +1,124 @@
+﻿@model GetQuestionDetailDto
+@{
+    Layout = "~/Views/UILayout/Index.cshtml";
+    ViewData["Title"] = "Detail";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/sorudetay.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Sidebar -->
+        <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
+            <div class="input-group mb-3">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Ara...">
+            </div>
+            <h6>MENU</h6>
+            <ul class="nav flex-column سؤال-menu">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Question" asp-action="Index">
+                        <i class="fas fa-list me-2"></i>Sorular
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-tags me-2"></i>Etiketler
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-sort-amount-down me-2"></i>Sıralama
+                    </a>
+                </li>
+            </ul>
+            <h6 class="mt-4">KİŞİSEL NAVİGATOR</h6>
+            <ul class="nav flex-column سؤال-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="far fa-question-circle me-2"></i>Sorularım
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-comment-alt me-2"></i>Cevaplarım
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="far fa-heart me-2"></i>Beğendiklerim
+                    </a>
+                </li>
+            </ul>
+            <div class="social-icons-left mt-auto">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+
+        <!-- Ana İçerik - Soru Detayı -->
+        <div class="col-lg-7 col-md-9">
+            <div class="card question-detail-card mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="/images/user-avatar-placeholder.png" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
+                        <div>
+                            <span class="fw-bold">@Model.UserName</span>
+                            <small class="text-muted ms-2">@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
+                        </div>
+                        <div class="ms-auto">
+                            <a href="#" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+                        </div>
+                    </div>
+                    <h4 class="card-title question-title mb-3">@Model.Title</h4>
+                    <p class="card-text question-content">@Model.Content</p>
+                    <div class="mb-3">
+                        <span class="badge bg-secondary">@Model.UniversityName</span>
+                        <span class="badge bg-secondary">@Model.DepartmentName</span>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="badge bg-light text-dark me-1">@tag</span>
+                        }
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm btn-vote"><i class="fas fa-arrow-up me-1"></i> Beğen</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cevap Yazma Formu -->
+            <div class="card answer-form-card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Cevaplar</h5>
+                    <textarea class="form-control mb-2" rows="4" placeholder="Akıllıca önerinizi buraya yazın..."></textarea>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-outline-secondary btn-sm me-2">İptal et</button>
+                        <button type="submit" class="btn btn-warning btn-sm btn-submit-answer">Tavsiye</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sağ Sidebar - Soru Sahibi Profil Kartı -->
+        <div class="col-lg-3 d-none d-lg-block sidebar-right">
+            <div class="card profile-card-right sticky-top author-profile-card">
+                <div class="card-body text-center p-4">
+                    <img src="/images/user-avatar-placeholder.png" alt="User Profile" class="rounded-circle mb-3 profile-avatar-right-big">
+                    <h4 class="card-title mb-1">@Model.UserName</h4>
+                    <div class="profile-stats-right mb-3">
+                        <span class="badge bg-custom-orange text-white"><i class="fas fa-medal me-1"></i> 5 [ 3 ]</span>
+                    </div>
+                    <div class="social-icons-right-profile">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
