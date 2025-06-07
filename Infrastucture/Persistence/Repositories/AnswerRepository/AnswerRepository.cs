@@ -19,6 +19,9 @@ namespace Persistence.Repositories.AnswerRepository
             return await _context.Answers
                 .Where(x => x.DeletedDate == null && x.QuestionId == questionId)
                 .Include(x => x.User)
+                    .ThenInclude(x=>x.Department)
+                        .ThenInclude(x => x.University)
+                .Include(x=>x.AnswerLikes)
                 .ToListAsync();
         }
 

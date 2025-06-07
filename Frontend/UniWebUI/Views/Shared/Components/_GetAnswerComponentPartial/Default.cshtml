@@ -1,0 +1,70 @@
+﻿@model List<GetAnswerDto>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Henüz bir yorum yapılmamış.</p>
+
+}
+else
+{
+    @foreach (var answer in Model)
+    {
+        <div class="card mb-3 p-3 answer-card" data-answer-id="@answer.AnswerId">
+            <div class="d-flex align-items-center mb-2">
+                <img src="@answer.ProfilePictureUrl"
+                     onerror="this.src='/images/user-avatar1.png';"
+                     class="rounded-circle me-3 answer-profile-img"
+                     width="45" height="45" style="object-fit: cover;" />
+
+
+                <div class="flex-grow-1">
+                    <div class="d-flex align-items-center mb-1">
+                        <strong>@answer.UserFullName</strong>
+                        @if (answer.IsVerified)
+                        {
+                            <span class="verified-badge ms-2" title="Doğrulanmış kullanıcı">
+                                <i class="fas fa-check-circle"></i>
+                            </span>
+                        }
+                    </div>
+
+                    <div class="mb-2">
+                        <span class="badge university-badge me-1">@answer.DepartmentName</span>
+                        <span class="badge university-badge">@answer.UniversityName</span>
+                    </div>
+
+                    @{
+                        string icon = "💬"; // default
+                        var lower = answer.Content.ToLower();
+
+                        if (lower.Contains("tavsiye") || lower.Contains("öner")) icon = "💡";
+                        else if (lower.Contains("bilgi") || lower.Contains("ders")) icon = "📘";
+                        else if (lower.Contains("benim başıma")) icon = "✍️";
+                        else if (lower.Contains("dikkat") || lower.Contains("önemli")) icon = "❗";
+                    }
+
+                    <div class="answer-content mb-2">
+                        <span class="me-2 answer-icon">@icon</span>
+                        @answer.Content
+                    </div>
+
+
+                    <div class="d-flex justify-content-end align-items-center">
+                        <small class="text-muted me-3">@answer.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
+
+                        <button class="btn btn-sm answer-like-button @(answer.IsLikedByCurrentUser ? "btn-danger" : "btn-outline-danger")"
+                                data-answer-id="@answer.AnswerId"
+                                data-liked="@answer.IsLikedByCurrentUser.ToString().ToLower()"
+                                data-like-count="@answer.LikeCount"
+                                style="position: relative; overflow: visible;">
+                            <i class="@(answer.IsLikedByCurrentUser ? "fas" : "far") fa-heart like-icon"></i>
+                            <span id="likeCount-@answer.AnswerId">@answer.LikeCount</span>
+                            <span class="like-fly-text" id="like-fly-@answer.AnswerId">+1</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -19,10 +19,11 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("AllAnswerByQuestion")]
-        public async Task<IActionResult> GetAllAnswerByQuestion(int questionId)
+        public async Task<IActionResult> GetAllAnswerByQuestion([FromQuery] int questionId, [FromQuery] int currentUserId)
         {
-            var values = await _mediator.Send(new GetAllAnswerByQuestionIdQuery(questionId));
-            return Ok(values);
+            var query = new GetAllAnswerByQuestionIdQuery(questionId, currentUserId);
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
         [HttpGet("AnswerById")]
         public async Task<IActionResult> GetAnswerById(int answerId)

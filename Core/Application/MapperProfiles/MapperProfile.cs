@@ -1,6 +1,4 @@
-﻿using Application.Features.MediatR.AnswerLikes.Queries;
-using Application.Features.MediatR.AnswerLikes.Results;
-using Application.Features.MediatR.Answers.Commands;
+﻿using Application.Features.MediatR.Answers.Commands;
 using Application.Features.MediatR.Answers.Results;
 using Application.Features.MediatR.Cities.Results;
 using Application.Features.MediatR.Department.Results;
@@ -78,7 +76,16 @@ namespace Application.MapperProfiles
             CreateMap<Answer,GetByIdAnswerQueryResult>()
                 .ForMember(x=>x.UserFullName, y => y.MapFrom(src => src.User.FullName));
             CreateMap<Answer, GetAllAnswerByQuestionIdQueryResult>()
-                .ForMember(x => x.UserFullName, y => y.MapFrom(src => src.User.FullName));
+                .ForMember(dest => dest.UserFullName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => src.AnswerLikes.Count))
+                .ForMember(dest => dest.IsLikedByCurrentUser, opt => opt.MapFrom((src, dest, destMember, context) =>
+                    src.AnswerLikes.Any(like => like.UserId == (int)context.Items["CurrentUserId"])
+                ))
+                .ForMember(dest => dest.IsVerified, opt => opt.MapFrom(src => src.User.IsVerified))
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.User.Department.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.User.Department.Name))
+                .ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => src.User.ProfilePictureUrl));
+
 
             //City
             CreateMap<City, GetAllCityQueryResult>().ReverseMap();

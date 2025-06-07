@@ -1,6 +1,7 @@
 ﻿using Application.Constants;
 using Application.Features.MediatR.QuestionLikes.Commands;
 using Application.Features.MediatR.QuestionLikes.Queries;
+using Application.Features.MediatR.Questions.Commands;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -38,9 +39,9 @@ namespace WebApi.Controllers
             return Ok(Messages<QuestionLike>.EntityAdded);
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteQuestionLike(UnlikeQuestionLikeCommand command)
+        public async Task<IActionResult> DeleteQuestionLike(int userId, int questionId)
         {
-            await _mediator.Send(command);
+            await _mediator.Send(new UnlikeQuestionLikeCommand(userId,questionId));
             return Ok(Messages<QuestionLike>.EntityDeleted);
         }
     }
