@@ -1,0 +1,92 @@
+/* Kayıt Sayfası Stilleri */
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand img {
+    margin-right: 8px;
+}
+
+/* Kayıt formunun olduğu sol taraf */
+.register-form-container {
+    background-color: #f8f9fa; /* Açık gri bir arka plan */
+}
+
+.register-form-container h2 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Kayıt Ol butonu için özel stil */
+.register-button {
+    background-color: #fec89a; /* Görseldeki açık turuncu/şeftali rengi */
+    border-color: #fec89a;
+    color: #212529; /* Koyu renk yazı */
+    font-weight: bold;
+}
+
+.register-button:hover {
+    background-color: #fdb474; /* Biraz daha koyu tonu */
+    border-color: #fdb474;
+    color: #212529;
+}
+
+/* Sağ taraftaki görsel alanı */
+.register-image-container img {
+    object-fit: cover;
+}
+
+/* Input alanlarındaki ikonların pozisyonu ve rengi */
+.form-control {
+    padding-right: 2.5rem; /* İkon için yer açar */
+}
+
+.position-relative .fas {
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    margin-top: 0 !important; /* HTML'deki inline stili ezmek için */
+    cursor: default;
+}
+
+.form-control.is-invalid + .fas.fa-times-circle {
+   color: #dc3545; /* Bootstrap'in danger rengi */
+}
+
+.form-control:not(.is-invalid) + .fas.fa-check-circle {
+   color: #198754; /* Bootstrap'in success rengi */
+}
+
+/* Navbar'daki butonlar (Kayıt sayfası için tersine çevrilmiş stil) */
+.navbar .btn-primary {
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.navbar .btn-primary:hover {
+    background-color: #e67e00;
+    border-color: #e67e00;
+}
+
+.navbar .btn-outline-primary {
+    border-color: #fd7e14;
+    color: #fd7e14;
+}
+
+.navbar .btn-outline-primary:hover {
+    background-color: #fd7e14;
+    color: white;
+}
+
+
+.form-label {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.invalid-feedback.d-block {
+    color: #dc3545 !important;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+}

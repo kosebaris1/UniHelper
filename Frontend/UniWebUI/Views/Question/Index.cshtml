@@ -1,0 +1,147 @@
+﻿@model QuestionListViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+@functions {
+    public static string GetRelativeTime(DateTime createdDate)
+    {
+        var span = DateTime.Now - createdDate;
+
+        if (span.TotalMinutes < 1)
+            return "az önce";
+        if (span.TotalMinutes < 60)
+            return $"{(int)span.TotalMinutes} dakika önce";
+        if (span.TotalHours < 24)
+            return $"{(int)span.TotalHours} saat önce";
+        if (span.TotalDays < 7)
+            return $"{(int)span.TotalDays} gün önce";
+        if (span.TotalDays < 30)
+            return $"{(int)(span.TotalDays / 7)} hafta önce";
+        if (span.TotalDays < 365)
+            return $"{(int)(span.TotalDays / 30)} ay önce";
+
+        return $"{(int)(span.TotalDays / 365)} yıl önce";
+    }
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Sidebar -->
+        <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
+            <div class="left-card shadow-sm p-3 rounded-4 bg-white text-center">
+
+
+                <h6 class="text-orange text-uppercase small fw-bold mb-2">Keşfet</h6>
+                <ul class="nav flex-column sidebar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-list me-2"></i> Sorular</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tags me-2"></i> Etiketler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i> Sıralama</a></li>
+                </ul>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <h6 class="text-orange text-uppercase small fw-bold mt-4 mb-2">Benim Alanım</h6>
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
+                    </ul>
+                }
+
+                <div class="social-icons-left mt-4 d-flex justify-content-center gap-3">
+                    <a href="#"><i class="fab fa-github fa-lg text-dark"></i></a>
+                    <a href="#"><i class="fab fa-instagram fa-lg text-orange"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f fa-lg text-primary"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orta İçerik -->
+        <div class="col-lg-7 col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Sorular</h4>
+                <div class="question-filters">
+                    <button class="btn btn-sm btn-primary active-filter"><i class="fas fa-bolt me-1"></i>En Yeni</button>
+                    <button class="btn btn-sm btn-outline-secondary">En Çok Beğeni Alan</button>
+                    <button class="btn btn-sm btn-outline-secondary">En Çok Etkileşim Alan</button>
+                    <button class="btn btn-sm btn-outline-secondary">Kapanmış</button>
+                </div>
+            </div>
+
+            <!-- Scrollable container -->
+            <div style="max-height: 75vh; overflow-y: auto; padding-right: 8px;">
+                @if (Model.Questions != null && Model.Questions.Any())
+                {
+                    @foreach (var question in Model.Questions)
+                    {
+                        <a asp-controller="Question" asp-action="Detail" asp-route-id="@question.QuestionId" class="text-decoration-none text-dark">
+                            <div class="card question-card mb-3 shadow-sm p-3 rounded-4 position-relative">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="@question.UserImageUrl" alt="User Avatar" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
+                                    <div>
+                                        <h6 class="mb-0 fw-semibold">@question.UserName</h6>
+                                        <small class="text-muted">@GetRelativeTime(question.CreatedDate)</small>
+                                    </div>
+
+                                    <div class="ms-auto">
+                                        <i class="fas fa-ellipsis-v text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <h5 class="fw-bold text-dark">@question.Title</h5>
+                                <p class="text-muted small">@question.Content.Substring(0, Math.Min(question.Content.Length, 100))...</p>
+
+                                <div class="mb-2">
+                                    <span class="badge question-badge university me-1">@question.UniversityName</span>
+                                    <span class="badge question-badge department me-1">@question.DepartmentName</span>
+                                    @foreach (var tag in question.QuestionTags)
+                                    {
+                                        <span class="badge question-badge tag me-1">@tag</span>
+                                    }
+                                </div>
+
+                                <div class="d-flex justify-content-end text-muted small mt-2">
+                                    <span class="me-3">
+                                        <i class="far fa-comment-dots me-1" style="color: #f39c12;"></i> @question.AnswerCount
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-heart me-1" style="color: #e74c3c;"></i> @question.LikeCount
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-warning">Filtrenize uygun soru bulunamadı.</div>
+                }
+            </div>
+        </div>
+
+        <!-- Sağ Sidebar - Filtreleme Kutusu -->
+        <div class="col-lg-3">
+            <div class="card filter-card shadow-sm rounded-4">
+                <div class="card-body">
+                    <h6 class="card-title text-orange fw-bold mb-3">
+                        <i class="fas fa-filter me-2"></i> Filtrele
+                    </h6>
+                    <form method="get" asp-action="Index" asp-controller="Question">
+                        @await Component.InvokeAsync("_CityFilterDropdownComponentPartial", new { selectedCityId = Model.SelectedCityId })
+                        @await Component.InvokeAsync("_UniversityFilterDropdownComponentPartial", new { selectedUniversityId = Model.SelectedUniversityId })
+                        @await Component.InvokeAsync("_DepartmentFilterDropdownComponentPartial", new { selectedDepartmentId = Model.SelectedDepartmentId })
+                        @await Component.InvokeAsync("_TagFilterMultiSelectComponentPartial", new { selectedTagIds = Model.SelectedTagsId })
+
+                        <button type="submit" class="btn btn-warning w-100 mt-2 rounded-pill">Filtrele</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

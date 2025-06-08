@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.QuestionInterface;
+﻿using Application.Constants;
+using Application.Interfaces.QuestionInterface;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -38,6 +39,8 @@ namespace Persistence.Repositories.QuestionRepository
                 .Include(q => q.Department)
                 .Include(q => q.QuestionTags)
                     .ThenInclude(qt => qt.Tag)
+                .Include(x=>x.QuestionLikes)
+                .Include(x=>x.Answers)
                 .AsQueryable();
 
             if (universityId.HasValue)
@@ -56,5 +59,35 @@ namespace Persistence.Repositories.QuestionRepository
 
         }
 
+        public async Task<Question> GetQuestionWithDetailsByIdAsync(int id)
+        {
+            var question = await _context.Questions.FindAsync(id);
+            if (question != null && question.DeletedDate == null)
+            {
+                return await _context.Questions
+                 .Include(q => q.User)
+                 .Include(q => q.University)
+                 .Include(q => q.Department)
+                 .Include(q => q.QuestionTags).ThenInclude(qt => qt.Tag)
+                 .FirstOrDefaultAsync(q => q.QuestionId == id);
+            }
+            throw new Exception(Messages<Question>.EntityNotFound);
+
+        }
+
+        public Task<List<Question>> GetTopQuestionAsync(int userId, int count)
+        {
+            return _context.Questions
+                .Where(x => x.DeletedDate == null && x.UserId == userId)
+                .Include(x => x.University)
+                .Include(x => x.Department)
+                .Include(x => x.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(x=>x.QuestionLikes)
+                .Include(x=>x.Answers)
+                .Take(count)
+                .OrderByDescending(x=>x.QuestionLikes.Count())
+                .ToListAsync();
+        }
     }
 }

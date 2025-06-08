@@ -1,0 +1,21 @@
+﻿@model List<GetAllCityDto>
+@{
+    int? selectedId = ViewBag.SelectedCityId as int?;
+}
+<div class="mb-2">
+    <label for="CityId" class="form-label">Şehir</label>
+    <select class="form-select" id="CityId" name="CityId">
+        <option value="">Tümü</option>
+        @foreach (var city in Model)
+        {
+            if (selectedId == city.CityId)
+            {
+                <option value="@city.CityId" selected="selected">@city.Name</option>
+            }
+            else
+            {
+                <option value="@city.CityId">@city.Name</option>
+            }
+        }
+    </select>
+</div>

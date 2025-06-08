@@ -1,0 +1,164 @@
+﻿/* Profil Sayfası Özel Stilleri */
+
+/* Turuncu renk tonu */
+.text-orange {
+    color: #fd7e14;
+}
+
+.bg-orange {
+    background-color: #fd7e14;
+}
+
+/* Profil kartı */
+.card-profile {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+    /* Profil fotoğrafı */
+    .card-profile img {
+        border: 3px solid #ffa94d;
+        box-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+    }
+
+.card-profile-header {
+    background: linear-gradient(135deg, #fd7e14, #ffa94d);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    padding: 20px 10px;
+    color: white;
+}
+
+    .card-profile-header img {
+        border: 3px solid #fff;
+    }
+
+/* List group içi ikonlar ve hover efekti */
+.list-group-item i {
+    width: 20px;
+}
+
+.list-group-item:hover {
+    background-color: #fff7e6;
+    cursor: pointer;
+}
+
+/* İstatistik kutuları */
+.card .text-orange {
+    font-weight: 600;
+}
+
+.card .text-muted {
+    font-size: 0.875rem;
+}
+
+/* Rozet özel efekti */
+.card .fa-medal {
+    color: #cd7f32; /* Bronz renk */
+}
+
+/* Son cevaplar */
+.card-body .fw-semibold {
+    font-size: 1rem;
+    color: #343a40;
+}
+
+.card-body .text-muted.small {
+    font-size: 0.85rem;
+}
+
+hr {
+    border-color: #eee;
+}
+
+/* Responsive düzeltmeler */
+@media (max-width: 768px) {
+    .card-profile img {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+
+/* 🔸 Rozet Renkleri */
+.text-bronze {
+    color: #cd7f32;
+}
+
+.text-silver {
+    color: #c0c0c0;
+}
+
+.text-gold {
+    color: #ffd700;
+}
+
+/* ✨ Nabız efekti */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px 5px rgba(255, 165, 0, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 1.8s infinite;
+}
+
+.answer-card-hover {
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInSlideUp 0.4s forwards;
+}
+
+    .answer-card-hover:hover {
+        background-color: #fff3e0;
+        transform: translateY(-2px);
+        box-shadow: 0 0 8px rgba(253, 126, 20, 0.2);
+    }
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Kart hover */
+.card-stat-hover:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(253, 126, 20, 0.3);
+}
+
+
+/* Sol menü buton hover */
+.list-hover-slide {
+    transition: all 0.2s ease;
+}
+
+    .list-hover-slide:hover {
+        background-color: #fff3e0;
+        transform: translateX(3px);
+    }
+
+.question-card-hover {
+    transition: all 0.2s ease-in-out;
+}
+
+    .question-card-hover:hover {
+        background-color: #fff9ec;
+        transform: translateY(-2px);
+        box-shadow: 0 0 6px rgba(255, 165, 0, 0.2);
+    }

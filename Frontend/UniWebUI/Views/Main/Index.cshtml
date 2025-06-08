@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/UILayout/Index.cshtml";
+
+    var questions = new List<dynamic>
+    {
+        new {
+            UserName = "Nisa Kandemir",
+            UserProfileImage = "https://randomuser.me/api/portraits/women/44.jpg",
+            PostedTimeAgo = "5 dakika önce",
+            Title = "ISUBU Bilgisayar Mühendisliği Müfredatı Hakkında Bilgi Verir Misiniz?",
+            Content = "Bölümdeki müfredat merak ediyorum. Daha çok yazılım alanında mı yoksa donanımsal bir müfredat mı var? En güzel açıklamayı yapana Süper Teşekkür bırakacağım <3",
+            Tags = new List<string>{ "ISUBU", "Bilgisayar Müh.", "Müfredat" },
+            Views = 125,
+            Comments = 15,
+            Likes = 155
+        },
+        new {
+            UserName = "Cengiz Kulaç",
+            UserProfileImage = "https://randomuser.me/api/portraits/men/52.jpg",
+            PostedTimeAgo = "25 dakika önce",
+            Title = "ODTÜ ELEKTRİK ELEKTRONİK MÜHENDİSLİĞİ BÖLÜMÜ HOCA(LARI)",
+            Content = "Bölümün hocaları çok takıyor ve zorluyor diyorlar. Gerçekten öyle mi? Seçmeli miyim çok kararsızım. Özellikle 3+ yıllık öğrenciler cevaplarsa çok mutlu olurum",
+            Tags = new List<string>{ "ODTÜ", "EEM", "Hocalar" },
+            Views = 125,
+            Comments = 15,
+            Likes = 155
+        },
+        new {
+            UserName = "Selin Dinç",
+            UserProfileImage = "https://randomuser.me/api/portraits/women/32.jpg",
+            PostedTimeAgo = "3 saat önce",
+            Title = "Boğaziçi üniversitesindeki siyasi durumların etkisi",
+            Content = "Boğaziçi İngilizce bölümünü tercih etmeyi düşünüyordum ama son yıllarda üniversite çokça siyasi müdahaleye maruz kaldı bu durumun okul içi olumsuz etkileri, etkinlikler ve kampüs yaşamı vs. üzerindeki olumsuz etkileri çok fazla mı düşüncelerinizi yazar mısınız?",
+            Tags = new List<string>{ "BOUN", "İngilizce Öğr.", "Diğer" },
+            Views = 125,
+            Comments = 15,
+            Likes = 155
+        }
+    };
+}
+
+<!-- Filtre Butonları -->
+<div class="mb-4 d-flex gap-2">
+    <button class="btn btn-sm btn-primary"><i class="bi bi-clock"></i> En Yeni</button>
+    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-hand-thumbs-up"></i> En Çok Beğeni Alan</button>
+    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-fire"></i> En Çok Etkileşim Alan</button>
+    <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-lock"></i> Kapanmış</button>
+</div>
+
+<!-- Soru Kartları -->
+@foreach (var question in questions)
+{
+    <div class="card mb-3 shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+                <img src="@question.UserProfileImage" class="rounded-circle me-2" width="40" height="40" />
+                <div>
+                    <strong>@question.UserName</strong><br />
+                    <small class="text-muted">@question.PostedTimeAgo</small>
+                </div>
+            </div>
+
+            <h6 class="fw-semibold mb-2">@question.Title</h6>
+            <p class="mb-3">@question.Content</p>
+
+            <div class="mb-3">
+                @foreach (var tag in question.Tags)
+                {
+                    <span class="badge rounded-pill text-dark bg-light border me-1">@tag</span>
+                }
+            </div>
+
+            <div class="d-flex justify-content-end text-muted gap-4 small">
+                <span><i class="bi bi-eye"></i> @question.Views</span>
+                <span><i class="bi bi-chat"></i> @question.Comments</span>
+                <span><i class="bi bi-heart"></i> @question.Likes</span>
+            </div>
+        </div>
+    </div>
+}

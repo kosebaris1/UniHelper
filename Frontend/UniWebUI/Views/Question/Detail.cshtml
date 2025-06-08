@@ -1,0 +1,298 @@
+﻿@model QuestionDetailViewModel
+
+@{
+    Layout = "~/Views/UILayout/Index.cshtml";
+    ViewData["Title"] = "Detail";
+    var isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
+    var userId = isAuthenticated ? int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value) : 0;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/answer-card.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sorudetay.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
+    <style>
+        .answer-slider-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+            .answer-slider-container::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .answer-slider-container::-webkit-scrollbar-thumb {
+                background-color: #ccc;
+                border-radius: 3px;
+            }
+
+            .answer-slider-container::-webkit-scrollbar-track {
+                background: transparent;
+            }
+    </style>
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sol Sidebar -->
+        <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
+            <div class="left-card shadow-sm p-3 rounded-4 bg-white text-center">
+                <h6 class="text-orange text-uppercase small fw-bold mb-2">Keşfet</h6>
+                <ul class="nav flex-column sidebar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-list me-2"></i> Sorular</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tags me-2"></i> Etiketler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i> Sıralama</a></li>
+                </ul>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <h6 class="text-orange text-uppercase small fw-bold mt-4 mb-2">Benim Alanım</h6>
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
+                    </ul>
+                }
+
+                <div class="social-icons-left mt-4 d-flex justify-content-center gap-3">
+                    <a href="#"><i class="fab fa-github fa-lg text-dark"></i></a>
+                    <a href="#"><i class="fab fa-instagram fa-lg text-orange"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f fa-lg text-primary"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ana İçerik -->
+        <div class="col-lg-7 col-md-9">
+            <div class="card question-detail-card highlight-question mb-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <img src="/images/user-avatar-placeholder.png" class="rounded-circle me-2" width="30" height="30" alt="User Avatar">
+                        <div>
+                            <span class="fw-bold">@Model.UserName</span>
+                            <small class="text-muted ms-2">@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
+                        </div>
+                    </div>
+                    <h4 class="card-title">@Model.Title</h4>
+                    <p class="card-text">@Model.Content</p>
+
+                    <div class="mb-3">
+                        <span class="question-badge university">@Model.UniversityName</span>
+                        <span class="question-badge department">@Model.DepartmentName</span>
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="question-badge tag">@tag</span>
+                        }
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        @if (isAuthenticated)
+                        {
+                            <button class="btn btn-outline-danger" id="likeButton">
+                                <i class="fas fa-heart"></i> Beğen (<span id="likeCount">0</span>)
+                            </button>
+                            <input type="hidden" id="currentUserId" value="@userId" />
+                            <input type="hidden" id="currentQuestionId" value="@Model.QuestionId" />
+                        }
+                        else
+                        {
+                            <a href="/Login/Index?returnUrl=/Questions/Detail/@Model.QuestionId" class="btn btn-outline-danger">
+                                <i class="fas fa-heart"></i> Beğenmek için giriş yap
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- ✅ Cevaplar Listesi -->
+            <div class="card answer-form-card my-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Cevaplar</h5>
+                    <div class="answer-slider-container mb-4">
+                        @await Component.InvokeAsync("_GetAnswerComponentPartial", new { questionId = Model.QuestionId, currentUserId = userId })
+                    </div>
+                </div>
+            </div>
+
+            <!-- ✅ Cevap Formu En Altta -->
+            @if (Model.CanAnswer)
+            {
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Cevabınızı Yazın</h5>
+                        <form id="answerForm">
+                            <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+                            <textarea name="Content" class="form-control mb-2" rows="4" placeholder="Cevabınızı yazın..."></textarea>
+                            <button type="submit" class="btn btn-primary">Gönder</button>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3">
+                    Bu soruya cevap yazma yetkiniz bulunmamaktadır.
+                </div>
+            }
+        </div>
+
+
+        <!-- Sağ Sidebar -->
+        <div class="col-lg-3 d-none d-lg-block sidebar-right">
+            <div class="profile-card shadow-sm p-4 rounded-4">
+                <div class="text-center mb-3">
+                    <div class="profile-image-wrapper mx-auto mb-2">
+                        <img src="/images/user-avatar-placeholder.png" alt="Profil Foto" class="profile-image">
+                    </div>
+                    <h6 class="fw-bold mb-0">Mert Sayan <i class="fas fa-circle-check text-success ms-1" title="Doğrulanmış"></i></h6>
+                    <div class="small text-muted">Bilgisayar Mühendisliği</div>
+                    <div class="small text-muted">Isparta Uygulamalı Bilimler</div>
+                </div>
+
+                <div class="stats d-flex justify-content-around text-center my-3">
+                    <div>
+                        <div class="fw-bold fs-5 text-orange">12</div>
+                        <div class="small text-muted">Cevap</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5 text-orange">34</div>
+                        <div class="small text-muted">Beğeni</div>
+                    </div>
+                </div>
+
+                <a href="/Questions/Ask" class="btn btn-warning w-100 mt-2 rounded-pill">
+                    <i class="fas fa-pen"></i> Soru Sor
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            const userId = $("#currentUserId").val();
+            const questionId = $("#currentQuestionId").val();
+
+            // Sayfa yüklenince: cevap like'ları için flame kontrolü
+            $(".answer-like-button").each(function () {
+                const button = $(this);
+                const icon = button.find("i");
+                const likeCount = parseInt(button.data("like-count"));
+
+                if (likeCount >= 3) {
+                    icon.addClass("flame");
+                    button.addClass("flaming-button");
+                }
+            });
+
+            // 🔥 Soru beğeni sayısını al ve alev efektini kontrol et
+            $.ajax({
+                url: '/QuestionLike/GetLikeCount',
+                type: 'GET',
+                data: { questionId: questionId },
+                success: function (res) {
+                    $('#likeCount').text(res.LikeCount);
+
+                    // Flame efekti ekle
+                    const icon = $('#likeButton').find('i');
+                    if (res.LikeCount >= 3) {
+                        icon.addClass("flame");
+                        $('#likeButton').addClass("flaming-button");
+                    } else {
+                        icon.removeClass("flame");
+                        $('#likeButton').removeClass("flaming-button");
+                    }
+                }
+            });
+
+            // ❤️ Soru beğen / beğenmekten vazgeç
+            $('#likeButton').on('click', function () {
+                const btn = $(this);
+                const liked = btn.hasClass('btn-danger');
+                const url = liked ? '/QuestionLike/UnLike' : '/QuestionLike/Like';
+
+                $.post(url, { userId, questionId })
+                    .done(function (response) {
+                        if (response.success) {
+                            btn.toggleClass('btn-danger btn-outline-danger');
+
+                            $.get('/QuestionLike/GetLikeCount', { questionId }, function (res) {
+                                $('#likeCount').text(res.LikeCount);
+
+                                const icon = btn.find('i');
+                                if (res.LikeCount >= 3) {
+                                    icon.addClass("flame");
+                                    btn.addClass("flaming-button");
+                                } else {
+                                    icon.removeClass("flame");
+                                    btn.removeClass("flaming-button");
+                                }
+
+                                btn.html(`<i class="fas fa-heart ${res.LikeCount >= 3 ? 'flame' : ''}"></i> ${liked ? 'Beğen' : 'Beğendin'} (<span id="likeCount">${res.LikeCount}</span>)`);
+                            });
+                        }
+                    });
+            });
+
+            // 💬 Cevap beğeni işlemleri
+            $(".answer-like-button").on("click", function () {
+                const button = $(this);
+                const icon = button.find("i");
+                const answerId = button.data("answer-id");
+                const isLiked = button.data("liked") === true || button.data("liked") === "true";
+
+                if (!userId) {
+                    alert("Beğenmek için giriş yapmalısınız.");
+                    return;
+                }
+
+                const url = isLiked ? "/AnswerLike/UnLike" : "/AnswerLike/Like";
+
+                if (!isLiked) {
+                    toastr.success("Cevabı beğendin!", "👍 Başarılı");
+                } else {
+                    toastr.info("Beğeni geri alındı.", "🔄 Bilgi");
+                }
+
+                $.post(url, { userId, answerId })
+                    .done(function (response) {
+                        if (response.success) {
+                            const likeCountSpan = $("#likeCount-" + answerId);
+                            let count = parseInt(likeCountSpan.text());
+
+                            const flyText = $("#like-fly-" + answerId);
+                            flyText.text(isLiked ? "💖 -1" : "💖 +1").addClass("fly");
+                            setTimeout(() => flyText.removeClass("fly"), 800);
+
+                            if (isLiked) {
+                                count--;
+                                button.removeClass("btn-danger").addClass("btn-outline-danger");
+                                icon.removeClass("fas").addClass("far");
+                            } else {
+                                count++;
+                                button.removeClass("btn-outline-danger").addClass("btn-danger");
+                                icon.removeClass("far").addClass("fas");
+                            }
+
+                            likeCountSpan.text(count);
+                            button.data("liked", !isLiked);
+
+                            icon.addClass("animated");
+                            setTimeout(() => icon.removeClass("animated"), 600);
+
+                            if (count >= 3) {
+                                icon.addClass("flame");
+                                button.addClass("flaming-button");
+                            } else {
+                                icon.removeClass("flame");
+                                button.removeClass("flaming-button");
+                            }
+                        }
+                    });
+            });
+        });
+    </script>
+}

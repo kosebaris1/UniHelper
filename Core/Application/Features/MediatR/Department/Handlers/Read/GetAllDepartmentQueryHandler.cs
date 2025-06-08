@@ -2,15 +2,7 @@
 using Application.Features.MediatR.Department.Results;
 using Application.Interfaces;
 using AutoMapper;
-using Domain.Entities;
-using Application.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Features.MediatR.Questions.Commands;
 
 namespace Application.Features.MediatR.Department.Handlers.Read
 {

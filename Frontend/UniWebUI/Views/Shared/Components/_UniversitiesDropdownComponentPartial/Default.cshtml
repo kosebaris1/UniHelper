@@ -1,0 +1,10 @@
+﻿@model List<GetAllUniversityDto>
+<div class="mb-3">
+    <select name="UniversityId" id="universitySelect" class="form-select" aria-label="Üniversite Seç">
+        <option value="">Üniversite Seç</option>
+        @foreach (var uni in Model)
+        {
+            <option value="@uni.UniversityId">@uni.Name</option>
+        }
+    </select>
+</div>

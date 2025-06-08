@@ -1,14 +1,12 @@
 ﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Interfaces.DepartmentInterface
 {
     public interface IDepartmentRepository
     {
         Task<List<Department>> GetDepartmentsByUniversity(int id);
+
+        Task<List<Department>> GetAllDistinctDepartmentsAsync();
+
     }
 }

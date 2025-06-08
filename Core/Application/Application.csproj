@@ -23,9 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\MediatR\AnswerLikes\Handlers\Read\" />
-    <Folder Include="Features\MediatR\AnswerLikes\Results\" />
-    <Folder Include="Features\MediatR\AnswerLikes\Queries\" />
+    <Folder Include="Features\MediatR\Cities\Commands\" />
+    <Folder Include="Features\MediatR\Cities\Handlers\Write\" />
     <Folder Include="Features\MediatR\Department\Commands\" />
     <Folder Include="Features\MediatR\Department\Handlers\Write\" />
     <Folder Include="Features\MediatR\Universities\Commands\" />

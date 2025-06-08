@@ -19,6 +19,15 @@ namespace Persistence.Repositories.DepartmentRepository
             _context = context;
         }
 
+        public async Task<List<Department>> GetAllDistinctDepartmentsAsync()
+        {
+            return await _context.Departments
+           .Where(x=>x.DeletedDate==null)
+           .GroupBy(d => d.Name)
+           .Select(g => g.First())
+           .ToListAsync();
+        }
+
         public async Task<List<Department>> GetDepartmentsByUniversity(int id)
         {
             var entity = await _context.Departments

@@ -1,0 +1,85 @@
+﻿@model List<GetAllTagDto>
+@{
+    var selectedIds = ViewBag.SelectedTagIds as List<int> ?? new List<int>();
+}
+
+<div class="mb-3">
+    <label for="TagSelector" class="form-label">Etiketler</label>
+    <div class="input-group">
+        <select class="form-select" id="TagSelector">
+            <option value="">Etiket Seç</option>
+            @foreach (var tag in Model)
+            {
+                <option value="@tag.TagId">@tag.Name</option>
+            }
+        </select>
+        <button type="button" class="btn btn-outline-primary" id="AddTagBtn">Ekle</button>
+    </div>
+
+    <div class="mt-2" id="SelectedTags">
+        @foreach (var tag in Model.Where(t => selectedIds.Contains(t.TagId)))
+        {
+            <div class="d-inline-block me-1 mb-1 position-relative">
+                <span class="badge bg-primary pe-4">@tag.Name</span>
+                <button type="button" class="btn-close btn-close-white btn-sm position-absolute top-0 end-0 remove-tag" data-id="@tag.TagId" aria-label="Kaldır"></button>
+                <input type="hidden" name="TagIds" value="@tag.TagId" />
+            </div>
+        }
+    </div>
+
+    <small class="text-muted">Etiket seçin ve "Ekle"ye basın. Seçilenler aşağıda görünür.</small>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const addBtn = document.getElementById('AddTagBtn');
+        const select = document.getElementById('TagSelector');
+        const tagContainer = document.getElementById('SelectedTags');
+
+        addBtn.addEventListener('click', function () {
+            const selectedValue = select.value;
+            const selectedText = select.options[select.selectedIndex].text;
+
+            if (!selectedValue || document.querySelector(`input[type="hidden"][value="${selectedValue}"]`)) return;
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'd-inline-block me-1 mb-1 position-relative';
+
+            const span = document.createElement('span');
+            span.className = 'badge bg-primary pe-4';
+            span.textContent = selectedText;
+
+            const closeBtn = document.createElement('button');
+            closeBtn.type = 'button';
+            closeBtn.className = 'btn-close btn-close-white btn-sm position-absolute top-0 end-0 remove-tag';
+            closeBtn.setAttribute('data-id', selectedValue);
+            closeBtn.setAttribute('aria-label', 'Kaldır');
+
+            const hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = 'TagIds';
+            hidden.value = selectedValue;
+
+            wrapper.appendChild(span);
+            wrapper.appendChild(closeBtn);
+            wrapper.appendChild(hidden);
+
+            tagContainer.appendChild(wrapper);
+        });
+
+        tagContainer.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-tag')) {
+                const wrapper = e.target.closest('div');
+                if (wrapper) wrapper.remove();
+            }
+        });
+    });
+</script>
+
+<style>
+    .btn-close {
+        padding: 0.3rem;
+        font-size: 0.6rem;
+        vertical-align: middle;
+    }
+</style>

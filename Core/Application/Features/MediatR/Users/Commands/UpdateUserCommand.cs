@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace Application.Features.MediatR.Users.Commands
         public string FullName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string? ProfilePictureUrl { get; set; }
+        public IFormFile? ProfilePictureUrl { get; set; }
         public string StudentNumber { get; set; }
-        public string? VerificationDocumentPath { get; set; }
+        public IFormFile? VerificationDocumentPath { get; set; }
 
         public int? UniversityId { get; set; }
 

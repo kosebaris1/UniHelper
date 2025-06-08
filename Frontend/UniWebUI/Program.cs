@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 namespace UniWebUI
 {
     public class Program
@@ -11,7 +13,8 @@ namespace UniWebUI
 
             builder.Services.AddHttpClient(); // .NET 6+
 
-
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddCookie(JwtBearerDefaults.AuthenticationScheme);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +29,7 @@ namespace UniWebUI
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

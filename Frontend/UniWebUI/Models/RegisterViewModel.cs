@@ -1,4 +1,4 @@
-﻿using UniDto.RegisterDto;
+﻿using UniDto.RegisterDtos;
 
 namespace UniWebUI.Models
 {

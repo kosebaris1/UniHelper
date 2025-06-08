@@ -31,11 +31,17 @@ namespace Persistence.Repositories.UserRepository
         public async Task<User> GetByIdUserAsync(int id)
         {
             var entity = await _context.Users
-               .Include(p => p.Role)
-               .FirstOrDefaultAsync(p => p.UserId == id && p.DeletedDate == null);
+                .Include(p => p.Role)
+                .Include(p => p.University)
+                .Include(p => p.Department)
+                .Include(p => p.Answers)
+                    .ThenInclude(a => a.AnswerLikes) // 🔥 önemli!
+                .Include(p => p.LikedAnswers) // (istersen)
+                .FirstOrDefaultAsync(p => p.UserId == id && p.DeletedDate == null);
 
             if (entity == null)
                 throw new Exception("User bulunamadı.");
+
             return entity;
         }
 
