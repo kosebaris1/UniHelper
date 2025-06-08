@@ -81,18 +81,48 @@ namespace UniWebUI.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7224/api/Questions/{id}");
 
+            var response = await client.GetAsync($"https://localhost:7224/api/Questions/{id}");
             if (!response.IsSuccessStatusCode)
                 return NotFound("Soru bulunamadı.");
 
             var json = await response.Content.ReadAsStringAsync();
             var question = JsonConvert.DeserializeObject<GetQuestionDetailDto>(json);
 
-            return View(question);
+            int userId = 0;
+            if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            }
+
+            // ✅ Cevap yazma yetkisi kontrolü
+            var permissionResponse = await client.GetAsync($"https://localhost:7224/api/Answer/can-answer?userId={userId}&questionId={id}");
+            bool canAnswer = false;
+            if (permissionResponse.IsSuccessStatusCode)
+            {
+                var permissionJson = await permissionResponse.Content.ReadAsStringAsync();
+                canAnswer = JsonConvert.DeserializeObject<bool>(permissionJson);
+            }
+
+            // ✅ ViewModel'e aktar
+            var viewModel = new QuestionDetailViewModel
+            {
+                QuestionId = question.QuestionId,
+                Title = question.Title,
+                Content = question.Content,
+                UserName = question.UserName,
+                UniversityName = question.UniversityName,
+                DepartmentName = question.DepartmentName,
+                Tags = question.Tags,
+                CreatedDate = question.CreatedDate,
+                CurrentUserId = userId,
+                CanAnswer = canAnswer
+            };
+
+            return View(viewModel);
         }
 
-        
+
 
         [HttpGet]
         public async Task<IActionResult> CreateQuestion()

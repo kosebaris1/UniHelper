@@ -1,4 +1,5 @@
-﻿@model GetQuestionDetailDto
+﻿@model QuestionDetailViewModel
+
 @{
     Layout = "~/Views/UILayout/Index.cshtml";
     ViewData["Title"] = "Detail";
@@ -17,18 +18,18 @@
             padding-right: 10px;
         }
 
-        .answer-slider-container::-webkit-scrollbar {
-            width: 6px;
-        }
+            .answer-slider-container::-webkit-scrollbar {
+                width: 6px;
+            }
 
-        .answer-slider-container::-webkit-scrollbar-thumb {
-            background-color: #ccc;
-            border-radius: 3px;
-        }
+            .answer-slider-container::-webkit-scrollbar-thumb {
+                background-color: #ccc;
+                border-radius: 3px;
+            }
 
-        .answer-slider-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
+            .answer-slider-container::-webkit-scrollbar-track {
+                background: transparent;
+            }
     </style>
 }
 
@@ -37,8 +38,6 @@
         <!-- Sol Sidebar -->
         <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
             <div class="left-card shadow-sm p-3 rounded-4 bg-white text-center">
-              
-
                 <h6 class="text-orange text-uppercase small fw-bold mb-2">Keşfet</h6>
                 <ul class="nav flex-column sidebar-nav">
                     <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-list me-2"></i> Sorular</a></li>
@@ -64,23 +63,19 @@
             </div>
         </div>
 
-
         <!-- Ana İçerik -->
         <div class="col-lg-7 col-md-9">
             <div class="card question-detail-card highlight-question mb-4">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
-                        <img src="/images/user-avatar-placeholder.png" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
+                        <img src="/images/user-avatar-placeholder.png" class="rounded-circle me-2" width="30" height="30" alt="User Avatar">
                         <div>
                             <span class="fw-bold">@Model.UserName</span>
                             <small class="text-muted ms-2">@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
                         </div>
-                        <div class="ms-auto">
-                            <a href="#" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
-                        </div>
                     </div>
-                    <h4 class="card-title question-title mb-3">@Model.Title</h4>
-                    <p class="card-text question-content">@Model.Content</p>
+                    <h4 class="card-title">@Model.Title</h4>
+                    <p class="card-text">@Model.Content</p>
 
                     <div class="mb-3">
                         <span class="question-badge university">@Model.UniversityName</span>
@@ -91,14 +86,12 @@
                         }
                     </div>
 
-
                     <div class="d-flex justify-content-end">
                         @if (isAuthenticated)
                         {
                             <button class="btn btn-outline-danger" id="likeButton">
                                 <i class="fas fa-heart"></i> Beğen (<span id="likeCount">0</span>)
                             </button>
-
                             <input type="hidden" id="currentUserId" value="@userId" />
                             <input type="hidden" id="currentQuestionId" value="@Model.QuestionId" />
                         }
@@ -112,44 +105,50 @@
                 </div>
             </div>
 
-            <!-- Yorumlar ve Form -->
-            <div class="card answer-form-card mb-4">
+            <!-- ✅ Yorum Yetkisi Kontrol -->
+            <div id="answer-permission-alert" class="alert alert-warning d-none">
+                Bu soruya cevap yazma yetkiniz bulunmamaktadır.
+            </div>
+
+            
+
+            <!-- Yorumlar -->
+            <div class="card answer-form-card my-4">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Cevaplar</h5>
-
                     <div class="answer-slider-container mb-4">
                         @await Component.InvokeAsync("_GetAnswerComponentPartial", new { questionId = Model.QuestionId, currentUserId = userId })
                     </div>
-
-                    @if (isAuthenticated)
-                    {
-                        <form method="post" asp-controller="QuestionComment" asp-action="Add">
-                            <input type="hidden" name="questionId" value="@Model.QuestionId" />
-                            <div class="mb-3">
-                                <textarea class="form-control" name="commentText" id="commentText" rows="4" placeholder="Akıllıca önerinizi buraya yazın..." required></textarea>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="reset" class="btn btn-outline-secondary btn-sm me-2">İptal et</button>
-                                <button type="submit" class="btn btn-warning btn-sm">Tavsiye</button>
-                            </div>
-                        </form>
-                    }
-                    else
-                    {
-                        <p class="text-danger">Yorum yapabilmek için giriş yapmalısınız.</p>
-                    }
                 </div>
             </div>
         </div>
 
-        <!-- Sağ Profil Kartı -->
+        @if (Model.CanAnswer)
+        {
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Cevap Yaz</h5>
+                    <form id="answerForm">
+                        <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+                        <textarea class="form-control mb-2" name="Content" rows="4" placeholder="Cevabınızı yazın..."></textarea>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning mt-3">
+                Bu soruya cevap yazma yetkiniz bulunmamaktadır.
+            </div>
+        }
+
+        <!-- Sağ Sidebar -->
         <div class="col-lg-3 d-none d-lg-block sidebar-right">
             <div class="profile-card shadow-sm p-4 rounded-4">
                 <div class="text-center mb-3">
                     <div class="profile-image-wrapper mx-auto mb-2">
-                        <img src="/images/user-avatar-placeholder.png"
-                             alt="Profil Foto"
-                             class="profile-image">
+                        <img src="/images/user-avatar-placeholder.png" alt="Profil Foto" class="profile-image">
                     </div>
                     <h6 class="fw-bold mb-0">Mert Sayan <i class="fas fa-circle-check text-success ms-1" title="Doğrulanmış"></i></h6>
                     <div class="small text-muted">Bilgisayar Mühendisliği</div>
@@ -172,84 +171,60 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
-
 @section Scripts {
-    <!-- Toastr JS -->
+    <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            var userId = $("#currentUserId").val();
-            var questionId = $("#currentQuestionId").val();
+            const userId = $("#currentUserId").val();
+            const questionId = $("#currentQuestionId").val();
 
-            $(".answer-like-button").each(function () {
-                const button = $(this);
-                const icon = button.find("i");
-                const likeCount = parseInt(button.data("like-count"));
+            // ✅ Cevap Gönderme (AJAX ile yapmak istiyorsan)
+            $("#answerForm").submit(function (e) {
+                e.preventDefault();
 
-                if (likeCount >= 3) {
-                    icon.addClass("flame");
-                    button.addClass("flaming-button");
-                }
+                $.post("/api/Answer", $(this).serialize())
+                    .done(() => {
+                        toastr.success("Cevabınız başarıyla gönderildi.");
+                        $("#answerForm textarea").val('');
+                    })
+                    .fail(() => {
+                        toastr.error("Cevap gönderilirken bir hata oluştu.");
+                    });
             });
 
-            // Soru beğeni sayısını al
-            $.ajax({
-                url: '/QuestionLike/GetLikeCount',
-                type: 'GET',
-                data: { questionId: questionId },
-                success: function (response) {
-                    $('#likeCount').text(response.LikeCount);
-                }
+            // ✅ Soru beğeni sayısını al
+            $.get('/QuestionLike/GetLikeCount', { questionId: questionId }, function (res) {
+                $('#likeCount').text(res.LikeCount);
             });
 
-            // Soru beğen / vazgeç işlemi
+            // ✅ Soru beğen / vazgeç
             $('#likeButton').on('click', function () {
-                var btn = $(this);
-                var liked = btn.hasClass('btn-danger');
+                const btn = $(this);
+                const liked = btn.hasClass('btn-danger');
+                const url = liked ? '/QuestionLike/UnLike' : '/QuestionLike/Like';
 
-                $.ajax({
-                    url: liked ? '/QuestionLike/UnLike' : '/QuestionLike/Like',
-                    type: 'POST',
-                    data: {
-                        userId: userId,
-                        questionId: questionId
-                    },
-                    success: function (response) {
+                $.post(url, { userId, questionId })
+                    .done(function (response) {
                         if (response.success) {
-                            if (liked) {
-                                btn.removeClass('btn-danger').addClass('btn-outline-danger');
-                            } else {
-                                btn.removeClass('btn-outline-danger').addClass('btn-danger');
-                            }
-
-                            $.ajax({
-                                url: '/QuestionLike/GetLikeCount',
-                                type: 'GET',
-                                data: { questionId: questionId },
-                                success: function (res) {
-                                    $('#likeCount').text(res.LikeCount);
-                                    btn.html(`<i class="fas fa-heart"></i> ${liked ? 'Beğen' : 'Beğendin'} (<span id="likeCount">${res.LikeCount}</span>)`);
-                                }
+                            btn.toggleClass('btn-danger btn-outline-danger');
+                            $.get('/QuestionLike/GetLikeCount', { questionId }, function (res) {
+                                $('#likeCount').text(res.LikeCount);
+                                btn.html(`<i class="fas fa-heart"></i> ${liked ? 'Beğen' : 'Beğendin'} (<span id="likeCount">${res.LikeCount}</span>)`);
                             });
                         }
-                    }
-                });
+                    });
             });
 
-            // Cevap beğen / vazgeç + ANİMASYON + ALEV
+            // ✅ Cevap beğen/vazgeç + animasyon
             $(".answer-like-button").on("click", function () {
                 const button = $(this);
                 const icon = button.find("i");
                 const answerId = button.data("answer-id");
                 const isLiked = button.data("liked") === true || button.data("liked") === "true";
-                const userId = $("#currentUserId").val();
-
-
 
                 if (!userId) {
                     alert("Beğenmek için giriş yapmalısınız.");
@@ -257,35 +232,22 @@
                 }
 
                 const url = isLiked ? "/AnswerLike/UnLike" : "/AnswerLike/Like";
-
-                //ekledim
                 if (!isLiked) {
                     toastr.success("Cevabı beğendin!", "👍 Başarılı");
                 } else {
                     toastr.info("Beğeni geri alındı.", "🔄 Bilgi");
                 }
 
-                $.ajax({
-                    url: url,
-                    method: "POST",
-                    data: {
-                        userId: userId,
-                        answerId: answerId
-                    },
-                    success: function (response) {
+                $.post(url, { userId, answerId })
+                    .done(function (response) {
                         if (response.success) {
-                            let likeCountSpan = $("#likeCount-" + answerId);
-                            let count = parseInt(likeCountSpan.text());
+                            const countSpan = $("#likeCount-" + answerId);
+                            let count = parseInt(countSpan.text());
 
-                            // Beğeni sayısını güncellemeden önce animation ayarla
                             const flyText = $("#like-fly-" + answerId);
-                            flyText.text(isLiked ? "💖 -1" : "💖 +1");
-                            flyText.addClass("fly");
-                            setTimeout(() => {
-                                flyText.removeClass("fly");
-                            }, 800);
+                            flyText.text(isLiked ? "💖 -1" : "💖 +1").addClass("fly");
+                            setTimeout(() => flyText.removeClass("fly"), 800);
 
-                            // Beğeni sayısını güncelle
                             if (isLiked) {
                                 count--;
                                 button.removeClass("btn-danger").addClass("btn-outline-danger");
@@ -296,16 +258,12 @@
                                 icon.removeClass("far").addClass("fas");
                             }
 
-                            likeCountSpan.text(count);
+                            countSpan.text(count);
                             button.data("liked", !isLiked);
 
-                            // Kalp animasyonu (büyüme)
                             icon.addClass("animated");
-                            setTimeout(() => {
-                                icon.removeClass("animated");
-                            }, 600);
+                            setTimeout(() => icon.removeClass("animated"), 600);
 
-                            // ALEV efekti – 10+ like varsa
                             if (count >= 3) {
                                 icon.addClass("flame");
                                 button.addClass("flaming-button");
@@ -314,14 +272,8 @@
                                 button.removeClass("flaming-button");
                             }
                         }
-                    },
-                    error: function () {
-                        alert("Bir hata oluştu.");
-                    }
-                });
+                    });
             });
         });
     </script>
 }
-
-

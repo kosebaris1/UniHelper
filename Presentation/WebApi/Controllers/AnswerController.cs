@@ -4,6 +4,7 @@ using Application.Features.MediatR.Answers.Queries;
 using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -30,6 +31,12 @@ namespace WebApi.Controllers
         {
             var value = await _mediator.Send(new GetByIdAnswerQuery(answerId));
             return Ok(value);
+        }
+        [HttpGet("can-answer")]
+        public async Task<IActionResult> CanUserAnswer(int userId, int questionId)
+        {
+            var result = await _mediator.Send(new CanUserAnswerQuestionQuery(userId, questionId));
+            return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> CreateAnswer(CreateAnswersCommand command)
