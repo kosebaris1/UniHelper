@@ -74,5 +74,20 @@ namespace Persistence.Repositories.QuestionRepository
             throw new Exception(Messages<Question>.EntityNotFound);
 
         }
+
+        public Task<List<Question>> GetTopQuestionAsync(int userId, int count)
+        {
+            return _context.Questions
+                .Where(x => x.DeletedDate == null && x.UserId == userId)
+                .Include(x => x.University)
+                .Include(x => x.Department)
+                .Include(x => x.QuestionTags)
+                    .ThenInclude(qt => qt.Tag)
+                .Include(x=>x.QuestionLikes)
+                .Include(x=>x.Answers)
+                .Take(count)
+                .OrderByDescending(x=>x.QuestionLikes.Count())
+                .ToListAsync();
+        }
     }
 }

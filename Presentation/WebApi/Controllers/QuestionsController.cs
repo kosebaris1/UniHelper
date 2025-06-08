@@ -32,6 +32,12 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetByIdQuestionQuery(id));
             return Ok(result);
         }
+        [HttpGet("TopQuestion")]
+        public async Task<IActionResult> GetTopQuestion(int userId,int count)
+        {
+            var result = await _mediator.Send(new GetMyTopQuestionQuery(userId,count));
+            return Ok(result);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateQuestion( CreateQuestionCommand command)

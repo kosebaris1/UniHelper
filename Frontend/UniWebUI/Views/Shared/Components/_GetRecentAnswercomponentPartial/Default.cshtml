@@ -1,0 +1,29 @@
+﻿@model List<GetRecentAnswerDto>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+        <span>🗨️ Son Cevapların</span>
+        <a href="#" class="btn btn-sm btn-outline-secondary">Tüm Cevaplar</a>
+    </div>
+    <div class="card-body">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <a href="/Question/Detail/@item.QuestionId" class="text-decoration-none">
+                    <div class="mb-4 p-3 border rounded shadow-sm bg-white answer-card-hover">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="fw-bold text-orange">Soru Başlığı: @item.QuestionTitle</span>
+                            <small class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</small>
+                        </div>
+                        <div class="text-secondary">Cevap: @item.Content</div>
+                    </div>
+                </a>
+            }
+        }
+        else
+        {
+            <div class="text-muted text-center">Henüz cevap verilmedi.</div>
+        }
+    </div>
+</div>

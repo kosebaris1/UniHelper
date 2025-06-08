@@ -24,7 +24,9 @@ namespace Persistence.Repositories.TokenRepository
             {
                 new Claim(ClaimTypes.Name,user.FullName),
                 new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
-                new Claim(ClaimTypes.Role,user.Role.Name)
+                new Claim(ClaimTypes.Role,user.Role.Name),
+                new Claim("ProfilePictureUrl", user.ProfilePictureUrl ?? "") // ← özel claim
+
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

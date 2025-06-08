@@ -19,9 +19,9 @@ namespace Persistence.Repositories.AnswerRepository
             return await _context.Answers
                 .Where(x => x.DeletedDate == null && x.QuestionId == questionId)
                 .Include(x => x.User)
-                    .ThenInclude(x=>x.Department)
+                    .ThenInclude(x => x.Department)
                         .ThenInclude(x => x.University)
-                .Include(x=>x.AnswerLikes)
+                .Include(x => x.AnswerLikes)
                 .ToListAsync();
         }
 
@@ -30,6 +30,17 @@ namespace Persistence.Repositories.AnswerRepository
             return await _context.Answers
                 .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.DeletedDate == null && x.AnswerId == answerId);
+        }
+
+        public async Task<List<Answer>> GetRecentAnswerAsync(int userId, int count)
+        {
+            return await _context.Answers
+                .Where(x => x.DeletedDate == null && x.UserId == userId)
+                .Include(x => x.Question)
+                .OrderByDescending(x => x.CreatedDate) 
+                .Take(count)
+                .ToListAsync();
+
         }
     }
 }

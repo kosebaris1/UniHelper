@@ -11,6 +11,7 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/profil.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/UniHelper_FrontEnd.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
@@ -22,7 +23,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                
+                <a class="navbar-brand" asp-controller="Question" asp-action="Index">
                     <img src="/images/logo.png" alt="UniHelper Logo" height="30"
                          class="d-inline-block align-text-top me-2">UniHelper
                 </a>
@@ -35,49 +37,46 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    @if (ViewData["ForceAuthenticatedNav"] as bool? == true || (User.Identity != null &&
-                    User.Identity.IsAuthenticated))
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item">
-                                <a class="btn btn-custom-orange me-3" asp-page="/Sorular/YeniSoru">
+                                <a class="btn btn-custom-orange me-3" href="/Question/CreateQuestion">
                                     <i class="fas fa-plus me-1"></i> Bir Soru Sor
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="#" title="Bildirimler">
-                                    <i class="fas fa-bell fs-5"></i>
-                                </a>
-                            </li>
+                        @using System.Security.Claims
+                            @{
+                                var userId = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                                var userImage = Context.User.FindFirst("ProfilePictureUrl")?.Value;
+                            }
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="/images/user-default-avatar.png" alt="User Avatar" class="rounded-circle"
-                                         height="30" width="30">
+                                    <img src="@userImage" alt="Profil" class="rounded-circle" height="30" width="30">
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUser">
-                                    <li><a class="dropdown-item" href="#">Profilim</a></li>
+                                    <li><a class="dropdown-item" href="/Profile/Index/@userId">Profilim</a></li>
                                     <li><a class="dropdown-item" href="#">Ayarlar</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Çıkış Yap</a></li> {* Logout işlemi için backend
-                                    entegrasyonu gerekir *}
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="/Account/Logout">Çıkış Yap</a></li>
                                 </ul>
                             </li>
+
                         </ul>
                     }
                     else
                     {
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="btn btn-custom-orange me-2" asp-area="" asp-page="/Account/Register">Kayıt</a>
+                                <a class="btn btn-custom-orange me-2" href="/Account/Register">Kayıt</a>
                             </li>
                             <li class="nav-item">
-                                <a class="btn btn-light" asp-area="" asp-page="/Account/Login">Giriş</a>
+                                <a class="btn btn-light" href="/Account/Login">Giriş</a>
                             </li>
                         </ul>
                     }
+
                 </div>
             </div>
         </nav>

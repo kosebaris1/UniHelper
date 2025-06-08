@@ -1,0 +1,44 @@
+﻿@model List<GetTopQuestionDto>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white fw-bold d-flex justify-content-between align-items-center">
+        <span>🔥 En Beğenilen Soruların</span>
+        <a href="#" class="btn btn-sm btn-outline-secondary">Tüm Sorular</a>
+    </div>
+    <div class="card-body">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <a href="/Question/Detail/@item.QuestionId" class="text-decoration-none">
+                    <div class="mb-4 p-3 border rounded shadow-sm bg-white question-card-hover">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="fw-bold text-orange">@item.Title</span>
+                            <small class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</small>
+                        </div>
+
+                        <div class="text-secondary mb-2">@item.Content</div>
+
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark border me-1">@item.UniversityName</span>
+                            <span class="badge bg-light text-dark border me-1">@item.DepartmentName</span>
+                            @foreach (var tag in item.QuestionTags)
+                            {
+                                <span class="badge bg-warning text-dark me-1">#@tag</span>
+                            }
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-3 text-muted small">
+                            <span><i class="fas fa-heart text-danger me-1"></i>@item.LikeCount</span>
+                            <span><i class="fas fa-comment-dots text-orange me-1"></i>@item.AnswerCount</span>
+                        </div>
+                    </div>
+                </a>
+            }
+        }
+        else
+        {
+            <div class="text-muted text-center">Henüz öne çıkan soru yok.</div>
+        }
+    </div>
+</div>

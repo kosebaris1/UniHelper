@@ -105,14 +105,7 @@
                 </div>
             </div>
 
-            <!-- ✅ Yorum Yetkisi Kontrol -->
-            <div id="answer-permission-alert" class="alert alert-warning d-none">
-                Bu soruya cevap yazma yetkiniz bulunmamaktadır.
-            </div>
-
-            
-
-            <!-- Yorumlar -->
+            <!-- ✅ Cevaplar Listesi -->
             <div class="card answer-form-card my-4">
                 <div class="card-body">
                     <h5 class="card-title mb-3">Cevaplar</h5>
@@ -121,27 +114,29 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ✅ Cevap Formu En Altta -->
+            @if (Model.CanAnswer)
+            {
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Cevabınızı Yazın</h5>
+                        <form id="answerForm">
+                            <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+                            <textarea name="Content" class="form-control mb-2" rows="4" placeholder="Cevabınızı yazın..."></textarea>
+                            <button type="submit" class="btn btn-primary">Gönder</button>
+                        </form>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning mt-3">
+                    Bu soruya cevap yazma yetkiniz bulunmamaktadır.
+                </div>
+            }
         </div>
 
-        @if (Model.CanAnswer)
-        {
-            <div class="card mt-3">
-                <div class="card-body">
-                    <h5 class="card-title">Cevap Yaz</h5>
-                    <form id="answerForm">
-                        <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
-                        <textarea class="form-control mb-2" name="Content" rows="4" placeholder="Cevabınızı yazın..."></textarea>
-                        <button type="submit" class="btn btn-primary">Gönder</button>
-                    </form>
-                </div>
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-warning mt-3">
-                Bu soruya cevap yazma yetkiniz bulunmamaktadır.
-            </div>
-        }
 
         <!-- Sağ Sidebar -->
         <div class="col-lg-3 d-none d-lg-block sidebar-right">
@@ -174,7 +169,6 @@
     </div>
 </div>
 @section Scripts {
-    <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
@@ -182,26 +176,39 @@
             const userId = $("#currentUserId").val();
             const questionId = $("#currentQuestionId").val();
 
-            // ✅ Cevap Gönderme (AJAX ile yapmak istiyorsan)
-            $("#answerForm").submit(function (e) {
-                e.preventDefault();
+            // Sayfa yüklenince: cevap like'ları için flame kontrolü
+            $(".answer-like-button").each(function () {
+                const button = $(this);
+                const icon = button.find("i");
+                const likeCount = parseInt(button.data("like-count"));
 
-                $.post("/api/Answer", $(this).serialize())
-                    .done(() => {
-                        toastr.success("Cevabınız başarıyla gönderildi.");
-                        $("#answerForm textarea").val('');
-                    })
-                    .fail(() => {
-                        toastr.error("Cevap gönderilirken bir hata oluştu.");
-                    });
+                if (likeCount >= 3) {
+                    icon.addClass("flame");
+                    button.addClass("flaming-button");
+                }
             });
 
-            // ✅ Soru beğeni sayısını al
-            $.get('/QuestionLike/GetLikeCount', { questionId: questionId }, function (res) {
-                $('#likeCount').text(res.LikeCount);
+            // 🔥 Soru beğeni sayısını al ve alev efektini kontrol et
+            $.ajax({
+                url: '/QuestionLike/GetLikeCount',
+                type: 'GET',
+                data: { questionId: questionId },
+                success: function (res) {
+                    $('#likeCount').text(res.LikeCount);
+
+                    // Flame efekti ekle
+                    const icon = $('#likeButton').find('i');
+                    if (res.LikeCount >= 3) {
+                        icon.addClass("flame");
+                        $('#likeButton').addClass("flaming-button");
+                    } else {
+                        icon.removeClass("flame");
+                        $('#likeButton').removeClass("flaming-button");
+                    }
+                }
             });
 
-            // ✅ Soru beğen / vazgeç
+            // ❤️ Soru beğen / beğenmekten vazgeç
             $('#likeButton').on('click', function () {
                 const btn = $(this);
                 const liked = btn.hasClass('btn-danger');
@@ -211,15 +218,26 @@
                     .done(function (response) {
                         if (response.success) {
                             btn.toggleClass('btn-danger btn-outline-danger');
+
                             $.get('/QuestionLike/GetLikeCount', { questionId }, function (res) {
                                 $('#likeCount').text(res.LikeCount);
-                                btn.html(`<i class="fas fa-heart"></i> ${liked ? 'Beğen' : 'Beğendin'} (<span id="likeCount">${res.LikeCount}</span>)`);
+
+                                const icon = btn.find('i');
+                                if (res.LikeCount >= 3) {
+                                    icon.addClass("flame");
+                                    btn.addClass("flaming-button");
+                                } else {
+                                    icon.removeClass("flame");
+                                    btn.removeClass("flaming-button");
+                                }
+
+                                btn.html(`<i class="fas fa-heart ${res.LikeCount >= 3 ? 'flame' : ''}"></i> ${liked ? 'Beğen' : 'Beğendin'} (<span id="likeCount">${res.LikeCount}</span>)`);
                             });
                         }
                     });
             });
 
-            // ✅ Cevap beğen/vazgeç + animasyon
+            // 💬 Cevap beğeni işlemleri
             $(".answer-like-button").on("click", function () {
                 const button = $(this);
                 const icon = button.find("i");
@@ -232,6 +250,7 @@
                 }
 
                 const url = isLiked ? "/AnswerLike/UnLike" : "/AnswerLike/Like";
+
                 if (!isLiked) {
                     toastr.success("Cevabı beğendin!", "👍 Başarılı");
                 } else {
@@ -241,8 +260,8 @@
                 $.post(url, { userId, answerId })
                     .done(function (response) {
                         if (response.success) {
-                            const countSpan = $("#likeCount-" + answerId);
-                            let count = parseInt(countSpan.text());
+                            const likeCountSpan = $("#likeCount-" + answerId);
+                            let count = parseInt(likeCountSpan.text());
 
                             const flyText = $("#like-fly-" + answerId);
                             flyText.text(isLiked ? "💖 -1" : "💖 +1").addClass("fly");
@@ -258,7 +277,7 @@
                                 icon.removeClass("far").addClass("fas");
                             }
 
-                            countSpan.text(count);
+                            likeCountSpan.text(count);
                             button.data("liked", !isLiked);
 
                             icon.addClass("animated");

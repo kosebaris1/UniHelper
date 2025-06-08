@@ -1,0 +1,82 @@
+﻿@model GetUserProfileDto
+@{
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- SOL SÜTUN -->
+        <div class="col-lg-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-profile-header text-center">
+                    <img src="@Model.ProfilePictureUrl" class="rounded-circle mt-3 shadow-sm" width="100" height="100" alt="Avatar" />
+                    <h5 class="mt-2 mb-0 text-white">@Model.FullName</h5>
+                    <p class="text-white-50 small mb-2">@Model.UniversityName</p>
+                    <p class="text-white-50 small mb-3">@(string.IsNullOrWhiteSpace(Model.DepartmentName) ? "Aday Öğrenci" : Model.DepartmentName)</p>
+                    <a href="#" class="btn btn-light btn-sm rounded-pill">Profili Düzenle</a>
+                </div>
+
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush text-start">
+                        <li class="list-group-item list-hover-slide"><i class="fas fa-question-circle me-2 text-orange"></i> Sorularım</li>
+                        <li class="list-group-item"><i class="fas fa-comment-dots me-2 text-orange"></i> Cevaplarım</li>
+                        <li class="list-group-item"><i class="fas fa-heart me-2 text-orange"></i> Beğendiklerim</li>
+                        <li class="list-group-item"><i class="fas fa-envelope me-2 text-orange"></i> Mesajlarım</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAĞ SÜTUN -->
+        <div class="col-lg-9">
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card text-center p-3 shadow-sm card-stat-hover">
+                        <div class="fw-bold fs-3 text-orange">@Model.AnswerCount</div>
+                        <div class="text-muted small">Verdiğin Cevap</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center p-3 shadow-sm card-stat-hover">
+                        <div class="fw-bold fs-3 text-orange">@Model.TotalLikes</div>
+                        <div class="text-muted small">Toplam Beğeni</div>
+                    </div>
+                </div>
+                @{
+                    var rozet = "Bronz Rozet";
+                    var rozetIcon = "fa-medal";
+                    var rozetClass = "text-bronze";
+                    var rozetDescription = "Katılıma Özel";
+
+                    if (Model.TotalLikes >= 5)
+                    {
+                        rozet = "Altın Rozet";
+                        rozetClass = "text-gold animate-pulse";
+                        rozetDescription = "5+ Beğeniye özel";
+                    }
+                    else if (Model.TotalLikes >= 3)
+                    {
+                        rozet = "Gümüş Rozet";
+                        rozetClass = "text-silver animate-pulse";
+                        rozetDescription = "3+ Beğeniye özel";
+                    }
+                }
+                <div class="col-md-4">
+                    <div class="card text-center p-3 shadow-sm card-stat-hover">
+                        <div class="fw-bold fs-5 @rozetClass">
+                            <i class="fas @rozetIcon me-1"></i> @rozet
+                        </div>
+                        <div class="text-muted small">@rozetDescription</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- SON CEVAPLAR -->
+            @await Component.InvokeAsync("_GetRecentAnswercomponentPartial",new {id=ViewBag.UserId})
+            @await Component.InvokeAsync("_GetTopQuestionComponentPartial", new { id = ViewBag.UserId })
+        </div>
+    </div>
+</div>
+

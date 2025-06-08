@@ -17,6 +17,7 @@ namespace Application.Interfaces.QuestionInterface
         Task<List<Question>> GetFilteredQuestions(int? cityId, int? universityId, int? departmentId, List<int>? tagsId);
         Task<int> CreateQuestionAsync(Question question, List<int> tagIds);
         Task<Question> GetQuestionWithDetailsByIdAsync(int id);
+        Task<List<Question>> GetTopQuestionAsync(int userId, int count);
 
 
     }

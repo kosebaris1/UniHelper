@@ -1,13 +1,6 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.Features.MediatR.Users.Results
+﻿namespace UniDto.UserDtos
 {
-    public class GetByIdUserQueryResult
+    public class GetUserProfileDto
     {
         public int UserId { get; set; }
         public string FullName { get; set; } //
