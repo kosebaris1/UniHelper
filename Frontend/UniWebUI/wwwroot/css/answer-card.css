@@ -1,10 +1,28 @@
-﻿.answer-card {
-    background: linear-gradient(135deg, #ffe5b4, #fffefc); /* soft turuncu gradyan */
-    border-left: 4px solid #ffa94d;
+﻿/*.answer-card {
+    background: linear-gradient(135deg, #ffe5b4, #fffefc);*/ /* soft turuncu gradyan */
+    /*border-left: 4px solid #ffa94d;
     animation: fadeIn 0.4s ease-in-out;
     transition: box-shadow 0.2s ease-in-out;
     box-shadow: 0 3px 8px rgba(255, 167, 38, 0.08);
+}*/
+.answer-card {
+    margin-left: 30px;
+    margin-right: 30px;
+    max-width: 100%;
+    background: #fffdfc;
+    border-left: 4px solid #ffa94d;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    font-size: 0.94rem;
 }
+@media (max-width: 768px) {
+    .answer-card {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+/*geri dönmek için yuakrdaki 2 sini silivericen
+*/
 .answer-icon {
     font-size: 1.2rem;
     vertical-align: top;

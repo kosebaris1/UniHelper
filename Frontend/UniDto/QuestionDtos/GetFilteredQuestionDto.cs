@@ -11,5 +11,8 @@
         public string DepartmentName { get; set; }
         public string UniversityName { get; set; }
         public List<string> QuestionTags { get; set; }
+        public int LikeCount { get; set; }
+        public int AnswerCount { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

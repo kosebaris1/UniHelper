@@ -47,7 +47,9 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => src.User.ProfilePictureUrl))
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
-                .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt=>qt.Tag.Name).ToList()));
+                .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt => qt.Tag.Name).ToList()))
+                .ForMember(dest => dest.AnswerCount, opt => opt.MapFrom(src => src.Answers.Count))
+                .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => src.QuestionLikes.Count));
             CreateMap<Question,GetByIdQuestionQueryResult>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))

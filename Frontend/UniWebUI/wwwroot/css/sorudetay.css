@@ -134,3 +134,113 @@
 .sidebar-left .sual-menu .nav-item a.nav-link.active i {
     /* Bu genel aktif stilin .yenisoru.css veya .sorular.css tarafından ezildiğinden emin olun */
 }
+
+
+
+/* Soru kartı daha büyük ve farklı */
+.highlight-question {
+    background: linear-gradient(135deg, #fffaf0, #fffef8);
+    padding: 30px;
+    border-radius: 16px;
+    border-left: 6px solid #ffa94d;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+/* Cevaplar daha dar kalsın */
+.answer-card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.question-detail-card {
+    background: linear-gradient(135deg, #fff8f0, #fffdf9);
+    border-left: 6px solid #ffa94d;
+    border-radius: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+}
+
+.question-badge {
+    background-color: #ffe0b2;
+    color: #4e342e;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    border-radius: 20px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+    .question-badge.department {
+        background-color: #ffcc80;
+    }
+
+    .question-badge.tag {
+        background-color: #ffb74d;
+    }
+
+.profile-summary-card {
+    border-radius: 12px;
+    background: #fffdfc;
+    border-left: 4px solid #ffa94d;
+}
+
+.profile-card {
+    background: linear-gradient(135deg, #fff9f2, #fff);
+    border-radius: 16px;
+    border: 1px solid #f4e2d8;
+    transition: all 0.3s ease-in-out;
+}
+
+    .profile-card:hover {
+        box-shadow: 0 8px 20px rgba(255, 153, 51, 0.15);
+    }
+
+.profile-image-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #ffa94d;
+    padding: 2px;
+    background: #fff;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-orange {
+    color: #ff7b00;
+}
+
+.left-card {
+    background: linear-gradient(145deg, #fffaf5, #ffffff);
+    border: 1px solid #ffe3cd;
+    border-radius: 16px;
+    min-height: 100%;
+}
+
+.sidebar-nav .nav-link {
+    color: #444;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+    .sidebar-nav .nav-link.active,
+    .sidebar-nav .nav-link:hover {
+        background-color: #ffe8cc;
+        color: #d35400;
+    }
+
+.text-orange {
+    color: #ff7b00;
+}
+
+.stylish-search input::placeholder {
+    font-size: 0.9rem;
+    color: #aaa;
+}

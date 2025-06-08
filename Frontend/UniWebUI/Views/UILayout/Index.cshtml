@@ -99,11 +99,11 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @if (TempData["SuccessMessage"] != null)
-    {
-        <script>
-            toastr.success("@TempData["SuccessMessage"]", "✔️");
-        </script>
-    }
+{
+    <script>
+        toastr.success("@TempData["SuccessMessage"]", "✔️");
+    </script>
+}
 
 
     @await RenderSectionAsync("Scripts", required: false)

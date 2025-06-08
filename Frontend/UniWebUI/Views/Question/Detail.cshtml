@@ -36,12 +36,38 @@
     <div class="row">
         <!-- Sol Sidebar -->
         <div class="col-lg-2 col-md-3 d-none d-md-block sidebar-sticky sidebar-left">
-            <!-- ... Sidebar içeriği aynı ... -->
+            <div class="left-card shadow-sm p-3 rounded-4 bg-white text-center">
+              
+
+                <h6 class="text-orange text-uppercase small fw-bold mb-2">Keşfet</h6>
+                <ul class="nav flex-column sidebar-nav">
+                    <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-list me-2"></i> Sorular</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tags me-2"></i> Etiketler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i> Sıralama</a></li>
+                </ul>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <h6 class="text-orange text-uppercase small fw-bold mt-4 mb-2">Benim Alanım</h6>
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
+                    </ul>
+                }
+
+                <div class="social-icons-left mt-4 d-flex justify-content-center gap-3">
+                    <a href="#"><i class="fab fa-github fa-lg text-dark"></i></a>
+                    <a href="#"><i class="fab fa-instagram fa-lg text-orange"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f fa-lg text-primary"></i></a>
+                </div>
+            </div>
         </div>
+
 
         <!-- Ana İçerik -->
         <div class="col-lg-7 col-md-9">
-            <div class="card question-detail-card mb-4">
+            <div class="card question-detail-card highlight-question mb-4">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-2">
                         <img src="/images/user-avatar-placeholder.png" alt="User Avatar" class="rounded-circle me-2" width="30" height="30">
@@ -57,13 +83,14 @@
                     <p class="card-text question-content">@Model.Content</p>
 
                     <div class="mb-3">
-                        <span class="badge bg-secondary">@Model.UniversityName</span>
-                        <span class="badge bg-secondary">@Model.DepartmentName</span>
+                        <span class="question-badge university">@Model.UniversityName</span>
+                        <span class="question-badge department">@Model.DepartmentName</span>
                         @foreach (var tag in Model.Tags)
                         {
-                            <span class="badge bg-light text-dark me-1">@tag</span>
+                            <span class="question-badge tag">@tag</span>
                         }
                     </div>
+
 
                     <div class="d-flex justify-content-end">
                         @if (isAuthenticated)
@@ -117,8 +144,36 @@
 
         <!-- Sağ Profil Kartı -->
         <div class="col-lg-3 d-none d-lg-block sidebar-right">
-            <!-- ... Profil Kartı içeriği aynı ... -->
+            <div class="profile-card shadow-sm p-4 rounded-4">
+                <div class="text-center mb-3">
+                    <div class="profile-image-wrapper mx-auto mb-2">
+                        <img src="/images/user-avatar-placeholder.png"
+                             alt="Profil Foto"
+                             class="profile-image">
+                    </div>
+                    <h6 class="fw-bold mb-0">Mert Sayan <i class="fas fa-circle-check text-success ms-1" title="Doğrulanmış"></i></h6>
+                    <div class="small text-muted">Bilgisayar Mühendisliği</div>
+                    <div class="small text-muted">Isparta Uygulamalı Bilimler</div>
+                </div>
+
+                <div class="stats d-flex justify-content-around text-center my-3">
+                    <div>
+                        <div class="fw-bold fs-5 text-orange">12</div>
+                        <div class="small text-muted">Cevap</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-5 text-orange">34</div>
+                        <div class="small text-muted">Beğeni</div>
+                    </div>
+                </div>
+
+                <a href="/Questions/Ask" class="btn btn-warning w-100 mt-2 rounded-pill">
+                    <i class="fas fa-pen"></i> Soru Sor
+                </a>
+            </div>
         </div>
+
+
     </div>
 </div>
 

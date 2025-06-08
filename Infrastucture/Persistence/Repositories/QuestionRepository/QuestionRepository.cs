@@ -39,6 +39,8 @@ namespace Persistence.Repositories.QuestionRepository
                 .Include(q => q.Department)
                 .Include(q => q.QuestionTags)
                     .ThenInclude(qt => qt.Tag)
+                .Include(x=>x.QuestionLikes)
+                .Include(x=>x.Answers)
                 .AsQueryable();
 
             if (universityId.HasValue)
