@@ -22,7 +22,7 @@ namespace Persistence.Repositories.QuestionRepository
                 throw new Exception("Soru bulunamadı");
 
             question.Status = newStatus;
-            question.UpdatedDate = DateTime.UtcNow;
+            question.UpdatedDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
         }

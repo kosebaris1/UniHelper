@@ -1,4 +1,5 @@
 ﻿using Application.Constants;
+using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Users.Commands;
 using Application.Features.MediatR.Users.Queries;
 using Application.Interfaces;
@@ -41,7 +42,12 @@ namespace WebApi.Controllers
             var value = await _mediator.Send(new GetByIdUserDetailsForAdminQuery(id));
             return Ok(value);
         }
-
+        [HttpGet("AllUnverifiedUser")]
+        public async Task<IActionResult> GetAllUnverifiedUser()
+        {
+            var value = await _mediator.Send(new GetAllUnverifiedUserQuery());
+            return Ok(value);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommand command)
@@ -84,5 +90,11 @@ namespace WebApi.Controllers
             return Ok(Messages<User>.EntityUpdated);
         }
 
+        [HttpPost("Accept")]
+        public async Task<IActionResult> ApproveQuestion(int userId)
+        {
+            await _mediator.Send(new AcceptUserCommand(userId));
+            return Ok("Kullanıcı onaylandı.");
+        }
     }
 }

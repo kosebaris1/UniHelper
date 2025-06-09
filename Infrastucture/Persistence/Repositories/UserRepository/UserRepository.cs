@@ -2,11 +2,6 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence.Repositories.UserRepository
 {
@@ -18,6 +13,18 @@ namespace Persistence.Repositories.UserRepository
         {
             _context = context;
         }
+
+        public async Task ChangeStatusAsync(int userId)
+        {
+            var user=await _context.Users.FindAsync(userId);
+            if (user == null)
+                throw new Exception("Soru bulunamadı");
+            user.IsVerified = true;
+            user.UpdatedDate=DateTime.Now;
+            await _context.SaveChangesAsync();
+        }
+
+       
 
         public async Task<List<User>> GetAllUserAsync()
         {
@@ -54,6 +61,21 @@ namespace Persistence.Repositories.UserRepository
             if (entity == null)
                 throw new Exception("User bulunamadı.");
             return entity;
+        }
+        public async Task<List<User>> GetAllUnverifiedUserAsync()
+        {
+            return await _context.Users
+                .Where(x => x.DeletedDate == null && x.IsVerified == false)
+                .Include(x=>x.University)
+                .Include(x=>x.Department)
+                .ToListAsync();
+        }
+        public async Task<List<User>> GetRecentVerifiedUserAsync(int count)
+        {
+            return await _context.Users
+                .Where(x => x.DeletedDate == null && x.IsVerified == true)
+                .Take(count)
+                .ToListAsync();
         }
     }
 }

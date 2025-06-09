@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.MediatR.Users.Queries
 {
-    public class GetAllUserQuery : IRequest<List<GetAllUserQueryResult>>
+    public class GetAllUnverifiedUserQuery:IRequest<List<GetAllUnverifiedUserQueryResult>>
     {
     }
 }
