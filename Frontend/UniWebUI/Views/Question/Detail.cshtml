@@ -132,9 +132,24 @@
             }
             else
             {
-                <div class="alert alert-warning mt-3">
-                    Bu soruya cevap yazma yetkiniz bulunmamaktadır.
-                </div>
+                if (!User.Identity.IsAuthenticated)
+                {
+                    <div class="alert alert-warning mt-3">
+                        Cevap yazmak için lütfen <a href="/Login/Index" class="fw-bold">giriş yapın</a>.
+                    </div>
+                }
+                else if (Model.CurrentUserIsVerified == false) 
+                {
+                    <div class="alert alert-warning mt-3">
+                        Bu soruya cevap yazmak için hesabınızın doğrulanması gerekmektedir. Lütfen yüklediğiniz belgenin onaylanmasını bekleyin.
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning mt-3">
+                        Bu soruya cevap yazma yetkiniz bulunmamaktadır.
+                    </div>
+                }
             }
         </div>
 

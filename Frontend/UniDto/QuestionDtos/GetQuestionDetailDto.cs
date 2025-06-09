@@ -11,5 +11,6 @@
         public string DepartmentName { get; set; }
         public List<string> Tags { get; set; } = new();
         public DateTime CreatedDate { get; set; }
+
     }
 }

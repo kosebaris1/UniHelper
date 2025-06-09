@@ -26,6 +26,10 @@ namespace Application.Features.MediatR.Answers.Handlers.Read
             if (user == null || question == null)
                 return false;
 
+            // ⛔ Doğrulanmamış kullanıcıysa cevap veremez
+            if (user.IsVerified != true)
+                return false;
+
             bool hasUniversity = question.UniversityId.HasValue;
             bool hasDepartment = question.DepartmentId.HasValue;
 

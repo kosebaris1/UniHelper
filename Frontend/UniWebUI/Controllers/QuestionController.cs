@@ -103,6 +103,7 @@ namespace UniWebUI.Controllers
             {
                 var permissionJson = await permissionResponse.Content.ReadAsStringAsync();
                 viewModel.CanAnswer = JsonConvert.DeserializeObject<bool>(permissionJson);
+                viewModel.CurrentUserIsVerified=JsonConvert.DeserializeObject<bool>(permissionJson);
             }
 
             return View(viewModel);
