@@ -23,6 +23,7 @@ using Persistence.Repositories.TokenRepository;
 using Persistence.Repositories.UniversitiesRepository;
 using Persistence.Repositories.UserRepository;
 using System.Text;
+using Persistence;
 
 namespace WebApi
 {
@@ -92,6 +93,9 @@ namespace WebApi
             builder.Services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
+
+            builder.Services.AddInfrastructureServices();
+
 
             var app = builder.Build();
 
