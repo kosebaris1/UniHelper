@@ -1,0 +1,52 @@
+﻿@model List<GetRecentUserDto>
+
+<div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Son Doğrulanan Kullanıcılar</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="max-height: 360px; overflow-y: auto;">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>Üniversite</th>
+                            <th>Bölüm</th>
+                            <th>Profil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.FullName</td>
+                                    <td>@item.UniversityName</td>
+                                    <td>@item.DepartmentName</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.ProfilePictureUrl))
+                                        {
+                                            <img src="@item.ProfilePictureUrl" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;" alt="Profil" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Yok</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Hiç doğrulanan kullanıcı bulunamadı.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

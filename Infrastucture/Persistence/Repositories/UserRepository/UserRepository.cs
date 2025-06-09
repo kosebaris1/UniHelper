@@ -68,12 +68,16 @@ namespace Persistence.Repositories.UserRepository
                 .Where(x => x.DeletedDate == null && x.IsVerified == false)
                 .Include(x=>x.University)
                 .Include(x=>x.Department)
+                .OrderByDescending(x=>x.CreatedDate)
                 .ToListAsync();
         }
         public async Task<List<User>> GetRecentVerifiedUserAsync(int count)
         {
             return await _context.Users
                 .Where(x => x.DeletedDate == null && x.IsVerified == true)
+                .Include(x => x.University)
+                .Include(x => x.Department)
+                .OrderByDescending(x=>x.UpdatedDate)
                 .Take(count)
                 .ToListAsync();
         }

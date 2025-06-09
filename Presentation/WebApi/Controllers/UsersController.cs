@@ -48,7 +48,13 @@ namespace WebApi.Controllers
             var value = await _mediator.Send(new GetAllUnverifiedUserQuery());
             return Ok(value);
         }
-
+        [HttpGet("RecentVerifiedUsers")]
+        public async Task<IActionResult> GetRecentVerifiedUsers(int count)
+        {
+            var value = await _mediator.Send(new GetRecentVerifiedUserQuery(count));
+            return Ok(value);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommand command)
         {
@@ -90,7 +96,7 @@ namespace WebApi.Controllers
             return Ok(Messages<User>.EntityUpdated);
         }
 
-        [HttpPost("Accept")]
+        [HttpPut("Accept")]
         public async Task<IActionResult> ApproveQuestion([FromBody] AcceptUserCommand command)
         {
             await _mediator.Send(command);

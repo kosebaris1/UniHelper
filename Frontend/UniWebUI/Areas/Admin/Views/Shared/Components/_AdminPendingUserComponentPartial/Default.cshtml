@@ -1,0 +1,93 @@
+﻿@model List<GetAllPendingUserDto>
+
+<div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Onay Bekleyen Kullanıcılar</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="max-height: 360px; overflow-y: auto;">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>Üniversite</th>
+                            <th>Bölüm</th>
+                            <th>Belge</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.FullName</td>
+                                    <td>@item.UniversityName</td>
+                                    <td>@item.DepartmentName</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.VerificationDocumentPath))
+                                        {
+                                            <img src="@item.VerificationDocumentPath"
+                                                 class="img-thumbnail verification-thumbnail"
+                                                 data-bs-toggle="modal"
+                                                 data-bs-target="#verificationModal"
+                                                 data-img="@item.VerificationDocumentPath"
+                                                 style="width: 50px; height: 50px; object-fit: cover; cursor: pointer;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Belge yok</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <form asp-area="Admin" asp-controller="AdminMain" asp-action="ApproveUser" method="post">
+                                                <input type="hidden" name="id" value="@item.UserId" />
+                                                <button type="submit" class="btn btn-success">Onayla</button>
+                                            </form>
+                                            <form asp-area="Admin" asp-controller="AdminMain" asp-action="RejectUser" method="post">
+                                                <input type="hidden" name="id" value="@item.UserId" />
+                                                <button type="submit" class="btn btn-danger">Reddet</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Onay bekleyen kullanıcı bulunmamaktadır.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="verificationModal" tabindex="-1" aria-labelledby="verificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img id="modalVerificationImage" src="" class="img-fluid rounded" alt="Doğrulama Belgesi" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@* @section Scripts {
+    <script>
+        document.querySelectorAll('.verification-thumbnail').forEach(img => {
+            img.addEventListener('click', function () {
+                const fullImgUrl = this.getAttribute('data-img');
+                document.getElementById('modalVerificationImage').src = fullImgUrl;
+            });
+        });
+    </script>
+}
+ *@

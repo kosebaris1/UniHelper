@@ -14,7 +14,7 @@
     </div>
 
     <!-- Stats Cards -->
-    @* @await Component.InvokeAsync("_AdminStatsCardComponentPartial") *@
+    @await Component.InvokeAsync("_AdminStatsCardComponentPartial")
 
     <!-- Recent Listings and Pending Approvals -->
     <div class="row">
@@ -24,6 +24,23 @@
         <!-- Pending Approvals -->
         @await Component.InvokeAsync("_AdminPendingQuestionComponentPartial")
     </div>
+    <div class="row">
+        <!-- Recent Listings -->
+        @await Component.InvokeAsync("_AdminRecentUserListComponentPartial")
+
+        <!-- Pending Approvals -->
+        @await Component.InvokeAsync("_AdminPendingUserComponentPartial")
+    </div>
 </div>
 
 
+@section Scripts {
+    <script>
+        document.querySelectorAll('.verification-thumbnail').forEach(img => {
+            img.addEventListener('click', function () {
+                const fullImgUrl = this.getAttribute('data-img');
+                document.getElementById('modalVerificationImage').src = fullImgUrl;
+            });
+        });
+    </script>
+}
