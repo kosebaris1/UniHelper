@@ -18,7 +18,7 @@ namespace Application.Features.MediatR.Questions.Handlers.Read
 
         public async Task<List<GetFilteredQuestionQueryResult>> Handle(GetFilteredQuestionQuery request, CancellationToken cancellationToken)
         {
-            var filteredQuestion = await _questionRepository.GetFilteredQuestions(request.CityId,request.UniversityId,request.DepartmentId,request.TagsId);
+            var filteredQuestion = await _questionRepository.GetFilteredQuestions(request.CityId,request.UniversityId,request.DepartmentId,request.TagsId,request.SortBy);
             return _mapper.Map<List<GetFilteredQuestionQueryResult>>(filteredQuestion);
         }
     }

@@ -21,21 +21,17 @@ namespace UniWebUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? cityId = null, int? universityId = null, int? departmentId = null, List<int>? tagsId = null)
+        public async Task<IActionResult> Index(int? cityId = null, int? universityId = null, int? departmentId = null, List<int>? tagsId = null, string sortBy = "new")
         {
             var client = _httpClientFactory.CreateClient();
-
             var queryParams = new List<string>();
 
             if (cityId.HasValue)
                 queryParams.Add($"CityId={cityId}");
-
             if (universityId.HasValue)
                 queryParams.Add($"UniversityId={universityId}");
-
             if (departmentId.HasValue)
                 queryParams.Add($"DepartmentId={departmentId}");
-
             if (tagsId != null && tagsId.Any())
             {
                 foreach (var tagId in tagsId)
@@ -44,9 +40,9 @@ namespace UniWebUI.Controllers
                 }
             }
 
-            var queryString = queryParams.Any()
-                ? "?" + string.Join("&", queryParams)
-                : string.Empty;
+            queryParams.Add($"SortBy={sortBy}"); // yeni parametre
+
+            var queryString = "?" + string.Join("&", queryParams);
 
             var responseMessage = await client.GetAsync("https://localhost:7224/api/Questions" + queryString);
 
@@ -61,7 +57,8 @@ namespace UniWebUI.Controllers
                     SelectedCityId = cityId,
                     SelectedUniversityId = universityId,
                     SelectedDepartmentId = departmentId,
-                    SelectedTagsId = tagsId
+                    SelectedTagsId = tagsId,
+                    SortBy = sortBy // set et
                 };
 
                 return View(viewModel);
@@ -73,9 +70,11 @@ namespace UniWebUI.Controllers
                 SelectedCityId = cityId,
                 SelectedUniversityId = universityId,
                 SelectedDepartmentId = departmentId,
-                SelectedTagsId = tagsId
+                SelectedTagsId = tagsId,
+                SortBy = sortBy
             });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Detail(int id)

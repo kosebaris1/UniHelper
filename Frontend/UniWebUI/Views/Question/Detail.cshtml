@@ -307,22 +307,21 @@
         });
 
         $('#getSummaryBtn').on('click', function () {
-            const btn = $(this);
             const questionId = $('#currentQuestionId').val();
             const summaryBox = $('#aiSummaryText');
-
-            // Buton animasyonu
-            btn.prop('disabled', true).html(`<i class="fas fa-spinner fa-spin"></i> Özetleniyor...`);
-
+            console.log("Soru ID:", questionId);
             summaryBox.val("Yapay zeka özeti hazırlanıyor...");
 
-            $.get(`/api/Questions/${questionId}/summary`, function (res) {
-                summaryBox.val(res.summary).addClass("fade-in");
-                setTimeout(() => summaryBox.removeClass("fade-in"), 1000);
-            }).fail(function () {
-                summaryBox.val("❌ Özet alınırken bir hata oluştu.");
-            }).always(function () {
-                btn.prop('disabled', false).html(`<i class="fas fa-magic"></i> Özeti Al`);
+            $.ajax({
+                url: `https://localhost:7224/api/Questions/${questionId}/summary`,
+                type: 'GET',
+                success: function (res) {
+                    summaryBox.val(res.summary).addClass("fade-in");
+                    setTimeout(() => summaryBox.removeClass("fade-in"), 1000);
+                },
+                error: function () {
+                    summaryBox.val("❌ Özet alınırken bir hata oluştu.");
+                }
             });
         });
 

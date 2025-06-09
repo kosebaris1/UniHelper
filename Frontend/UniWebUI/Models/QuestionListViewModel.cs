@@ -9,5 +9,8 @@ namespace UniWebUI.Models
         public int? SelectedUniversityId { get; set; }
         public int? SelectedDepartmentId { get; set; }
         public List<int>? SelectedTagsId { get; set; }
+
+        public string SortBy { get; set; } = "new"; // default değer
+
     }
 }
