@@ -244,3 +244,17 @@
     font-size: 0.9rem;
     color: #aaa;
 }
+
+#aiSummaryText.fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

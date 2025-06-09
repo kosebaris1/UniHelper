@@ -13,5 +13,8 @@ namespace Application.Features.MediatR.Questions.Queries
         public int? UniversityId { get; set; }
         public int? DepartmentId { get; set; }
         public List<int>? TagsId { get; set; }
+
+        public string SortBy { get; set; } = "new"; // default olarak "new"
+
     }
 }

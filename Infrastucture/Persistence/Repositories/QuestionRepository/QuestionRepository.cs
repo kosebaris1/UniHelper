@@ -25,22 +25,22 @@ namespace Persistence.Repositories.QuestionRepository
                 });
             }
 
+            question.CreatedDate= DateTime.Now;
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 
             return question.QuestionId;
         }
 
-        public async Task<List<Question>> GetFilteredQuestions(int? cityId, int? universityId, int? departmentId, List<int>?  tagsId)
+        public async Task<List<Question>> GetFilteredQuestions(int? cityId, int? universityId, int? departmentId, List<int>? tagsId, string sortBy)
         {
             var query = _context.Questions
-                .Include(p=>p.User)
+                .Include(p => p.User)
                 .Include(q => q.University)
                 .Include(q => q.Department)
-                .Include(q => q.QuestionTags)
-                    .ThenInclude(qt => qt.Tag)
-                .Include(x=>x.QuestionLikes)
-                .Include(x=>x.Answers)
+                .Include(q => q.QuestionTags).ThenInclude(qt => qt.Tag)
+                .Include(x => x.QuestionLikes)
+                .Include(x => x.Answers)
                 .AsQueryable();
 
             if (universityId.HasValue)
@@ -55,9 +55,18 @@ namespace Persistence.Repositories.QuestionRepository
             if (tagsId != null && tagsId.Any())
                 query = query.Where(q => q.QuestionTags.Any(qt => tagsId.Contains(qt.TagId)));
 
-            return await query.ToListAsync();
+            // Sıralama
+            query = sortBy switch
+            {
+                "like" => query.OrderByDescending(q => q.QuestionLikes.Count),
+                "comment" => query.OrderByDescending(q => q.Answers.Count),
+                "new" => query.OrderByDescending(q => q.CreatedDate),
+                _ => query.OrderByDescending(q => q.CreatedDate)
+            };
 
+            return await query.ToListAsync();
         }
+
 
         public async Task<Question> GetQuestionWithDetailsByIdAsync(int id)
         {

@@ -32,6 +32,16 @@ namespace Persistence.Repositories.AnswerRepository
                 .FirstOrDefaultAsync(x => x.DeletedDate == null && x.AnswerId == answerId);
         }
 
+        public async Task<List<string>> GetAnswersByQuestionIdForSummaryAsync(int questionId)
+        {
+            return await _context.Answers
+                .Where(x => x.QuestionId == questionId && x.DeletedDate==null)
+                .OrderByDescending(x => x.AnswerLikes.Count) // beğeni sayısına göre sırala
+                .Take(50)
+                .Select(x => x.Content)
+                .ToListAsync();
+        }
+
         public async Task<List<Answer>> GetRecentAnswerAsync(int userId, int count)
         {
             return await _context.Answers
