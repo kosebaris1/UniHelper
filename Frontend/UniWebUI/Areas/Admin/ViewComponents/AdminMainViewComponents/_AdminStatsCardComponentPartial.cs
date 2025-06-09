@@ -3,7 +3,7 @@
 //using Microsoft.AspNetCore.Mvc;
 //using Newtonsoft.Json;
 
-//namespace HayvanWebUI.Areas.Admin.ViewComponents.AdminMainViewComponents
+//namespace UniWebUI.Areas.Admin.ViewComponents.AdminMainViewComponents
 //{
 //    public class _AdminStatsCardComponentPartial:ViewComponent
 //    {

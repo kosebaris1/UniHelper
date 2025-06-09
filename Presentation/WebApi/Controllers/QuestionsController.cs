@@ -70,17 +70,17 @@ namespace WebApi.Controllers
             return Ok(Messages<Question>.EntityDeleted);
         }
 
-        [HttpPost("approve/{id}")]  
-        public async Task<IActionResult> ApproveQuestion(int id)
+        [HttpPut("approve")]  
+        public async Task<IActionResult> ApproveQuestion([FromBody] ApproveQuestionCommand command)
         {
-            await _mediator.Send(new ApproveQuestionCommand { QuestionId = id });
+            await _mediator.Send(command);
             return Ok("Soru onaylandı.");
         }
 
-        [HttpPost("reject/{id}")]
-        public async Task<IActionResult> RejectQuestion(int id)
+        [HttpPut("reject")]
+        public async Task<IActionResult> RejectQuestion([FromBody] RejectQuestionCommand command)
         {
-            await _mediator.Send(new RejectQuestionCommand { QuestionId = id });
+            await _mediator.Send(command);
             return Ok("Soru reddedildi.");
         }
 

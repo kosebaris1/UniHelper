@@ -91,9 +91,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("Accept")]
-        public async Task<IActionResult> ApproveQuestion(int userId)
+        public async Task<IActionResult> ApproveQuestion([FromBody] AcceptUserCommand command)
         {
-            await _mediator.Send(new AcceptUserCommand(userId));
+            await _mediator.Send(command);
             return Ok("Kullanıcı onaylandı.");
         }
     }

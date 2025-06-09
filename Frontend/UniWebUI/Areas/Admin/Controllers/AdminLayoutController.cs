@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace HayvanWebUI.Areas.Admin.Controllers
+namespace UniWebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/AdminLayout")]

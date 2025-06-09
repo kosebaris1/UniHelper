@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace HayvanWebUI.Areas.Admin.Controllers
+namespace UniWebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/AdminMain")]
@@ -27,10 +27,10 @@ namespace HayvanWebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var dto = new { Id = id };
+            var dto = new { QuestionId = id };
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("https://localhost:7160/api/Pets/Accept", content);
+            var response = await client.PutAsync("https://localhost:7224/api/Questions/approve", content);
 
             return RedirectToAction("Index", "AdminMain", new { area = "Admin" }); // veya View() vs
         }
@@ -40,10 +40,10 @@ namespace HayvanWebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var dto = new { Id = id };
+            var dto = new { QuestionId = id };
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("https://localhost:7160/api/Pets/Reject", content);
+            var response = await client.PutAsync("https://localhost:7224/api/Questions/reject", content);
 
             return RedirectToAction("Index", "AdminMain", new { area = "Admin" }); // veya View() vs
         }
