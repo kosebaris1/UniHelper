@@ -35,13 +35,28 @@ namespace WebApi
 
             // Add services to the container.
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {   
+                        policy.WithOrigins(
+                                "https://localhost:7230",
+                                "http://localhost:5251"
+                               )
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                    });
+            });
 
 
             builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = null;
-    });
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
 
             builder.Services.AddAuthorization();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -105,6 +120,9 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors(MyAllowSpecificOrigins); // bunu UseRouting ile UseAuthorization arasýna koyabilirsin
+
 
             app.UseHttpsRedirection();
             app.UseAuthentication();
