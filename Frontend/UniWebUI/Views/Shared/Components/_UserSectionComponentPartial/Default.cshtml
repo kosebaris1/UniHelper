@@ -1,0 +1,27 @@
+﻿@model GetUserSectionDto
+
+<div class="profile-card shadow-sm p-4 rounded-4">
+    <div class="text-center mb-3">
+        <div class="profile-image-wrapper mx-auto mb-2">
+            <img src="@Model.ProfilePictureUrl" alt="Profil Foto" class="profile-image">
+        </div>
+        <h6 class="fw-bold mb-0">@Model.FullName <i class="fas fa-circle-check text-success ms-1" title="Doğrulanmış"></i></h6>
+        <div class="small text-muted">@Model.DepartmentName</div>
+        <div class="small text-muted">@Model.UniversityName</div>
+    </div>
+
+    <div class="stats d-flex justify-content-around text-center my-3">
+        <div>
+            <div class="fw-bold fs-5 text-orange">@Model.AnswerCount</div>
+            <div class="small text-muted">Cevap</div>
+        </div>
+        <div>
+            <div class="fw-bold fs-5 text-orange">@Model.TotalLikes</div>
+            <div class="small text-muted">Beğeni</div>
+        </div>
+    </div>
+
+    <a href="/Question/CreateQuestion" class="btn btn-warning w-100 mt-2 rounded-pill">
+        <i class="fas fa-pen"></i> Soru Sor
+    </a>
+</div>

@@ -81,45 +81,33 @@ namespace UniWebUI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
+            // 🔹 Soru detayını al
             var response = await client.GetAsync($"https://localhost:7224/api/Questions/{id}");
             if (!response.IsSuccessStatusCode)
                 return NotFound("Soru bulunamadı.");
 
             var json = await response.Content.ReadAsStringAsync();
-            var question = JsonConvert.DeserializeObject<GetQuestionDetailDto>(json);
+            var viewModel = JsonConvert.DeserializeObject<QuestionDetailViewModel>(json); // 👈 Direkt ViewModel'e deserialize
 
+            // 🔹 Giriş yapmış kullanıcıyı al
             int userId = 0;
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             }
+            viewModel.CurrentUserId = userId;
 
-            // ✅ Cevap yazma yetkisi kontrolü
+            // 🔹 Cevap yazma yetkisi kontrolü
             var permissionResponse = await client.GetAsync($"https://localhost:7224/api/Answer/can-answer?userId={userId}&questionId={id}");
-            bool canAnswer = false;
             if (permissionResponse.IsSuccessStatusCode)
             {
                 var permissionJson = await permissionResponse.Content.ReadAsStringAsync();
-                canAnswer = JsonConvert.DeserializeObject<bool>(permissionJson);
+                viewModel.CanAnswer = JsonConvert.DeserializeObject<bool>(permissionJson);
             }
-
-            // ✅ ViewModel'e aktar
-            var viewModel = new QuestionDetailViewModel
-            {
-                QuestionId = question.QuestionId,
-                Title = question.Title,
-                Content = question.Content,
-                UserName = question.UserName,
-                UniversityName = question.UniversityName,
-                DepartmentName = question.DepartmentName,
-                Tags = question.Tags,
-                CreatedDate = question.CreatedDate,
-                CurrentUserId = userId,
-                CanAnswer = canAnswer
-            };
 
             return View(viewModel);
         }
+
 
 
 
