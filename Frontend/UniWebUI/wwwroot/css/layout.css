@@ -1,0 +1,13 @@
+/**
+ * layout.css
+ * Sayfa düzeni ve büyük bölümlere ait stiller - modüler yapı
+ */
+
+/* Layout modüllerini içe aktarma */
+@import url('layout/base-layout.css');
+@import url('layout/sidebar.css');
+@import url('layout/user-profile.css');
+@import url('layout/hero.css');
+@import url('layout/pet-containers.css');
+@import url('layout/footer.css');
+@import url('layout/responsive.css');

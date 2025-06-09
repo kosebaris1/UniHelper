@@ -1,0 +1,42 @@
+/**
+ * components/tags.css
+ * Etiket bileşenlerinin stilleri
+ */
+
+/* ----- TAGS ----- */
+.pet-tags {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pet-tag {
+  background-color: #e9ecef;
+  border-radius: var(--border-radius-lg);
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.popular-tag {
+  background-color: #fff;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  border-radius: var(--border-radius-lg);
+  padding: 6px 12px;
+  margin: 4px;
+  font-size: 0.9rem;
+  display: inline-block;
+  transition: all var(--transition-slow) ease;
+  text-decoration: none;
+}
+
+.popular-tag:hover {
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}

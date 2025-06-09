@@ -1,0 +1,25 @@
+/**
+ * components/buttons.css
+ * Butonların stil tanımlamaları
+ */
+
+/* ----- BUTTONS ----- */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--hover-color);
+  border-color: var(--hover-color);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color);
+  color: white;
+}

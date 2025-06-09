@@ -1,0 +1,31 @@
+/**
+ * components/containers.css
+ * Arama kutusu ve yorum bölümleri gibi konteynırların stilleri
+ */
+
+/* ----- SEARCH CONTAINER ----- */
+.search-container {
+  background-color: white;
+  padding: var(--card-spacing);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 30px;
+}
+
+/* ----- COMMENTS ----- */
+.comments-section {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-spacing);
+  margin-bottom: var(--card-spacing);
+}
+
+.comment {
+  border-bottom: 1px solid var(--border-color);
+  padding: 15px 0;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}

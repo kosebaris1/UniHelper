@@ -1,0 +1,13 @@
+/**
+ * admin-theme.css
+ * Admin panel için özel tasarım - modüler yapı
+ */
+
+/* Admin modüllerini içe aktarma */
+@import url('admin/variables.css');
+@import url('admin/base.css');
+@import url('admin/sidebar.css');
+@import url('admin/topbar.css');
+@import url('admin/cards.css');
+@import url('admin/utilities.css');
+@import url('admin/charts.css');

@@ -1,0 +1,20 @@
+/**
+ * admin/base.css
+ * Admin panel temel stilleri
+ */
+
+/* ----- BASE STYLES ----- */
+body.admin-body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--admin-gray-100);
+}
+
+#wrapper {
+  display: flex;
+}
+
+/* ----- CONTENT WRAPPER ----- */
+.content-wrapper {
+  width: calc(100% - var(--admin-sidebar-width));
+  padding: 1.5rem;
+}

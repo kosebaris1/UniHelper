@@ -1,0 +1,27 @@
+/**
+ * components/cards.css
+ * Kart bileşenlerinin stilleri
+ */
+
+/* ----- CARDS ----- */
+.card {
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.25rem;
+}

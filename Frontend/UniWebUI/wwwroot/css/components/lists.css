@@ -1,0 +1,39 @@
+/**
+ * components/lists.css
+ * Liste grupları ve elemanlarının stilleri
+ */
+
+/* ----- LIST GROUPS ----- */
+.list-group-item {
+  border-radius: var(--border-radius-sm) !important;
+  margin-bottom: 5px;
+  border: 1px solid #eee;
+}
+
+.list-group-item:first-child {
+  border-top: none;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.list-group-item i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.list-group-item .badge {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.4rem;
+  border-radius: 10px;
+  line-height: 1;
+}

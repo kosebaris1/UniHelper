@@ -15,6 +15,18 @@ namespace Persistence.Repositories.QuestionRepository
             _context = context;
         }
 
+        public async Task ChangeStatusAsync(int questionId, string newStatus)
+        {
+            var question = await _context.Questions.FindAsync(questionId);
+            if (question == null)
+                throw new Exception("Soru bulunamadı");
+
+            question.Status = newStatus;
+            question.UpdatedDate = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<int> CreateQuestionAsync(Question question, List<int> tagIds)
         {
             foreach (var tagId in tagIds)
@@ -32,9 +44,18 @@ namespace Persistence.Repositories.QuestionRepository
             return question.QuestionId;
         }
 
+        public Task<List<Question>> GetAllPendingQuestionAsync()
+        {
+            return _context.Questions
+                .Where(x=>x.DeletedDate==null && x.Status=="Pending")
+                .Include(x=>x.User)
+                .ToListAsync();
+        }
+
         public async Task<List<Question>> GetFilteredQuestions(int? cityId, int? universityId, int? departmentId, List<int>? tagsId, string sortBy)
         {
             var query = _context.Questions
+                .Where(x=>x.DeletedDate==null && x.Status== "Approved")
                 .Include(p => p.User)
                 .Include(q => q.University)
                 .Include(q => q.Department)

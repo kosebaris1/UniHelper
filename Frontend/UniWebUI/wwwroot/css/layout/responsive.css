@@ -1,0 +1,51 @@
+/**
+ * responsive.css
+ * Duyarlı tasarım (responsive) medya sorgularını içerir
+ */
+
+/* ----- RESPONSIVE LAYOUT ----- */
+@media (max-width: 768px) {
+  .pet-detail-header {
+    height: 300px;
+  }
+
+  .pet-thumbnail-container {
+    height: 120px;
+  }
+
+  .similar-pet-container {
+    height: 100px;
+  }
+
+  .card-img-top {
+    height: 160px;
+  }
+
+  .hero-section {
+    padding: 60px 0;
+  }
+
+  .hero-buttons .btn {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .pet-detail-header {
+    height: 250px;
+  }
+
+  .pet-thumbnail-container {
+    height: 100px;
+  }
+
+  .user-profile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}

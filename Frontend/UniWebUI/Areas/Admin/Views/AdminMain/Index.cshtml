@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="h3 mb-0 text-gray-800">Kontrol Paneli</h1>
+            <p class="text-muted">Platformun genel durumunu bu sayfadan takip edebilirsiniz.</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    @await Component.InvokeAsync("_AdminStatsCardComponentPartial")
+
+    <!-- Charts -->
+    @await Component.InvokeAsync("_AdminChartsComponentPartial")
+
+    <!-- Recent Listings and Pending Approvals -->
+    <div class="row">
+        <!-- Recent Listings -->
+        @await Component.InvokeAsync("_AdminRecentListComponentPartial")
+
+        <!-- Pending Approvals -->
+        @await Component.InvokeAsync("_AdminPendingApprovalsComponentPartial")
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Area Chart
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
+                datasets: [{
+                    label: "Kayıtlar",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: [65, 78, 90, 105, 125, 130, 145, 160, 185, 200, 220, 232],
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        
+    </script>
+
+    
+}

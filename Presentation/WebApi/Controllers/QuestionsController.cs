@@ -44,6 +44,13 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetQuestionSummaryQuery(id));
             return Ok(new { summary = result });
         }
+        [HttpGet("PendingQuestions")]
+        public async Task<IActionResult> GetAllPendingQuestion()
+        {
+            var result = await _mediator.Send(new GetAllPendingQuestionQuery());
+            return Ok(result);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateQuestion( CreateQuestionCommand command)
         {
@@ -62,6 +69,20 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
             return Ok(Messages<Question>.EntityDeleted);
         }
-        
+
+        [HttpPost("approve/{id}")]  
+        public async Task<IActionResult> ApproveQuestion(int id)
+        {
+            await _mediator.Send(new ApproveQuestionCommand { QuestionId = id });
+            return Ok("Soru onaylandı.");
+        }
+
+        [HttpPost("reject/{id}")]
+        public async Task<IActionResult> RejectQuestion(int id)
+        {
+            await _mediator.Send(new RejectQuestionCommand { QuestionId = id });
+            return Ok("Soru reddedildi.");
+        }
+
     }
 }

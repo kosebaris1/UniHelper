@@ -1,0 +1,28 @@
+/**
+ * pages/pet.css
+ * Hayvan sayfaları stilleri
+ */
+
+/* ----- PET PAGES ----- */
+.pet-edit-thumbnail {
+  height: 150px;
+  width: auto;
+}
+
+.pet-delete-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.request-pet-thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.request-status-badge {
+  width: 90px;
+  display: inline-block;
+}

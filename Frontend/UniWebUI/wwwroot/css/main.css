@@ -1,0 +1,21 @@
+/**
+ * main.css
+ * Tüm CSS dosyalarını içe aktaran ana CSS dosyası
+ */
+
+/* CSS değişkenleri */
+@import url('variables.css');
+
+/* Temel stiller */
+@import url('base.css');
+
+/* Komponentler */
+@import url('components.css');
+
+/* Sayfa düzeni */
+@import url('layout.css');
+
+/* Sayfa-özel stiller */
+@import url('pages.css');
+
+/* Not: admin-theme.css dosyası _AdminLayout.cshtml içinde ayrıca içe aktarılacak */

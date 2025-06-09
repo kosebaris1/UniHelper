@@ -1,0 +1,33 @@
+/**
+ * hero.css
+ * Ana sayfa hero bölümü ve özellikli bölümlerin stillerini içerir
+ */
+
+/* ----- HERO SECTION ----- */
+.hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 0;
+  margin-bottom: 40px;
+}
+
+.hero-text {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.hero-buttons .btn {
+  margin: 0 10px;
+}
+
+/* ----- FEATURED SECTIONS ----- */
+.featured-pets {
+  padding: 40px 0;
+}

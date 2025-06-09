@@ -1,0 +1,11 @@
+/**
+ * base.css
+ * Temel CSS stilleri - modüler yapı
+ */
+
+/* Base modüllerini içe aktarma */
+@import url('base/reset.css');
+@import url('base/utilities.css');
+@import url('base/forms.css');
+@import url('base/badges.css');
+@import url('base/icons.css');

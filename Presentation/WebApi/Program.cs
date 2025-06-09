@@ -24,6 +24,8 @@ using Persistence.Repositories.UniversitiesRepository;
 using Persistence.Repositories.UserRepository;
 using System.Text;
 using Persistence;
+using Application.Interfaces.StatisticInterface;
+using Persistence.Repositories.StatisticRepository;
 
 namespace WebApi
 {
@@ -108,6 +110,7 @@ namespace WebApi
             builder.Services.AddScoped<IUniversitiesRepository, UniversitiesRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
+            builder.Services.AddScoped<IStatisticRepository, StatisticRepository>();
 
             builder.Services.AddInfrastructureServices();
 

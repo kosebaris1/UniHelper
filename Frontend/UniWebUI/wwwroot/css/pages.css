@@ -1,0 +1,11 @@
+/**
+ * pages.css
+ * Sayfa-özel stiller - modüler yapı
+ */
+
+/* Sayfa modüllerini içe aktarma */
+@import url('pages/index.css');
+@import url('pages/pet.css');
+@import url('pages/user.css');
+@import url('pages/message.css');
+@import url('pages/admin.css');

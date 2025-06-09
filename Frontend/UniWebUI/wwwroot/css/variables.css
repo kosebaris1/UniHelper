@@ -1,0 +1,9 @@
+/**
+ * variables.css
+ * Tüm projenin ortak değişkenleri - modüler yapı
+ */
+
+/* Variables modüllerini içe aktarma */
+@import url('variables/colors.css');
+@import url('variables/sizes.css');
+@import url('variables/effects.css');

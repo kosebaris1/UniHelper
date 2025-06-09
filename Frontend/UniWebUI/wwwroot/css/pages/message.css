@@ -1,0 +1,108 @@
+/**
+ * pages/message.css
+ * Mesajlaşma sayfaları stilleri
+ */
+
+/* ----- MESSAGE PAGES ----- */
+.message-bubble {
+  max-width: 75%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  margin-bottom: 5px;
+}
+
+.message-sender {
+  background-color: var(--primary-color);
+  color: white;
+  border-top-right-radius: 0;
+}
+
+.message-receiver {
+  background-color: #f0f0f0;
+  border-top-left-radius: 0;
+}
+
+.message-content {
+  word-wrap: break-word;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.conversation-list .list-group-item.active {
+  background-color: rgba(255, 127, 40, 0.1);
+  border-color: var(--border-color);
+  color: inherit;
+  border-left: 3px solid var(--primary-color);
+}
+
+.conversation-list .list-group-item {
+  border-left: 3px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.conversation-list .list-group-item:hover {
+  background-color: rgba(255, 127, 40, 0.05);
+}
+
+.conversation-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.conversation-search {
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.message-composer {
+  display: flex;
+  padding: 10px 15px;
+  background-color: white;
+  border-top: 1px solid var(--border-color);
+}
+
+.message-composer .form-control {
+  border-radius: var(--border-radius-lg);
+  padding-left: 15px;
+}
+
+.message-composer .btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+}
+
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.new-message-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.message-icon-lg {
+  font-size: 1.5rem;
+}

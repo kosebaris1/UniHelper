@@ -65,7 +65,8 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => src.QuestionLikes.Count))
                 .ForMember(dest => dest.AnswerCount, opt => opt.MapFrom(src => src.Answers.Count));
 
-
+            CreateMap<Question, GetAllPendingQuestionQueryResult>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
 
 
 

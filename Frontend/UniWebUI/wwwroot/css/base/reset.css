@@ -1,0 +1,13 @@
+/**
+ * base/reset.css
+ * Temel stil sıfırlama ve genel ayarlar
+ */
+
+/* Genel stil sıfırlama ve ayarlar */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  margin: 0;
+  padding: 0;
+}

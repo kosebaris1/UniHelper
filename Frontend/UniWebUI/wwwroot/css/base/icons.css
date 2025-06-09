@@ -1,0 +1,14 @@
+/**
+ * base/icons.css
+ * İkonlar ve derecelendirme stilleri
+ */
+
+/* Genel ikonlar */
+.empty-state-icon {
+  font-size: 3rem;
+}
+
+/* Yıldız derecelendirme */
+.text-warning .fas {
+  color: #ffc107;
+}
