@@ -42,6 +42,15 @@ namespace Persistence.Repositories.AnswerRepository
                 .ToListAsync();
         }
 
+        public async Task<List<Answer>> GetMyAllAnswerAsync(int userId)
+        {
+            return await _context.Answers
+               .Where(x => x.DeletedDate == null && x.UserId == userId)
+               .Include(x => x.Question)
+               .OrderByDescending(x => x.CreatedDate)
+               .ToListAsync();
+        }
+
         public async Task<List<Answer>> GetRecentAnswerAsync(int userId, int count)
         {
             return await _context.Answers

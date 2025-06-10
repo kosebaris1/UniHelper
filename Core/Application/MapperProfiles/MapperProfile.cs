@@ -126,6 +126,8 @@ namespace Application.MapperProfiles
             CreateMap<Answer, GetRecentAnswerByUserIdQueryResult>()
                 .ForMember(dest => dest.QuestionTitle, opt => opt.MapFrom(src => src.Question.Title));
 
+            CreateMap<Answer,GetMyAllAnswerQueryResult>()
+                .ForMember(dest => dest.QuestionTitle, opt => opt.MapFrom(src => src.Question.Title));
 
             //City
             CreateMap<City, GetAllCityQueryResult>().ReverseMap();

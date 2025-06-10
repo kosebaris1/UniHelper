@@ -44,7 +44,13 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetRecentAnswerByUserIdQuery(userId,count));
             return Ok(result);
         }
-        
+        [HttpGet("MyAnswer")]
+        public async Task<IActionResult> GetMyAnswer(int userId)
+        {
+            var result = await _mediator.Send(new GetMyAllAnswerQuery(userId));
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateAnswer(CreateAnswersCommand command)
         {
