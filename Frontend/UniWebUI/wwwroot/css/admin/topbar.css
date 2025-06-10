@@ -1,0 +1,31 @@
+/**
+ * admin/topbar.css
+ * Admin üst çubuğu stilleri
+ */
+
+/* ----- TOPBAR ----- */
+.topbar {
+  height: 4.375rem;
+  background-color: white;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.topbar .navbar-search {
+  width: 25rem;
+  padding-left: 0.75rem;
+}
+
+.topbar .navbar-search input {
+  font-size: 0.85rem;
+  height: auto;
+}
+
+.topbar .dropdown a {
+  color: var(--admin-gray-900);
+  text-decoration: none;
+}
+
+.topbar .dropdown a i {
+  font-size: 1rem;
+}

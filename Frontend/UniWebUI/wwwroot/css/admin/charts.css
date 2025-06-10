@@ -1,0 +1,17 @@
+/**
+ * admin/charts.css
+ * Admin grafik bileşenleri stilleri
+ */
+
+/* ----- CHARTS ----- */
+.chart-area {
+  position: relative;
+  height: 20rem;
+  width: 100%;
+}
+
+.chart-pie {
+  position: relative;
+  height: 15rem;
+  width: 100%;
+}

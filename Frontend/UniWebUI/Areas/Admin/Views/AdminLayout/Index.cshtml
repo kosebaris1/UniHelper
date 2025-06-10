@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    @await Component.InvokeAsync("_LayoutAdminHeadComponentPartial")
+</head>
+
+<body class="admin-body">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @await Component.InvokeAsync("_LayoutAdminNavComponentPartial")
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Topbar -->
+            @await Component.InvokeAsync("_LayoutAdminTopbarComponentPartial")
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+            <main role="main">
+                @RenderBody()
+            </main>
+            <!-- End of Page Content -->
+            <!-- Footer -->
+            @await Component.InvokeAsync("_LayoutAdminFooterComponentPartial")
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Modals and Utility Elements -->
+    @await Component.InvokeAsync("_LayoutAdminModalsComponentPartial")
+
+    <!-- Scripts -->
+    @await Component.InvokeAsync("_LayoutAdminScriptsComponentPartial")
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

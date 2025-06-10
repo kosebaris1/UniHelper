@@ -1,0 +1,14 @@
+/**
+ * components.css
+ * Yeniden kullanılabilir bileşenlerin stilleri - modüler yapı
+ */
+
+/* Components modüllerini içe aktarma */
+@import url('components/buttons.css');
+@import url('components/cards.css');
+@import url('components/navbar.css');
+@import url('components/lists.css');
+@import url('components/pagination.css');
+@import url('components/tags.css');
+@import url('components/avatars.css');
+@import url('components/containers.css');

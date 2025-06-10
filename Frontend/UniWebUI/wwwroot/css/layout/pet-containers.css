@@ -1,0 +1,66 @@
+/**
+ * pet-containers.css
+ * Hayvan listesi, detay ve ilgili kartların stillerini içerir
+ */
+
+/* ----- PET CONTAINERS ----- */
+.pet-detail-info {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-spacing);
+  margin-bottom: var(--card-spacing);
+}
+
+.pet-detail-header {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 30px;
+}
+
+.pet-detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pet-thumbnail-container {
+  height: 150px;
+  overflow: hidden;
+  border-radius: var(--border-radius-md);
+}
+
+.pet-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.similar-pet-container {
+  height: 120px;
+  overflow: hidden;
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+  position: relative;
+}
+
+.similar-pet-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adoption-form {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-spacing);
+  margin-bottom: var(--card-spacing);
+}
+
+.favorite-remove-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

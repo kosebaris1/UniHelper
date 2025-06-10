@@ -1,0 +1,38 @@
+/**
+ * user-profile.css
+ * Kullanıcı profili ve hesap ilgili stilleri içerir
+ */
+
+/* ----- USER PROFILE ----- */
+.user-profile {
+  background-color: #fff;
+  padding: var(--card-spacing);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.profile-info {
+  margin-left: 15px;
+}
+
+.user-profile h4 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  font-weight: 600;
+}
+
+.user-profile p {
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.user-profile .badge {
+  margin-bottom: 10px;
+  display: inline-block;
+}

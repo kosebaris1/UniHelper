@@ -1,0 +1,32 @@
+/**
+ * base-layout.css
+ * _Layout.cshtml için temel stiller
+ */
+
+/* ----- BASE LAYOUT STYLES ----- */
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--hover-color);
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--hover-color);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}

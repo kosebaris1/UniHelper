@@ -1,0 +1,25 @@
+/**
+ * admin/variables.css
+ * Admin paneline özel değişkenler
+ */
+
+/* ----- ADMIN VARIABLES ----- */
+:root {
+  --admin-primary: #4e73df;
+  --admin-primary-gradient: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  --admin-secondary: #f8f9fc;
+  --admin-success: #1cc88a;
+  --admin-info: #36b9cc;
+  --admin-warning: #f6c23e;
+  --admin-danger: #e74a3b;
+  --admin-gray-100: #f8f9fc;
+  --admin-gray-200: #eaecf4;
+  --admin-gray-300: #dddfeb;
+  --admin-gray-400: #d1d3e2;
+  --admin-gray-500: #b7b9cc;
+  --admin-gray-600: #858796;
+  --admin-gray-700: #6e707e;
+  --admin-gray-800: #5a5c69;
+  --admin-gray-900: #3a3b45;
+  --admin-sidebar-width: 225px;
+}

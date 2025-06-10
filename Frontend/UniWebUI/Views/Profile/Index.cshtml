@@ -7,26 +7,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- SOL SÜTUN -->
-        <div class="col-lg-3 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-profile-header text-center">
-                    <img src="@Model.ProfilePictureUrl" class="rounded-circle mt-3 shadow-sm" width="100" height="100" alt="Avatar" />
-                    <h5 class="mt-2 mb-0 text-white">@Model.FullName</h5>
-                    <p class="text-white-50 small mb-2">@Model.UniversityName</p>
-                    <p class="text-white-50 small mb-3">@(string.IsNullOrWhiteSpace(Model.DepartmentName) ? "Aday Öğrenci" : Model.DepartmentName)</p>
-                    <a href="#" class="btn btn-light btn-sm rounded-pill">Profili Düzenle</a>
-                </div>
-
-                <div class="card-body p-0">
-                    <ul class="list-group list-group-flush text-start">
-                        <li class="list-group-item list-hover-slide"><i class="fas fa-question-circle me-2 text-orange"></i> Sorularım</li>
-                        <li class="list-group-item"><i class="fas fa-comment-dots me-2 text-orange"></i> Cevaplarım</li>
-                        <li class="list-group-item"><i class="fas fa-heart me-2 text-orange"></i> Beğendiklerim</li>
-                        <li class="list-group-item"><i class="fas fa-envelope me-2 text-orange"></i> Mesajlarım</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        @await Component.InvokeAsync("_ProfileSideBarComponentPartial", new { id = ViewBag.UserId})
 
         <!-- SAĞ SÜTUN -->
         <div class="col-lg-9">

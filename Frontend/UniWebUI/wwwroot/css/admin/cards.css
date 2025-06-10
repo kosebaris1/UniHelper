@@ -1,0 +1,39 @@
+/**
+ * admin/cards.css
+ * Admin kartları ve içerik bileşenleri stilleri
+ */
+
+/* ----- CARDS ----- */
+.card {
+  margin-bottom: 1.5rem;
+  border: none;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+  background-color: var(--admin-gray-100);
+  border-bottom: 1px solid var(--admin-gray-200);
+}
+
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+/* ----- BORDER CARDS ----- */
+.border-left-primary {
+  border-left: 0.25rem solid var(--admin-primary) !important;
+}
+
+.border-left-success {
+  border-left: 0.25rem solid var(--admin-success) !important;
+}
+
+.border-left-info {
+  border-left: 0.25rem solid var(--admin-info) !important;
+}
+
+.border-left-warning {
+  border-left: 0.25rem solid var(--admin-warning) !important;
+}

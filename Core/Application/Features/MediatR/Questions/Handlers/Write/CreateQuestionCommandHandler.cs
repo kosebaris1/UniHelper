@@ -20,6 +20,7 @@ namespace Application.Features.MediatR.Questions.Handlers.Write
         public async Task<Unit> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
         {
             var question=_mapper.Map<Question>(request);
+            question.Status = "Pending";
             await _questionRepository.CreateQuestionAsync(question, request.TagIds);
             return Unit.Value;
         }

@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h1 class="h3 mb-0 text-gray-800">Kontrol Paneli</h1>
+            <p class="text-muted">Platformun genel durumunu bu sayfadan takip edebilirsiniz.</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    @await Component.InvokeAsync("_AdminStatsCardComponentPartial")
+
+    <!-- Recent Listings and Pending Approvals -->
+    <div class="row">
+        <!-- Recent Listings -->
+        @await Component.InvokeAsync("_AdminRecentQuestionListComponentPartial")
+
+        <!-- Pending Approvals -->
+        @await Component.InvokeAsync("_AdminPendingQuestionComponentPartial")
+    </div>
+    <div class="row">
+        <!-- Recent Listings -->
+        @await Component.InvokeAsync("_AdminRecentUserListComponentPartial")
+
+        <!-- Pending Approvals -->
+        @await Component.InvokeAsync("_AdminPendingUserComponentPartial")
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.verification-thumbnail').forEach(img => {
+            img.addEventListener('click', function () {
+                const fullImgUrl = this.getAttribute('data-img');
+                document.getElementById('modalVerificationImage').src = fullImgUrl;
+            });
+        });
+    </script>
+}

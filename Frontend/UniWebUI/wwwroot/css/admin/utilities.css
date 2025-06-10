@@ -1,0 +1,70 @@
+/**
+ * admin/utilities.css
+ * Admin yardımcı stiller (text, border, background, vb.)
+ */
+
+/* ----- TEXT UTILITIES ----- */
+.text-xs {
+  font-size: 0.7rem;
+}
+
+.text-primary {
+  color: var(--admin-primary) !important;
+}
+
+.text-success {
+  color: var(--admin-success) !important;
+}
+
+.text-info {
+  color: var(--admin-info) !important;
+}
+
+.text-warning {
+  color: var(--admin-warning) !important;
+}
+
+.text-gray-300 {
+  color: var(--admin-gray-300) !important;
+}
+
+.text-gray-800 {
+  color: var(--admin-gray-800) !important;
+}
+
+/* ----- DROPDOWNS ----- */
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1.5rem;
+  clear: both;
+  font-weight: 400;
+  color: var(--admin-gray-900);
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}
+
+.dropdown-item:hover {
+  color: var(--admin-gray-900);
+  text-decoration: none;
+  background-color: var(--admin-gray-100);
+}
+
+/* ----- BACKGROUND UTILITIES ----- */
+.bg-gradient-primary {
+  background-color: var(--admin-primary);
+  background-image: var(--admin-primary-gradient);
+}
+
+/* ----- PROGRESS BARS ----- */
+.progress {
+  height: 0.5rem;
+  margin-bottom: 0.5rem;
+}

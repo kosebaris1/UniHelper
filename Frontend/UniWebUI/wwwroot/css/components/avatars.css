@@ -1,0 +1,101 @@
+/**
+ * components/avatars.css
+ * Kullanıcı avatarları ve profil stillerini içerir
+ */
+
+/* ----- AVATARS ----- */
+.user-avatar {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-profile {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 25px 0 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.user-profile .user-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: block;
+  border: 5px solid #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.user-profile .user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.user-profile .profile-info {
+  text-align: center;
+  width: 100%;
+  margin-top: 18px;
+}
+
+.user-profile .profile-info h5 {
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: #212529;
+}
+
+.user-profile .profile-info p {
+  font-size: 1rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* İletişim Bilgileri */
+.contact-info {
+  padding: 10px 0;
+}
+
+.contact-info p {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.contact-info i {
+  width: 25px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.user-avatar-sm {
+  width: var(--avatar-size-sm);
+  height: var(--avatar-size-sm);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-photo {
+  width: var(--avatar-size-lg) !important;
+  height: var(--avatar-size-lg) !important;
+  object-fit: cover !important;
+  display: inline-block !important;
+  border: 3px solid #fff !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.avatar-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}

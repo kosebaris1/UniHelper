@@ -6,5 +6,7 @@ namespace UniWebUI.Models
     {
         public int CurrentUserId { get; set; }
         public bool CanAnswer { get; set; }
+        public bool CurrentUserIsVerified { get; set; }
+
     }
 }

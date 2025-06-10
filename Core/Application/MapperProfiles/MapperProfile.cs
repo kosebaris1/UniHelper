@@ -39,11 +39,22 @@ namespace Application.MapperProfiles
             .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role.Name))
             .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
             .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            CreateMap<User, GetAllUnverifiedUserQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            CreateMap<User, GetRecentVerifiedUserQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            CreateMap<User, Get3TopLikeUserQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
 
             //Question
             CreateMap<Question, CreateQuestionCommand>().ReverseMap();
+
             CreateMap<Question, UpdateQuestionCommand>().ReverseMap();
+
             CreateMap<Question, GetFilteredQuestionQueryResult>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.UserImageUrl, opt => opt.MapFrom(src => src.User.ProfilePictureUrl))
@@ -52,11 +63,14 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt => qt.Tag.Name).ToList()))
                 .ForMember(dest => dest.AnswerCount, opt => opt.MapFrom(src => src.Answers.Count))
                 .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => src.QuestionLikes.Count));
-            CreateMap<Question,GetByIdQuestionQueryResult>()
+
+            CreateMap<Question, GetByIdQuestionQueryResult>()
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+                .ForMember(dest => dest.UserProfileUrl, opt => opt.MapFrom(src => src.User.ProfilePictureUrl))
                 .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt => qt.Tag.Name).ToList()));
+
             CreateMap<Question, GetMyTopQuestionQueryResult>()
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
@@ -64,7 +78,18 @@ namespace Application.MapperProfiles
                 .ForMember(dest => dest.LikeCount, opt => opt.MapFrom(src => src.QuestionLikes.Count))
                 .ForMember(dest => dest.AnswerCount, opt => opt.MapFrom(src => src.Answers.Count));
 
+            CreateMap<Question, GetAllPendingQuestionQueryResult>()
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
 
+            CreateMap<Question, GetMyAllLikedQuestionQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+                .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt => qt.Tag.Name).ToList()));
+
+            CreateMap<Question, GetMyAllQuestionQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name))
+                .ForMember(dest => dest.QuestionTags, opt => opt.MapFrom(src => src.QuestionTags.Select(qt => qt.Tag.Name).ToList()));
 
 
 
@@ -101,6 +126,8 @@ namespace Application.MapperProfiles
             CreateMap<Answer, GetRecentAnswerByUserIdQueryResult>()
                 .ForMember(dest => dest.QuestionTitle, opt => opt.MapFrom(src => src.Question.Title));
 
+            CreateMap<Answer,GetMyAllAnswerQueryResult>()
+                .ForMember(dest => dest.QuestionTitle, opt => opt.MapFrom(src => src.Question.Title));
 
             //City
             CreateMap<City, GetAllCityQueryResult>().ReverseMap();

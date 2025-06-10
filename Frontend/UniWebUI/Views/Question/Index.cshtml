@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Index.cshtml";
+    int i = 0;
 }
 @functions {
     public static string GetRelativeTime(DateTime createdDate)
@@ -48,9 +49,9 @@
                 {
                     <h6 class="text-orange text-uppercase small fw-bold mt-4 mb-2">Benim Alanım</h6>
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyQuestions/@ViewBag.UserId"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyAnswers/@ViewBag.UserId"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyLikedQuestions/@ViewBag.UserId"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
                     </ul>
                 }
 
@@ -102,15 +103,17 @@
                 {
                     @foreach (var question in Model.Questions)
                     {
+                        var delayClass = $"delay-{(i > 9 ? 9 : i)}"; // Maksimum .delay-9'a kadar sınırlıyoruz
+                        i++;
+
                         <a asp-controller="Question" asp-action="Detail" asp-route-id="@question.QuestionId" class="text-decoration-none text-dark">
-                            <div class="card question-card mb-3 shadow-sm p-3 rounded-4 position-relative">
+                            <div class="card question-card mb-3 shadow-sm p-3 rounded-4 position-relative fade-in-up @delayClass">
                                 <div class="d-flex align-items-center mb-2">
                                     <img src="@question.UserImageUrl" alt="User Avatar" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
                                     <div>
                                         <h6 class="mb-0 fw-semibold">@question.UserName</h6>
                                         <small class="text-muted">@GetRelativeTime(question.CreatedDate)</small>
                                     </div>
-
                                     <div class="ms-auto">
                                         <i class="fas fa-ellipsis-v text-muted"></i>
                                     </div>

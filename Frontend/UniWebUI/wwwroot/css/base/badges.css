@@ -1,0 +1,39 @@
+/**
+ * base/badges.css
+ * Badge stilleri
+ */
+
+/* Badge stilleri */
+.badge {
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: var(--border-radius-lg);
+}
+
+.badge-primary {
+  background-color: var(--primary-color);
+}
+
+.badge-sm {
+  font-size: 0.65rem;
+  padding: 0;
+  border-radius: 50%;
+  min-width: 18px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  position: relative;
+}
+
+.badge-placeholder {
+  min-width: 18px;
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  margin-left: 4px;
+  position: relative;
+}

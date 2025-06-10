@@ -11,6 +11,7 @@
         public Department? Department { get; set; }
         public int? UniversityId { get; set; }
         public University? University { get; set; }
+        public string Status { get; set; } = "Pending"; 
 
         public ICollection<Answer> Answers { get; set; }
         public ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>(); // ✅

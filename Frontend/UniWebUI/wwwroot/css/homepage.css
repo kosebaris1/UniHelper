@@ -1,0 +1,65 @@
+﻿/* Genel ayarlar */
+.text-orange {
+    color: #f57c00;
+}
+
+.btn-warning {
+    background-color: #f57c00;
+    border-color: #f57c00;
+    color: white;
+}
+
+    .btn-warning:hover {
+        background-color: #e06b00;
+        border-color: #e06b00;
+    }
+
+/* Kart gölgeleri */
+.card.shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s ease-in-out;
+}
+
+    .card.shadow:hover {
+        transform: translateY(-5px);
+    }
+
+/* Hakkımızda kartı */
+.card-body h3 {
+    color: #f57c00;
+    font-weight: bold;
+}
+
+/* Öğrenci avatarları */
+.card img {
+    object-fit: cover;
+    border: 3px solid #f57c00;
+    transition: transform 0.3s;
+}
+
+    .card img:hover {
+        transform: scale(1.05);
+    }
+
+/* Başlıklar */
+.display-4 {
+    font-weight: bold;
+}
+
+/* Animasyon */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-section {
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+}

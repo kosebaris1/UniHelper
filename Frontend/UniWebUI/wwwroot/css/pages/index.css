@@ -1,0 +1,19 @@
+/**
+ * pages/index.css
+ * Ana sayfa stilleri
+ */
+
+/* ----- INDEX PAGE ----- */
+.index-card-img {
+  height: 220px;
+  object-fit: cover;
+  border-top-left-radius: var(--border-radius-md);
+  border-top-right-radius: var(--border-radius-md);
+}
+
+.story-img {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: var(--border-radius-md);
+  border-top-right-radius: var(--border-radius-md);
+}

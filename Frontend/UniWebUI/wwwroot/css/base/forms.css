@@ -1,0 +1,10 @@
+/**
+ * base/forms.css
+ * Form elemanları stilleri
+ */
+
+/* Form elemanları */
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(255, 127, 42, 0.25);
+}

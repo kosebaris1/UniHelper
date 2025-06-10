@@ -1,0 +1,13 @@
+/**
+ * pages/admin.css
+ * Admin sayfaları stilleri
+ */
+
+/* ----- ADMIN PAGES ----- */
+.progress-bar-admin-65 {
+  width: 65%;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(145deg, #4e73df 10%, #224abe 100%);
+}

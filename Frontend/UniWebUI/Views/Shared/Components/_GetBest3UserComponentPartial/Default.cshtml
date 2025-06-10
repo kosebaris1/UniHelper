@@ -1,0 +1,20 @@
+﻿@model List<GetBest3UserDto>
+
+<div class="text-center mb-4">
+    <h3 class="text-orange">Tanışabileceğin Öğrenciler</h3>
+</div>
+<div class="row justify-content-center mb-5 animated-section">
+    @* Placeholder kullanıcılar *@
+    @foreach(var item in Model)
+    {
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <img src="@item.ProfilePictureUrl" class="rounded-circle mb-2" width="80" height="80" alt="User1">
+                    <h5 class="card-title mb-0">@item.FullName</h5>
+                    <small class="text-muted">@item.UniversityName - @item.DepartmentName</small>
+                </div>
+            </div>
+        </div>
+    }
+</div>

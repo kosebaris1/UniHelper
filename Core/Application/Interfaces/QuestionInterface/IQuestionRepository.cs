@@ -18,7 +18,10 @@ namespace Application.Interfaces.QuestionInterface
         Task<int> CreateQuestionAsync(Question question, List<int> tagIds);
         Task<Question> GetQuestionWithDetailsByIdAsync(int id);
         Task<List<Question>> GetTopQuestionAsync(int userId, int count);
-
+        Task ChangeStatusAsync(int questionId, string newStatus);
+        Task<List<Question>> GetAllPendingQuestionAsync();
+        Task<List<Question>> GetMyAllLikedQuestion(int userId);
+        Task<List<Question>> GetMyAllQuestion(int userId);
 
     }
 }

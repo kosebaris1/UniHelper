@@ -1,0 +1,38 @@
+/**
+ * base/utilities.css
+ * Genel kullanılan yardımcı sınıflar
+ */
+
+/* Genel kullanılan ve yardımcı sınıflar */
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+
+.section-title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Separator */
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.separator span {
+  padding: 0 10px;
+  color: #6c757d;
+}

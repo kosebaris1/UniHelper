@@ -44,6 +44,25 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetQuestionSummaryQuery(id));
             return Ok(new { summary = result });
         }
+        [HttpGet("PendingQuestions")]
+        public async Task<IActionResult> GetAllPendingQuestion()
+        {
+            var result = await _mediator.Send(new GetAllPendingQuestionQuery());
+            return Ok(result);
+        }
+        [HttpGet("MyQuestions")]
+        public async Task<IActionResult> GetMyAllQuestion(int userId)
+        {
+            var result = await _mediator.Send(new GetMyAllQuestionQuery(userId));
+            return Ok(result);
+        }
+        [HttpGet("MyLikedQuestions")]
+        public async Task<IActionResult> GetMyAllLikedQuestion(int userId)
+        {
+            var result = await _mediator.Send(new GetMyAllLikedQuestionQuery(userId));
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateQuestion( CreateQuestionCommand command)
         {
@@ -62,6 +81,20 @@ namespace WebApi.Controllers
             await _mediator.Send(command);
             return Ok(Messages<Question>.EntityDeleted);
         }
-        
+
+        [HttpPut("approve")]  
+        public async Task<IActionResult> ApproveQuestion([FromBody] ApproveQuestionCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Soru onaylandı.");
+        }
+
+        [HttpPut("reject")]
+        public async Task<IActionResult> RejectQuestion([FromBody] RejectQuestionCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok("Soru reddedildi.");
+        }
+
     }
 }

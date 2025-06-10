@@ -1,0 +1,116 @@
+/**
+ * sidebar.css
+ * Kenar menüsü ve navigasyon stillerini içerir
+ */
+
+/* ----- SIDEBAR ----- */
+.sidebar {
+  background-color: white;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--card-spacing);
+  margin-bottom: var(--card-spacing);
+}
+
+.sidebar-menu {
+  margin-top: var(--card-spacing);
+}
+
+.sidebar-menu .list-group {
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius-md);
+  background-color: #fff;
+}
+
+.sidebar-menu .list-group-item {
+  border-radius: 0 !important;
+  margin-bottom: 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #eee;
+  transition: all var(--transition-fast) ease;
+  background-color: #fff;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.sidebar-menu .list-group-item:first-child {
+  border-top: none;
+  border-top-left-radius: var(--border-radius-md) !important;
+  border-top-right-radius: var(--border-radius-md) !important;
+}
+
+.sidebar-menu .list-group-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  border-bottom-left-radius: var(--border-radius-md) !important;
+  border-bottom-right-radius: var(--border-radius-md) !important;
+}
+
+.sidebar-menu .list-group-item:hover {
+  background-color: rgba(255, 127, 40, 0.05);
+  z-index: 1;
+}
+
+.sidebar-menu .list-group-item.active {
+  background-color: rgba(255, 127, 40, 0.1) !important;
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  border-left: 3px solid var(--primary-color) !important;
+  font-weight: 500;
+}
+
+.sidebar-menu .list-group-item a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  position: relative;
+}
+
+.sidebar-menu .list-group-item a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  max-width: calc(100% - 40px);
+  min-width: 0;
+}
+
+.sidebar-menu .list-group-item .ms-auto {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-menu .list-group-item .badge {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.35rem;
+  border-radius: 8px;
+  min-width: 16px;
+  height: 16px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.sidebar-menu .menu-item-top {
+  border-top: 1px solid #ddd !important;
+  border-top-left-radius: var(--border-radius-md) !important;
+  border-top-right-radius: var(--border-radius-md) !important;
+}
+
+.sidebar-menu .menu-item-bottom {
+  border-bottom: 1px solid #ddd !important;
+  border-bottom-left-radius: var(--border-radius-md) !important;
+  border-bottom-right-radius: var(--border-radius-md) !important;
+}

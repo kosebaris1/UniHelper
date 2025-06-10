@@ -1,0 +1,37 @@
+﻿@model List<GetMyAllAnswerDto>
+@{
+    ViewData["Title"] = "Cevaplarım";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- SOL PANEL -->
+        @await Component.InvokeAsync("_ProfileSideBarComponentPartial", new { id = ViewBag.UserId })
+
+        <!-- SAĞ PANEL -->
+        <div class="col-lg-9">
+            <h4 class="mb-4">💬 Verdiğim Cevaplar</h4>
+            @if (Model.Any())
+            {
+                @foreach (var answer in Model)
+                {
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <h6 class="text-orange mb-1">Soru: @answer.QuestionTitle</h6>
+                            <p class="card-text">@answer.Content</p>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>@answer.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
+                                <a href="/Question/Detail/@answer.QuestionId" class="btn btn-sm btn-outline-secondary">Soruyu Gör</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-secondary">Henüz hiç cevap vermemişsiniz.</div>
+            }
+        </div>
+    </div>
+</div>
