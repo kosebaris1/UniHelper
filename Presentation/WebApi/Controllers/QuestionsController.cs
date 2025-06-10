@@ -50,7 +50,19 @@ namespace WebApi.Controllers
             var result = await _mediator.Send(new GetAllPendingQuestionQuery());
             return Ok(result);
         }
-        
+        [HttpGet("MyQuestions")]
+        public async Task<IActionResult> GetMyAllQuestion(int userId)
+        {
+            var result = await _mediator.Send(new GetMyAllQuestionQuery(userId));
+            return Ok(result);
+        }
+        [HttpGet("MyLikedQuestions")]
+        public async Task<IActionResult> GetMyAllLikedQuestion(int userId)
+        {
+            var result = await _mediator.Send(new GetMyAllLikedQuestionQuery(userId));
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateQuestion( CreateQuestionCommand command)
         {
