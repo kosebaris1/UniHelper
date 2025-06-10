@@ -49,9 +49,9 @@
                 {
                     <h6 class="text-orange text-uppercase small fw-bold mt-4 mb-2">Benim Alanım</h6>
                     <ul class="nav flex-column sidebar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyQuestions/@Model.CurrentUserId"><i class="far fa-question-circle me-2"></i> Sorularım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyAnswers/@Model.CurrentUserId"><i class="far fa-comment-alt me-2"></i> Cevaplarım</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Profile/MyLikedQuestions/@Model.CurrentUserId"><i class="far fa-heart me-2"></i> Beğendiklerim</a></li>
                     </ul>
                 }
 
@@ -71,9 +71,12 @@
 
                         <img src="@Model.UserProfileUrl" class="rounded-circle me-2" width="30" height="30" alt="User Avatar">
                         <div>
-                            <span class="fw-bold">@Model.UserName</span>
+                            <a href="/Profile/PublicProfile/@Model.UserId" class="fw-bold text-decoration-none text-dark">
+                                @Model.UserName
+                            </a>
                             <small class="text-muted ms-2">@Model.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
                         </div>
+
                     </div>
                     <h4 class="card-title">@Model.Title</h4>
                     <p class="card-text">@Model.Content</p>

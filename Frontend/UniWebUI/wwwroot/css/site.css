@@ -87,3 +87,19 @@ body {
     color: #f57c00 !important;
     transition: 0.2s;
 }
+
+.text-gold {
+    color: #f0b429;
+}
+
+.text-silver {
+    color: #b8b8b8;
+}
+
+.text-bronze {
+    color: #cd7f32;
+}
+
+.border-orange {
+    border-color: #fd7e14 !important;
+}

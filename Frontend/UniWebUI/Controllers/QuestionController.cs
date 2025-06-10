@@ -23,6 +23,8 @@ namespace UniWebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? cityId = null, int? universityId = null, int? departmentId = null, List<int>? tagsId = null, string sortBy = "new")
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            ViewBag.UserId = userId;
             var client = _httpClientFactory.CreateClient();
             var queryParams = new List<string>();
 

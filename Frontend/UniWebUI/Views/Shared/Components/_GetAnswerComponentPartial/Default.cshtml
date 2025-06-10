@@ -19,14 +19,17 @@ else
 
                 <div class="flex-grow-1">
                     <div class="d-flex align-items-center mb-1">
-                        <strong>@answer.UserFullName</strong>
+                        <a href="/Profile/PublicProfile/@answer.UserId" class="fw-bold text-decoration-none text-dark">
+                            @answer.UserFullName
+                        </a>
                         @if (answer.IsVerified)
                         {
                             <span class="verified-badge ms-2" title="Doğrulanmış kullanıcı">
-                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-check-circle text-primary"></i>
                             </span>
                         }
                     </div>
+
 
                     <div class="mb-2">
                         <span class="badge university-badge me-1">@answer.DepartmentName</span>

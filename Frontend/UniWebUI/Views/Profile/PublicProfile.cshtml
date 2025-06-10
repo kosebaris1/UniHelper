@@ -1,0 +1,64 @@
+﻿@model GetUserProfileDto
+@{
+    ViewData["Title"] = "Kullanıcı Profili";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="container d-flex justify-content-center" style="min-height: 100vh;">
+    <div class="align-self-start mt-5 w-100" style="max-width: 700px;">
+
+        <!-- Profil Kartı -->
+        <div class="card shadow-sm p-4 mb-4 text-center">
+            <img src="@Model.ProfilePictureUrl"
+                 class="rounded-circle border border-3 border-orange mx-auto mb-3"
+                 style="width: 120px; height: 120px; object-fit: cover;" />
+            <h4 class="mb-1">@Model.FullName</h4>
+            <p class="text-muted mb-0">@Model.UniversityName</p>
+            <p class="text-muted">@Model.DepartmentName</p>
+        </div>
+
+        <!-- İstatistik Kartları -->
+        <div class="row g-3 text-center">
+            <div class="col-4">
+                <div class="card p-3 shadow-sm h-100">
+                    <div class="fw-bold fs-3 text-orange">@Model.AnswerCount</div>
+                    <div class="text-muted small">Verdiği Cevap</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card p-3 shadow-sm h-100">
+                    <div class="fw-bold fs-3 text-orange">@Model.TotalLikes</div>
+                    <div class="text-muted small">Toplam Beğeni</div>
+                </div>
+            </div>
+            @{
+                var rozet = "Bronz Rozet";
+                var rozetIcon = "fa-medal";
+                var rozetClass = "text-bronze";
+                var rozetDescription = "Katılıma Özel";
+
+                if (Model.TotalLikes >= 5)
+                {
+                    rozet = "Altın Rozet";
+                    rozetClass = "text-gold animate-pulse";
+                    rozetDescription = "5+ Beğeniye özel";
+                }
+                else if (Model.TotalLikes >= 3)
+                {
+                    rozet = "Gümüş Rozet";
+                    rozetClass = "text-silver animate-pulse";
+                    rozetDescription = "3+ Beğeniye özel";
+                }
+            }
+            <div class="col-4">
+                <div class="card p-3 shadow-sm h-100">
+                    <div class="fw-bold fs-5 @rozetClass">
+                        <i class="fas @rozetIcon me-1"></i> @rozet
+                    </div>
+                    <div class="text-muted small">@rozetDescription</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

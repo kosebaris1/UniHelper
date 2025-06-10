@@ -34,7 +34,7 @@ namespace UniWebUI
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Index}/{id?}");
+                pattern: "{controller=Main}/{action=Index}/{id?}");
 
             //area kullanýmý için
             app.UseEndpoints(endpoints =>

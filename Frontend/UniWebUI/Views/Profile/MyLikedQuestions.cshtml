@@ -1,0 +1,46 @@
+﻿@model List<GetMyAllLikedQuestionDto>
+@{
+    ViewData["Title"] = "MyLikedQuestions";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- SOL PANEL -->
+        @await Component.InvokeAsync("_ProfileSideBarComponentPartial", new { id = ViewBag.UserId })
+
+        <!-- SAĞ PANEL -->
+        <div class="col-lg-9">
+            <h4 class="mb-4">❤️ Beğendiğim Sorular</h4>
+            @if (Model.Any())
+            {
+                @foreach (var question in Model)
+                {
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@question.Title</h5>
+                            <p class="card-text text-muted">@question.Content</p>
+                            <div class="mb-2">
+                                <span class="badge bg-secondary">@question.UniversityName</span>
+                                <span class="badge bg-secondary">@question.DepartmentName</span>
+                                @foreach (var tag in question.QuestionTags)
+                                {
+                                    <span class="badge bg-orange text-white">#@tag</span>
+                                }
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>@question.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
+                                <a href="/Question/Detail/@question.QuestionId" class="btn btn-sm btn-outline-danger">Detay</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning">Henüz beğendiğiniz bir soru bulunamadı.</div>
+            }
+        </div>
+    </div>
+</div>
+

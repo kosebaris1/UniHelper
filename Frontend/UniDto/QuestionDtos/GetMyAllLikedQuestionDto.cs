@@ -1,6 +1,6 @@
-﻿namespace Application.Features.MediatR.Questions.Results
+﻿namespace UniDto.QuestionDtos
 {
-    public class GetMyAllQuestionQueryResult
+    public class GetMyAllLikedQuestionDto
     {
         public int QuestionId { get; set; }
         public string Title { get; set; }
