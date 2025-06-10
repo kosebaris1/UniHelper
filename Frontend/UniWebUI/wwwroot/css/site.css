@@ -83,3 +83,7 @@ body {
     background-color: #e67e00;
     border-color: #e67e00;
 }
+.navbar .nav-link.text-dark:hover {
+    color: #f57c00 !important;
+    transition: 0.2s;
+}

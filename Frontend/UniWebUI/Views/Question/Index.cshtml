@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/UILayout/Index.cshtml";
+    int i = 0;
 }
 @functions {
     public static string GetRelativeTime(DateTime createdDate)
@@ -102,15 +103,17 @@
                 {
                     @foreach (var question in Model.Questions)
                     {
+                        var delayClass = $"delay-{(i > 9 ? 9 : i)}"; // Maksimum .delay-9'a kadar sınırlıyoruz
+                        i++;
+
                         <a asp-controller="Question" asp-action="Detail" asp-route-id="@question.QuestionId" class="text-decoration-none text-dark">
-                            <div class="card question-card mb-3 shadow-sm p-3 rounded-4 position-relative">
+                            <div class="card question-card mb-3 shadow-sm p-3 rounded-4 position-relative fade-in-up @delayClass">
                                 <div class="d-flex align-items-center mb-2">
                                     <img src="@question.UserImageUrl" alt="User Avatar" class="rounded-circle me-3" width="40" height="40" style="object-fit: cover;">
                                     <div>
                                         <h6 class="mb-0 fw-semibold">@question.UserName</h6>
                                         <small class="text-muted">@GetRelativeTime(question.CreatedDate)</small>
                                     </div>
-
                                     <div class="ms-auto">
                                         <i class="fas fa-ellipsis-v text-muted"></i>
                                     </div>

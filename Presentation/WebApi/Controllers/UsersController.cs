@@ -54,6 +54,12 @@ namespace WebApi.Controllers
             var value = await _mediator.Send(new GetRecentVerifiedUserQuery(count));
             return Ok(value);
         }
+        [HttpGet("Get3TopLikeUser")]
+        public async Task<IActionResult> Get3TopLikeUser()
+        {
+            var value = await _mediator.Send(new Get3TopLikeUserQuery());
+            return Ok(value);
+        }
         
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommand command)

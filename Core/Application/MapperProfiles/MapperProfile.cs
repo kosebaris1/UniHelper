@@ -45,6 +45,9 @@ namespace Application.MapperProfiles
             CreateMap<User, GetRecentVerifiedUserQueryResult>()
                 .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
+            CreateMap<User, Get3TopLikeUserQueryResult>()
+                .ForMember(dest => dest.UniversityName, opt => opt.MapFrom(src => src.University.Name))
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department.Name));
 
 
             //Question

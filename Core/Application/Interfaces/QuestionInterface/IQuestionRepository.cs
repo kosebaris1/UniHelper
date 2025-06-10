@@ -20,7 +20,8 @@ namespace Application.Interfaces.QuestionInterface
         Task<List<Question>> GetTopQuestionAsync(int userId, int count);
         Task ChangeStatusAsync(int questionId, string newStatus);
         Task<List<Question>> GetAllPendingQuestionAsync();
-
+        Task<List<Question>> GetMyAllLikedQuestion(int userId);
+        Task<List<Question>> GetMyAllQuestion(int userId);
 
     }
 }

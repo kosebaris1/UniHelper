@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.UserInterface;
+﻿using Application.Features.MediatR.Users.Results;
+using Application.Interfaces.UserInterface;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Context;
@@ -79,6 +80,24 @@ namespace Persistence.Repositories.UserRepository
                 .Include(x => x.Department)
                 .OrderByDescending(x=>x.UpdatedDate)
                 .Take(count)
+                .ToListAsync();
+        }
+
+        public async Task<List<Get3TopLikeUserQueryResult>> GetTop3VerifiedUserAsync()
+        {
+            return await _context.Users
+                .Where(x => x.DeletedDate == null && x.IsVerified==true)
+                .Select(x => new Get3TopLikeUserQueryResult
+                {
+                    UserId = x.UserId,
+                    FullName = x.FullName,
+                    UniversityName = x.University.Name,
+                    DepartmentName = x.Department.Name,
+                    ProfilePictureUrl = x.ProfilePictureUrl,
+                    TotalLikes = x.Answers.SelectMany(a => a.AnswerLikes).Count() // ✅ doğru yazım bu
+                })
+                .OrderByDescending(x => x.TotalLikes)
+                .Take(3)
                 .ToListAsync();
         }
     }

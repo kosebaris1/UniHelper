@@ -1,9 +1,5 @@
-﻿using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Features.MediatR.Users.Results;
+using Domain.Entities;
 
 namespace Application.Interfaces.UserInterface
 {
@@ -15,6 +11,7 @@ namespace Application.Interfaces.UserInterface
         Task ChangeStatusAsync(int userId);
         Task<List<User>> GetAllUnverifiedUserAsync();
         Task<List<User>> GetRecentVerifiedUserAsync(int count);
+        Task<List<Get3TopLikeUserQueryResult>> GetTop3VerifiedUserAsync();
 
     }
 }

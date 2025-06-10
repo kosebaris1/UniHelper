@@ -88,6 +88,22 @@ namespace Persistence.Repositories.QuestionRepository
             return await query.ToListAsync();
         }
 
+        public async Task<List<Question>> GetMyAllLikedQuestion(int userId)
+        {
+            var likedQuestionIds = await _context.QuestionLikes
+                .Where(x => x.UserId == userId)
+                .Select(x => x.QuestionId)
+                .ToListAsync();
+
+            return await _context.Questions
+                .Where(q => likedQuestionIds.Contains(q.QuestionId)) 
+                .Include(q => q.User)
+                .Include(q => q.University)
+                .Include(q => q.Department)
+                .Include(q => q.QuestionTags)
+                .ToListAsync();
+        }
+
 
         public async Task<Question> GetQuestionWithDetailsByIdAsync(int id)
         {
