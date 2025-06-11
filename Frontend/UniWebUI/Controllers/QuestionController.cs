@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 using System.Text;
 using UniDto.DepartmenDtos;
@@ -23,8 +22,12 @@ namespace UniWebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? cityId = null, int? universityId = null, int? departmentId = null, List<int>? tagsId = null, string sortBy = "new")
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            ViewBag.UserId = userId;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+                ViewBag.UserId = userId;
+            }
+
             var client = _httpClientFactory.CreateClient();
             var queryParams = new List<string>();
 
@@ -97,6 +100,7 @@ namespace UniWebUI.Controllers
             {
                 userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             }
+            userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
             viewModel.CurrentUserId = userId;
 
             // 🔹 Cevap yazma yetkisi kontrolü

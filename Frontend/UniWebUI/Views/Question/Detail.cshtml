@@ -125,11 +125,12 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="card-title">Cevabınızı Yazın</h5>
-                        <form id="answerForm">
-                            <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
-                            <textarea name="Content" class="form-control mb-2" rows="4" placeholder="Cevabınızı yazın..."></textarea>
+                        <form asp-controller="QuestionComment" asp-action="Add" method="post">
+                            <input type="hidden" name="questionId" value="@Model.QuestionId" />
+                            <textarea name="commentText" class="form-control mb-2" rows="4" placeholder="Cevabınızı yazın..."></textarea>
                             <button type="submit" class="btn btn-primary">Gönder</button>
                         </form>
+
                     </div>
                 </div>
             }
@@ -141,12 +142,12 @@
                         Cevap yazmak için lütfen <a href="/Login/Index" class="fw-bold">giriş yapın</a>.
                     </div>
                 }
-                else if (Model.CurrentUserIsVerified == false) 
+                @* else if (Model.CurrentUserIsVerified == false) 
                 {
                     <div class="alert alert-warning mt-3">
                         Bu soruya cevap yazmak için hesabınızın doğrulanması gerekmektedir. Lütfen yüklediğiniz belgenin onaylanmasını bekleyin.
                     </div>
-                }
+                } *@
                 else
                 {
                     <div class="alert alert-warning mt-3">
@@ -195,6 +196,8 @@
                     button.addClass("flaming-button");
                 }
             });
+
+
 
             // 🔥 Soru beğeni sayısını al ve alev efektini kontrol et
             $.ajax({

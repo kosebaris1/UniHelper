@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
-using UniDto.QuestionDtos;
 
 namespace UniWebUI.Controllers
 {
@@ -42,20 +41,20 @@ namespace UniWebUI.Controllers
             return Json(new { success = false });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> CommentsPartial(int questionId)
-        {
-            var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"https://localhost:7224/api/Answer/AllAnswerByQuestion?questionId={questionId}");
+        //[HttpGet]
+        //public async Task<IActionResult> CommentsPartial(int questionId)
+        //{
+        //    var client = _httpClientFactory.CreateClient();
+        //    var response = await client.GetAsync($"https://localhost:7224/api/Answer/AllAnswerByQuestion?questionId={questionId}");
 
-            if (!response.IsSuccessStatusCode)
-                return PartialView("_CommentsPartial", new List<GetAnswerDto>());
+        //    if (!response.IsSuccessStatusCode)
+        //        return PartialView("_CommentsPartial", new List<GetAnswerDto>());
 
-            var jsonData = await response.Content.ReadAsStringAsync();
-            var comments = JsonConvert.DeserializeObject<List<GetAnswerDto>>(jsonData);
+        //    var jsonData = await response.Content.ReadAsStringAsync();
+        //    var comments = JsonConvert.DeserializeObject<List<GetAnswerDto>>(jsonData);
 
-            return PartialView("_CommentsPartial", comments);
-        }
+        //    return PartialView("_CommentsPartial", comments);
+        //}
 
 
     }
