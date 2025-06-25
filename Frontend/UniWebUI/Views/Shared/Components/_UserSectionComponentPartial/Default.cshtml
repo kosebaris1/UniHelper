@@ -20,8 +20,16 @@
             <div class="small text-muted">Beğeni</div>
         </div>
     </div>
-
-    <a href="/Question/CreateQuestion" class="btn btn-warning w-100 mt-2 rounded-pill">
-        <i class="fas fa-pen"></i> Soru Sor
-    </a>
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <a href="/Question/CreateQuestion" class="btn btn-warning w-100 mt-2 rounded-pill">
+            <i class="fas fa-pen"></i> Soru Sor
+        </a>
+    }
+    else
+    {
+        <a href="/Login/Index" class="btn btn-warning w-100 mt-2 rounded-pill">
+            <i class="fas fa-pen"></i> Soru Sormak İçin Giriş Yap
+        </a>
+    }
 </div>
