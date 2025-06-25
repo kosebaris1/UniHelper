@@ -99,8 +99,9 @@ namespace UniWebUI.Controllers
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
             }
-            userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
             viewModel.CurrentUserId = userId;
 
             // 🔹 Cevap yazma yetkisi kontrolü
