@@ -64,6 +64,7 @@
                             @{
                                 var userId = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                                 var userImage = Context.User.FindFirst("ProfilePictureUrl")?.Value;
+                                var userRole = Context.User.FindFirst(ClaimTypes.Role)?.Value;
                             }
 
                             <!-- ✅ Profil Dropdown -->
@@ -74,9 +75,13 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUser">
                                     <li><a class="dropdown-item" href="/Profile/Index/@userId">Profilim</a></li>
-                                    <li><a class="dropdown-item" href="#">Ayarlar</a></li>
+                                   
+                                    @if (User.IsInRole("Admin") || userRole == "Admin")
+                                    {
+                                        <li><a class="dropdown-item" href="/Admin/AdminMain/Index">Admin Paneli</a></li>
+                                    }
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" href="/Account/Logout">Çıkış Yap</a></li>
+                                    <li><a class="dropdown-item" href="/Login/Index">Çıkış Yap</a></li>
                                 </ul>   
                             </li>
                         </ul>

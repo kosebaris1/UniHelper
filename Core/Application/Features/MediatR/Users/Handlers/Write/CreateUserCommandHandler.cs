@@ -30,7 +30,8 @@ namespace Application.Features.MediatR.Users.Handlers.Write
 
             if (request.ProfilePictureUrl != null && request.ProfilePictureUrl.Length > 0)
             {
-                var uploadsFolderPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "users");
+                var uploadsFolderPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "users");
+
                 if (!Directory.Exists(uploadsFolderPath))
                 {
                     Directory.CreateDirectory(uploadsFolderPath);
@@ -52,7 +53,8 @@ namespace Application.Features.MediatR.Users.Handlers.Write
             // Öğrenci belgesi işlemi (verification)
             if (request.VerificationDocumentPath != null && request.VerificationDocumentPath.Length > 0)
             {
-                var verificationFolderPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "verifications");
+
+                var verificationFolderPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "verifications");
                 if (!Directory.Exists(verificationFolderPath))
                 {
                     Directory.CreateDirectory(verificationFolderPath);

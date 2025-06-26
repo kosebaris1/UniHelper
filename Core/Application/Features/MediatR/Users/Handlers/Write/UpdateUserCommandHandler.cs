@@ -29,14 +29,14 @@ namespace Application.Features.MediatR.Users.Handlers.Write
                 // Eski fotoğrafı sil (varsa)
                 if (!string.IsNullOrEmpty(user.ProfilePictureUrl))
                 {
-                    var oldPhotoFullPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", user.ProfilePictureUrl.TrimStart('/'));
+                    var oldPhotoFullPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", user.ProfilePictureUrl.TrimStart('/'));
                     if (File.Exists(oldPhotoFullPath))
                     {
                         File.Delete(oldPhotoFullPath);
                     }
                 }
 
-                var uploadsFolderPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "users");
+                var uploadsFolderPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "users");
                 Directory.CreateDirectory(uploadsFolderPath); // garantili oluşturma
 
                 var fileExtension = Path.GetExtension(request.ProfilePictureUrl.FileName);
@@ -57,14 +57,14 @@ namespace Application.Features.MediatR.Users.Handlers.Write
                 // Eski belgeyi sil (varsa)
                 if (!string.IsNullOrEmpty(user.VerificationDocumentPath))
                 {
-                    var oldDocFullPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", user.VerificationDocumentPath.TrimStart('/'));
+                    var oldDocFullPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", user.VerificationDocumentPath.TrimStart('/'));
                     if (File.Exists(oldDocFullPath))
                     {
                         File.Delete(oldDocFullPath);
                     }
                 }
 
-                var verificationFolderPath = Path.Combine("C:\\csharpprojeler\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "verifications");
+                var verificationFolderPath = Path.Combine("C:\\Users\\furka\\Source\\Repos\\UniHelper\\Frontend\\UniWebUI", "wwwroot", "verifications");
                 Directory.CreateDirectory(verificationFolderPath);
 
                 var fileExtension = Path.GetExtension(request.VerificationDocumentPath.FileName);

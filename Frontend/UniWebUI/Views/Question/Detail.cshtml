@@ -13,23 +13,23 @@
     <link rel="stylesheet" href="~/css/sorular.css" asp-append-version="true" />
     <style>
         .answer-slider-container {
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 10px;
         }
 
-            .answer-slider-container::-webkit-scrollbar {
-                width: 6px;
-            }
+        .answer-slider-container::-webkit-scrollbar {
+        width: 6px;
+        }
 
-            .answer-slider-container::-webkit-scrollbar-thumb {
-                background-color: #ccc;
-                border-radius: 3px;
-            }
+        .answer-slider-container::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 3px;
+        }
 
-            .answer-slider-container::-webkit-scrollbar-track {
-                background: transparent;
-            }
+        .answer-slider-container::-webkit-scrollbar-track {
+        background: transparent;
+        }
     </style>
 }
 
@@ -41,8 +41,8 @@
                 <h6 class="text-orange text-uppercase small fw-bold mb-2">Keşfet</h6>
                 <ul class="nav flex-column sidebar-nav">
                     <li class="nav-item"><a class="nav-link active" href="#"><i class="fas fa-list me-2"></i> Sorular</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tags me-2"></i> Etiketler</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i> Sıralama</a></li>
+                   @*  <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tags me-2"></i> Etiketler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-sort-amount-down me-2"></i> Sıralama</a></li> *@
                 </ul>
 
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -160,19 +160,52 @@
 
         <!-- Sağ Sidebar -->
         <div class="col-lg-3 d-none d-lg-block sidebar-right">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                @await Component.InvokeAsync("_UserSectionComponentPartial", new { id = userId })
+            }
+            else
+            {
+                <div class="profile-card shadow-sm p-4 rounded-4">
+                    <div class="text-center mb-3">
+                        <div >
+                            <img src="/images/girissiz-avatar.png" alt="Profil Fotoğrafı" class="rounded-circle" width="80" height="80" />
+                        </div>
+                        <h6 class="fw-bold mb-0">Giriş Yapmamış Kullanıcı</h6>
+                       
+                    </div>
 
-            @await Component.InvokeAsync("_UserSectionComponentPartial", new { id = userId })
+                    
+                    
+                        <a href="/Login/Index" class="btn btn-warning w-100 mt-2 rounded-pill">
+                            <i class="fas fa-pen"></i> Soru Sormak İçin Giriş Yap
+                        </a>
+                    
+                </div>
+
+
+            }
+            
 
             <div class="ai-summary-box mt-4">
                 <h5 class="fw-bold text-orange mb-3 d-flex align-items-center">
                     <i class="fas fa-robot me-2"></i> Yapay Zeka Özeti
                 </h5>
                 <textarea id="aiSummaryText" class="form-control mb-3 rounded-4 shadow-sm p-3 bg-light"
-                          rows="12" readonly placeholder="Henüz özet alınmadı...">
+                rows="12" readonly placeholder="Henüz özet alınmadı...">
                 </textarea>
-                <button class="btn btn-warning w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" id="getSummaryBtn">
-                    <i class="fas fa-magic"></i> Özeti Al
-                </button>
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <button class="btn btn-warning w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" id="getSummaryBtn">
+                        <i class="fas fa-magic"></i> Özeti Al
+                    </button>
+                }
+                else
+                {
+                    <a class="btn btn-warning w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" id="getSummaryBtn" href="/Login/Index">
+                        <i class="fas fa-magic"></i> Özeti Almak İçin Giriş Yapın
+                    </a>
+                }
             </div>
         </div>
     </div>
