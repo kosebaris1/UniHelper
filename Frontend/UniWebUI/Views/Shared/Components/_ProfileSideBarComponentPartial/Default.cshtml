@@ -6,7 +6,7 @@
             <h5 class="mt-2 mb-0 text-white">@Model.FullName</h5>
             <p class="text-white-50 small mb-2">@Model.UniversityName</p>
             <p class="text-white-50 small mb-3">@(string.IsNullOrWhiteSpace(Model.DepartmentName) ? "Aday Öğrenci" : Model.DepartmentName)</p>
-            <a href="#" class="btn btn-light btn-sm rounded-pill">Profili Düzenle</a>
+            @* <a href="#" class="btn btn-light btn-sm rounded-pill">Profili Düzenle</a> *@
         </div>
 
         <div class="card-body p-0">
@@ -20,9 +20,9 @@
                 <a href="/Profile/MyLikedQuestions" class="list-group-item">
                     <i class="fas fa-heart me-2 text-orange"></i> Beğendiklerim
                 </a>
-                <a href="/Message/Index" class="list-group-item">
+               @*  <a href="/Message/Index" class="list-group-item">
                     <i class="fas fa-envelope me-2 text-orange"></i> Mesajlarım
-                </a>
+                </a> *@
             </div>
         </div>
     </div>
