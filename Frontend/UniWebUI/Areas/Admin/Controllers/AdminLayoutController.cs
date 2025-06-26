@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace UniWebUI.Areas.Admin.Controllers
 {
@@ -10,7 +11,10 @@ namespace UniWebUI.Areas.Admin.Controllers
         [Route("Index")]
         public IActionResult Index()
         {
+
+
             return View();
+
         }
     }
 }

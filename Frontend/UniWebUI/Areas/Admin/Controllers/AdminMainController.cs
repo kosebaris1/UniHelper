@@ -19,6 +19,7 @@ namespace UniWebUI.Areas.Admin.Controllers
         [Route("Index")]
         public IActionResult Index()
         {
+
             return View();
         }
         [Route("Accept")]
