@@ -160,8 +160,32 @@
 
         <!-- Sağ Sidebar -->
         <div class="col-lg-3 d-none d-lg-block sidebar-right">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                @await Component.InvokeAsync("_UserSectionComponentPartial", new { id = userId })
+            }
+            else
+            {
+                <div class="profile-card shadow-sm p-4 rounded-4">
+                    <div class="text-center mb-3">
+                        <div >
+                            <img src="/images/girissiz-avatar.png" alt="Profil Fotoğrafı" class="rounded-circle" width="80" height="80" />
+                        </div>
+                        <h6 class="fw-bold mb-0">Giriş Yapmamış Kullanıcı</h6>
+                       
+                    </div>
 
-            @await Component.InvokeAsync("_UserSectionComponentPartial", new { id = userId })
+                    
+                    
+                        <a href="/Login/Index" class="btn btn-warning w-100 mt-2 rounded-pill">
+                            <i class="fas fa-pen"></i> Soru Sormak İçin Giriş Yap
+                        </a>
+                    
+                </div>
+
+
+            }
+            
 
             <div class="ai-summary-box mt-4">
                 <h5 class="fw-bold text-orange mb-3 d-flex align-items-center">
