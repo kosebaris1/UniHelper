@@ -1,5 +1,10 @@
 ﻿@model List<GetAnswerDto>
-
+@{
+    var isAuthenticated = User.Identity != null && User.Identity.IsAuthenticated;
+    var currentUserId = isAuthenticated
+        ? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value
+        : "0";
+}
 @if (!Model.Any())
 {
     <p class="text-muted">Henüz bir yorum yapılmamış.</p>
@@ -10,12 +15,19 @@ else
     @foreach (var answer in Model)
     {
         <div class="card mb-3 p-3 answer-card" data-answer-id="@answer.AnswerId">
+            <input type="hidden" id="currentUserId" value="@currentUserId" />
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <a class="btn btn-sm btn-outline-warning"
+                   href="/Report/Create?questionId=@answer.QuestionId&answerId=@answer.AnswerId&userId=@currentUserId">
+                    🚩 Şikayet Et
+                </a>
+            </div>
+
             <div class="d-flex align-items-center mb-2">
                 <img src="@answer.ProfilePictureUrl"
                      onerror="this.src='/images/user-avatar1.png';"
                      class="rounded-circle me-3 answer-profile-img"
                      width="45" height="45" style="object-fit: cover;" />
-
 
                 <div class="flex-grow-1">
                     <div class="d-flex align-items-center mb-1">
@@ -30,14 +42,13 @@ else
                         }
                     </div>
 
-
                     <div class="mb-2">
                         <span class="badge university-badge me-1">@answer.DepartmentName</span>
                         <span class="badge university-badge">@answer.UniversityName</span>
                     </div>
 
                     @{
-                        string icon = "💬"; // default
+                        string icon = "💬";
                         var lower = answer.Content.ToLower();
 
                         if (lower.Contains("tavsiye") || lower.Contains("öner")) icon = "💡";
@@ -51,7 +62,6 @@ else
                         @answer.Content
                     </div>
 
-
                     <div class="d-flex justify-content-end align-items-center">
                         <small class="text-muted me-3">@answer.CreatedDate.ToString("dd MMMM yyyy HH:mm")</small>
 
@@ -64,10 +74,51 @@ else
                             <span id="likeCount-@answer.AnswerId">@answer.LikeCount</span>
                             <span class="like-fly-text" id="like-fly-@answer.AnswerId">+1</span>
                         </button>
-
                     </div>
                 </div>
             </div>
         </div>
     }
+
 }
+@section Scripts {
+    <script>
+        $(document).on('click', '.report-answer-button', function () {
+            const answerId = $(this).data('answer-id');
+            const questionId = $(this).data('question-id');
+            const userId = $(this).data('user-id');
+
+            console.log("Click!", { userId, questionId, answerId });
+
+            if (!userId || userId === 0 || userId === "0") {
+                alert("Şikayet etmek için giriş yapmalısınız.");
+                return;
+            }
+
+            const reason = prompt("Lütfen şikayet nedeninizi yazınız:");
+            if (!reason || reason.trim() === "") {
+                alert("Şikayet nedeni boş bırakılamaz.");
+                return;
+            }
+
+            $.ajax({
+                url: '/Report/Add',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    userId: userId,
+                    questionId: questionId,
+                    answerId: answerId,
+                    reason: reason
+                }),
+                success: function () {
+                    alert("Şikayetiniz alınmıştır. Teşekkür ederiz.");
+                },
+                error: function () {
+                    alert("Bir hata oluştu. Şikayet gönderilemedi.");
+                }
+            });
+        });
+    </script>
+}
+

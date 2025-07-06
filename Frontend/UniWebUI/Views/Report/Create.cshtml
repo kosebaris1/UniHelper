@@ -1,0 +1,20 @@
+﻿@model CreateReportViewModel
+
+@{
+    ViewData["Title"] = "Şikayet Et";
+}
+
+<h2>🚩 Şikayet Et</h2>
+
+<form asp-action="Create" method="post">
+    <input type="hidden" name="UserId" value="@Model.UserId" />
+    <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+    <input type="hidden" name="AnswerId" value="@Model.AnswerId" />
+
+    <div class="mb-3">
+        <label class="form-label">Şikayet Nedeni</label>
+        <textarea name="Reason" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-danger">Gönder</button>
+</form>
