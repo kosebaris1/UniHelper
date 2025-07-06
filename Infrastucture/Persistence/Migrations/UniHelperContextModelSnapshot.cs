@@ -133,6 +133,33 @@ namespace Persistence.Migrations
                     b.ToTable("Departments");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Domain.Entities.Question", b =>
                 {
                     b.Property<int>("QuestionId")
@@ -230,6 +257,44 @@ namespace Persistence.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("QuestionTags");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
@@ -486,6 +551,31 @@ namespace Persistence.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Report", b =>
+                {
+                    b.HasOne("Domain.Entities.Answer", "Answer")
+                        .WithMany("Reports")
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.Question", "Question")
+                        .WithMany("Reports")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Reports")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Answer");
+
+                    b.Navigation("Question");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.University", b =>
                 {
                     b.HasOne("Domain.Entities.City", "City")
@@ -500,8 +590,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Entities.Department", "Department")
                         .WithMany("Users")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("Domain.Entities.Role", "Role")
                         .WithMany("Users")
@@ -510,8 +599,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.University", "University")
                         .WithMany("Users")
-                        .HasForeignKey("UniversityId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("UniversityId");
 
                     b.Navigation("Department");
 
@@ -523,6 +611,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Answer", b =>
                 {
                     b.Navigation("AnswerLikes");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -544,6 +634,8 @@ namespace Persistence.Migrations
                     b.Navigation("QuestionLikes");
 
                     b.Navigation("QuestionTags");
+
+                    b.Navigation("Reports");
                 });
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
@@ -572,6 +664,8 @@ namespace Persistence.Migrations
                     b.Navigation("LikedQuestions");
 
                     b.Navigation("Questions");
+
+                    b.Navigation("Reports");
                 });
 #pragma warning restore 612, 618
         }

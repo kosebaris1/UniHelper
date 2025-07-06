@@ -25,6 +25,9 @@
         public ICollection<QuestionLike> LikedQuestions { get; set; } = new List<QuestionLike>();
         public ICollection<AnswerLike> LikedAnswers { get; set; } = new List<AnswerLike>();
 
+        public ICollection<Report> Reports { get; set; }  // Bu cevaba gelen tüm şikayetler
+
+
     }
 
 }

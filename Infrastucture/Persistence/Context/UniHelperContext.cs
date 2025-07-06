@@ -5,9 +5,9 @@ namespace Persistence.Context
 {
     public class UniHelperContext : DbContext
     {
-        public UniHelperContext(DbContextOptions<UniHelperContext> options):base(options) { }
+        public UniHelperContext(DbContextOptions<UniHelperContext> options) : base(options) { }
 
-        
+
 
 
         public DbSet<User> Users { get; set; }
@@ -19,7 +19,10 @@ namespace Persistence.Context
         public DbSet<Department> Departments { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<QuestionLike> QuestionLikes { get; set; }
-        public DbSet<AnswerLike> AnswerLikes{ get; set; }
+        public DbSet<AnswerLike> AnswerLikes { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,33 +33,19 @@ namespace Persistence.Context
                 .HasForeignKey(q => q.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //// Question → Department (opsiyonel)
-            //modelBuilder.Entity<Question>()
-            //    .HasOne(q => q.Department)
-            //    .WithMany(d => d.Questions)
-            //    .HasForeignKey(q => q.DepartmentId)
-            //    .OnDelete(DeleteBehavior.SetNull);
-
-            //// Question → University (opsiyonel)
-            //modelBuilder.Entity<Question>()
-            //    .HasOne(q => q.University)
-            //    .WithMany(u => u.Questions)
-            //    .HasForeignKey(q => q.UniversityId)
-            //    .OnDelete(DeleteBehavior.SetNull);
-
             // User → Department
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Department)
-                .WithMany(d => d.Users)
-                .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.SetNull);
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.Department)
+            //    .WithMany(d => d.Users)
+            //    .HasForeignKey(u => u.DepartmentId)
+            //    .OnDelete(DeleteBehavior.SetNull);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.University)
-                .WithMany(u => u.Users)
-                .HasForeignKey(u => u.UniversityId)
-                .OnDelete(DeleteBehavior.Restrict); // ✅ ÇAKIŞMA YOK
-
+            // User → University
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.University)
+            //    .WithMany(u => u.Users)
+            //    .HasForeignKey(u => u.UniversityId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             // User → Role
             modelBuilder.Entity<User>()
@@ -93,15 +82,18 @@ namespace Persistence.Context
                 .HasForeignKey(qt => qt.TagId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // University → City
             modelBuilder.Entity<University>()
                 .HasOne(u => u.City)
                 .WithMany(c => c.Universities)
                 .HasForeignKey(u => u.CityId)
-                .OnDelete(DeleteBehavior.Restrict); // ya da SetNull
+                .OnDelete(DeleteBehavior.Restrict);
 
+            // QuestionLike composite key
             modelBuilder.Entity<QuestionLike>()
                 .HasKey(ql => new { ql.UserId, ql.QuestionId });
 
+            // QuestionLike relationships
             modelBuilder.Entity<QuestionLike>()
                 .HasOne(ql => ql.User)
                 .WithMany(u => u.LikedQuestions)
@@ -114,20 +106,43 @@ namespace Persistence.Context
                 .HasForeignKey(ql => ql.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-
+            // AnswerLike composite key
             modelBuilder.Entity<AnswerLike>()
                 .HasKey(al => new { al.UserId, al.AnswerId });
+
+            // AnswerLike relationships
             modelBuilder.Entity<AnswerLike>()
                 .HasOne(al => al.User)
-                .WithMany(u => u.LikedAnswers) // User entity'deki ICollection
+                .WithMany(u => u.LikedAnswers)
                 .HasForeignKey(al => al.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<AnswerLike>()
                 .HasOne(al => al.Answer)
                 .WithMany(a => a.AnswerLikes)
                 .HasForeignKey(al => al.AnswerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Report → User
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.User)
+                .WithMany(u => u.Reports)
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Report → Question
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.Question)
+                .WithMany(q => q.Reports)
+                .HasForeignKey(r => r.QuestionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Report → Answer
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.Answer)
+                .WithMany(a => a.Reports)
+                .HasForeignKey(r => r.AnswerId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
-}
+    }
