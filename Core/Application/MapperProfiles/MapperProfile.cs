@@ -4,6 +4,8 @@ using Application.Features.MediatR.Cities.Results;
 using Application.Features.MediatR.Department.Results;
 using Application.Features.MediatR.Questions.Commands;
 using Application.Features.MediatR.Questions.Results;
+using Application.Features.MediatR.Report.Command;
+using Application.Features.MediatR.Report.Result;
 using Application.Features.MediatR.Tags.Commands;
 using Application.Features.MediatR.Tags.Results;
 using Application.Features.MediatR.Universities.Results;
@@ -131,6 +133,12 @@ namespace Application.MapperProfiles
 
             //City
             CreateMap<City, GetAllCityQueryResult>().ReverseMap();
+
+
+            CreateMap<Report, CreateReportCommand>().ReverseMap();
+            CreateMap<Report, GetAllReportQueryResult>().ReverseMap();
+            CreateMap<Report, GetReportByAnswerIdQueryResult>()
+    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
 
         }
 

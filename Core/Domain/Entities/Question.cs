@@ -17,6 +17,9 @@
         public ICollection<QuestionTag> QuestionTags { get; set; } = new List<QuestionTag>(); // ✅
         public ICollection<QuestionLike> QuestionLikes { get; set; } = new List<QuestionLike>();
 
+        public ICollection<Report> Reports { get; set; }  // Bu cevaba gelen tüm şikayetler
+
+
     }
 
 }

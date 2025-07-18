@@ -1,0 +1,34 @@
+﻿@model List<GetReportDto>
+
+@{
+    ViewData["Title"] = "Şikayet Listesi";
+}
+
+<h2>👁️ Bu Cevaba Gelen Şikayetler</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Bu cevaba henüz bir şikayet yapılmamış.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Şikayet Eden</th>
+                <th>Açıklama</th>
+                <th>Tarih</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model)
+            {
+                <tr>
+                    <td>@report.UserName</td>
+                    <td>@report.Reason</td>
+                    <td>@report.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
