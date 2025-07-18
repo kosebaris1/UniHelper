@@ -23,6 +23,17 @@ namespace WebApi.Controllers
             return Ok(reports);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetReportByAnswerId(int id)
+        {
+            var report = await _mediator.Send(new GetReportByAnswerIdQuery(id));
+            if (report == null)
+            {
+                return NotFound("Report not found.");
+            }
+            return Ok(report);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateReport(CreateReportCommand command)
         {

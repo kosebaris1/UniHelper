@@ -137,7 +137,8 @@ namespace Application.MapperProfiles
 
             CreateMap<Report, CreateReportCommand>().ReverseMap();
             CreateMap<Report, GetAllReportQueryResult>().ReverseMap();
-            CreateMap<Report, GetReportByIdQueryResult>().ReverseMap();
+            CreateMap<Report, GetReportByAnswerIdQueryResult>()
+    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.FullName));
 
         }
 

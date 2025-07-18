@@ -11,5 +11,7 @@ namespace Application.Interfaces.ReportInterface
     {
         Task AddAsync(Report report);
         Task<List<Report>> GetAllAsync();
+        Task<List<Report>> GetReportsByAnswerAsync(int answerId);
+
     }
 }

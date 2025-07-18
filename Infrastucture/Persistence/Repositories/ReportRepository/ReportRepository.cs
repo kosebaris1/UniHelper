@@ -34,5 +34,16 @@ namespace Persistence.Repositories.ReportRepository
                 .OrderByDescending(r => r.CreatedAt)
                 .ToListAsync();
         }
+
+        public async Task<List<Report>> GetReportsByAnswerAsync(int answerId)
+        {
+            return await _context.Reports
+        .Where(r => r.AnswerId == answerId)
+        .Include(r => r.User)
+        .Include(r => r.Question)
+        .Include(r => r.Answer)
+        .OrderByDescending(r => r.CreatedAt)
+        .ToListAsync();
+        }
     }
 }

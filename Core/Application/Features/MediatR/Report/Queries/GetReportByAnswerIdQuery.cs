@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace Application.Features.MediatR.Report.Queries
 {
-    public class GetReportByIdQuery : IRequest<GetReportByIdQueryResult>
+    public class GetReportByAnswerIdQuery : IRequest<List<GetReportByAnswerIdQueryResult>>
     {
         public int Id { get; set; }
 
-        public GetReportByIdQuery(int id)
+        public GetReportByAnswerIdQuery(int id)
         {
             Id = id;
         }

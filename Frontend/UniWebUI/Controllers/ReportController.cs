@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
+using UniDto.ReportDtos;
 using UniWebUI.Models;
 
 namespace UniWebUI.Controllers
@@ -52,6 +53,22 @@ namespace UniWebUI.Controllers
 
           
             return View(model);
+        }
+       
+        [HttpGet]
+        public async Task<IActionResult> AnswerReports(int answerId)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($" https://localhost:7224/api/Report/{answerId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                var reports = JsonConvert.DeserializeObject<List<GetReportDto>>(json);
+                return View(reports);
+            }
+
+            return View(new List<GetReportDto>());
         }
 
 
