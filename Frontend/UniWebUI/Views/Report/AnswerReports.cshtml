@@ -1,34 +1,76 @@
 ﻿@model List<GetReportDto>
 
 @{
+    Layout = "~/Views/UILayout/Index.cshtml";
     ViewData["Title"] = "Şikayet Listesi";
 }
 
-<h2>👁️ Bu Cevaba Gelen Şikayetler</h2>
+<style>
+    .report-list-wrapper {
+        max-width: 900px;
+        margin: 50px auto;
+        background-color: #fffef4;
+        border: 1px solid #f2e197;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+    }
 
-@if (!Model.Any())
-{
-    <div class="alert alert-info">Bu cevaba henüz bir şikayet yapılmamış.</div>
-}
-else
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Şikayet Eden</th>
-                <th>Açıklama</th>
-                <th>Tarih</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var report in Model)
-            {
+    .report-list-wrapper h2 {
+        color: #b58900;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .table-custom th {
+        background-color: #fff7cd;
+        color: #5d4c00;
+        font-weight: 600;
+    }
+
+    .table-custom td {
+        background-color: #fffbec;
+        vertical-align: middle;
+    }
+
+    .alert-custom {
+        background-color: #fff8d1;
+        color: #5c4900;
+        border: 1px solid #ffe680;
+        border-radius: 6px;
+        padding: 15px;
+    }
+</style>
+
+<div class="report-list-wrapper">
+    <h2>👁️ Bu Cevaba Gelen Şikayetler</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-custom">
+            Bu cevaba henüz bir şikayet yapılmamış.
+        </div>
+    }
+    else
+    {
+        <table class="table table-custom table-bordered table-hover">
+            <thead>
                 <tr>
-                    <td>@report.UserName</td>
-                    <td>@report.Reason</td>
-                    <td>@report.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                    <th>Şikayet Eden</th>
+                    <th>Açıklama</th>
+                    <th>Tarih</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var report in Model)
+                {
+                    <tr>
+                        <td>@report.UserName</td>
+                        <td>@report.Reason</td>
+                        <td>@report.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

@@ -1,20 +1,75 @@
 ﻿@model CreateReportViewModel
 
 @{
+    Layout = "~/Views/UILayout/Index.cshtml";
     ViewData["Title"] = "Şikayet Et";
 }
 
-<h2>🚩 Şikayet Et</h2>
+<style>
+    body {
+        background-color: #fdf6e3;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-<form asp-action="Create" method="post">
-    <input type="hidden" name="UserId" value="@Model.UserId" />
-    <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
-    <input type="hidden" name="AnswerId" value="@Model.AnswerId" />
+    .report-card {
+        background-color: #fffef4;
+        border: 1px solid #f3e29f;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        max-width: 600px;
+        margin: 40px auto;
+    }
 
-    <div class="mb-3">
-        <label class="form-label">Şikayet Nedeni</label>
-        <textarea name="Reason" class="form-control" required></textarea>
-    </div>
+    .report-card h2 {
+        color: #b58900;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
 
-    <button type="submit" class="btn btn-danger">Gönder</button>
-</form>
+    .form-label {
+        color: #6b5000;
+        font-weight: 600;
+    }
+
+    .form-control {
+        border: 1px solid #e2c94c;
+        border-radius: 6px;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.2rem rgba(255, 230, 120, 0.5);
+        border-color: #ffd700;
+    }
+
+    .btn-yellow {
+        background-color: #ffcc00;
+        border: none;
+        color: #4a3900;
+        font-weight: bold;
+        padding: 10px 24px;
+        border-radius: 6px;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .btn-yellow:hover {
+        background-color: #e6b800;
+    }
+</style>
+
+<div class="report-card">
+    <h2>🚩 Şikayet Et</h2>
+
+    <form asp-action="Create" method="post">
+        <input type="hidden" name="UserId" value="@Model.UserId" />
+        <input type="hidden" name="QuestionId" value="@Model.QuestionId" />
+        <input type="hidden" name="AnswerId" value="@Model.AnswerId" />
+
+        <div class="mb-3">
+            <label class="form-label">Şikayet Nedeni</label>
+            <textarea name="Reason" class="form-control" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-yellow">Gönder</button>
+    </form>
+</div>
