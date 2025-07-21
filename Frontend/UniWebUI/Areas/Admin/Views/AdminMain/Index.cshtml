@@ -21,6 +21,7 @@
         <!-- Recent Listings -->
         @await Component.InvokeAsync("_AdminRecentQuestionListComponentPartial")
 
+
         <!-- Pending Approvals -->
         @await Component.InvokeAsync("_AdminPendingQuestionComponentPartial")
     </div>
@@ -30,6 +31,9 @@
 
         <!-- Pending Approvals -->
         @await Component.InvokeAsync("_AdminPendingUserComponentPartial")
+
+        @await Component.InvokeAsync("_AdminReportListComponentPartial")
+
     </div>
 </div>
 

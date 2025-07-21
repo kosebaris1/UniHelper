@@ -1,0 +1,53 @@
+﻿@using UniDto.ReportDtos
+@model List<GetReportDto>
+
+<div class="col-lg-6 mb-4">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+            <!-- Buraya ekledik -->
+            <h6 class="m-0 font-weight-bold">Şikayetler</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive" style="max-height: 360px; overflow-y: auto;">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead class="table-dark" style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th>ID</th>
+                            <th>User Id</th>
+                            <th>QuestionId</th>
+                            <th>AnswerId</th>
+                            <th>Sebep</th>
+                            <th>oluşturulma Tarihi</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.UserId</td>
+                                    <td>@item.QuestionId</td>
+                                    <td>@item.AnswerId</td>
+                                    <td>@(item.Reason.Length > 30 ? item.Reason.Substring(0, 30) + "..." : item.Reason)</td>
+                                    <td>@item.CreatedAt</td>
+                                    <td>
+                                        <a asp-area="" asp-controller="Question" asp-action="Detail" asp-route-id="@item.QuestionId" class="btn btn-primary btn-sm">Görüntüle</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">Hiç soru bulunamadı.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
