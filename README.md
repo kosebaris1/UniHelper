@@ -66,6 +66,7 @@ UniHelper; yalnızca doğrulanmış üniversite öğrencilerinin içerik oluştu
 - Admin Panel Dashboard
 - API Katmanı (CQRS yapısı)
 - JWT ile Kimlik Doğrulama
+- Yorum Şikayet alanı
 
 ---
 
